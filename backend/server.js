@@ -1,0 +1,25 @@
+const express = require('express')
+const cookieParser = require('cookie-parser')
+const port = 7070
+const app = express()
+const driveControllers = require('./controllers/drive')
+const authControllers = require('./controllers/auth')
+
+
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
+app.use(cookieParser())
+
+
+const userRouter = require('./routes/user')
+const authRouter = require('./routes/auth')
+const driveRouter = require('./routes/drive')
+app.use('/users', userRouter)
+app.use('/auth', authRouter)
+app.use('/users', driveRouter)
+
+
+
+app.listen(port, () => {
+    console.log('Running server...');
+})

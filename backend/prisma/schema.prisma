@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String
+  folderIds Int[] 
+  Folders Folder[] @relation("ownedByUser")
+  fileIds Int[]
+  files File[] @relation("fileOwnedByUser")
+  shareFilesRecieved File[]
+  shareFolderRecieved Folder[] 
+  @@unique([username, password])
+}
+
+model Folder {
+  id Int @id @default(autoincrement())
+  name String
+  ownerId Int
+  owner User @relation("ownedByUser", fields: [ownerId], references: [id])
+  parentId Int?
+  parentFolder Folder? @relation("ChildFolder", fields: [parentId], references: [id])
+  childrenIds Int[]
+  childrenFolders Folder[] @relation("ChildFolder")
+  files File[] @relation("fileParent")
+  drive Boolean @default(false)
+  sharedWithUsers User[]
+}
+
+model File {
+  id Int @id @default(autoincrement())
+  name String
+  ownerId Int
+  owner User @relation("fileOwnedByUser", fields: [ownerId], references: [id])
+  parentId Int
+  parentFolder Folder @relation("fileParent", fields: [parentId], references: [id])
+  size Int
+  extension String
+  link String
+  sharedWithUsers User[]
+}
