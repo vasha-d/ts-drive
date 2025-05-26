@@ -7,25 +7,6 @@ function getExtension(name) {
 
     return split[split.length-1]
 }
-
-async function newFolder(name, parentId, ownerId) {
-    let newFolder = await prisma.folder.create({
-        data: {
-            owner: {
-                connect: {
-                    id: ownerId
-                }
-            },
-            parentFolder: {
-                connect: {
-                    id: parentId
-                }
-            },
-            name: name
-        }
-    })
-    return newFolder
-}
 async function newFile(file, parentId, ownerId) {
     let name = file.originalname
     let extension = getExtension(name)
@@ -52,17 +33,9 @@ async function newFile(file, parentId, ownerId) {
             extension: extension
         }
     })
+    return newFile
 }
-async function getFolder(folderId) {   
 
-    const folder = await prisma.folder.findUnique({
-        where: {
-            id: folderId
-        }
-    })
-
-    return folder
-}
 async function getFile(fileId) {
     const file = await prisma.file.findUnique({
         where: {
@@ -71,42 +44,18 @@ async function getFile(fileId) {
     })
     return file
 }
-async function renameFolder(folderId, newName) {
-    const folder = await prisma.folder.update({
-        where: {
-            id: folderId
-        },
-        data: {
-            name: newName
-        }
-    })
-    return folder
-}
+
 async function renameFile(fileId, newName) {
     const file = await prisma.folder.update({
         where: {
             id: fileId
         },
         data: {
-            name: newName
+            username: newName
         }
     })
 }
-async function shareFolder(folderId, userToShareWith) {
-    const folder = await prisma.folder.update({
-        where: {
-            id: folderId
-        },
-        data: {
-            sharedWithUsers: {
-                connect: {
-                    name: userToShareWith
-                }
-            }
-        }
-    })
-    return folder
-}
+
 async function shareFile(fileId, userToShareWith) {
     const file = await prisma.file.update({
         where: {
@@ -122,21 +71,7 @@ async function shareFile(fileId, userToShareWith) {
     })
     return file
 }
-async function moveFolder(folderId, newParentId) {
-    const folder = await prisma.folder.update({
-        where: {
-            id: folderId
-        },
-        data: {
-            parentFolder: {
-                connect: {
-                    id: newParentId
-                }
-            }
-        }
-    })
-    return folder
-}
+
 async function moveFile(fileId, newParentId) {
     const file = await prisma.file.update({
         where: {
@@ -171,15 +106,19 @@ async function uploadToCloudinary(file) {
         uploadStream.end(file.buffer)
     })
 }
+async function deleteFile(fileId) {
+    let del = await prisma.file.delete({
+        where: {
+            id: fileId
+        }
+    })
+    return del
+}
 module.exports = {
-    newFolder,
     newFile,
-    getFolder,
     getFile,
-    renameFolder,
     renameFile,
-    shareFolder,
     shareFile,
-    moveFolder,
-    moveFile
+    moveFile,
+    deleteFile
 }

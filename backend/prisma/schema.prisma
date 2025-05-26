@@ -24,16 +24,15 @@ model User {
   files File[] @relation("fileOwnedByUser")
   shareFilesRecieved File[]
   shareFolderRecieved Folder[] 
-  @@unique([username, password])
 }
 
 model Folder {
   id Int @id @default(autoincrement())
   name String
   ownerId Int
-  owner User @relation("ownedByUser", fields: [ownerId], references: [id])
+  owner User @relation("ownedByUser", fields: [ownerId], references: [id], onDelete: Cascade)
   parentId Int?
-  parentFolder Folder? @relation("ChildFolder", fields: [parentId], references: [id])
+  parentFolder Folder? @relation("ChildFolder", fields: [parentId], references: [id], onDelete:  Cascade)
   childrenIds Int[]
   childrenFolders Folder[] @relation("ChildFolder")
   files File[] @relation("fileParent")
@@ -45,9 +44,9 @@ model File {
   id Int @id @default(autoincrement())
   name String
   ownerId Int
-  owner User @relation("fileOwnedByUser", fields: [ownerId], references: [id])
+  owner User @relation("fileOwnedByUser", fields: [ownerId], references: [id], onDelete: Cascade)
   parentId Int
-  parentFolder Folder @relation("fileParent", fields: [parentId], references: [id])
+  parentFolder Folder @relation("fileParent", fields: [parentId], references: [id], onDelete: Cascade)
   size Int
   extension String
   link String
