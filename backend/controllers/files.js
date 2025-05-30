@@ -1,8 +1,10 @@
 const filesModel = require('../model/files')
-async function postFile(req, res) {
+async function  postFile(req, res) {
     let file = req.file
     let parentId = parseInt(req.body.parentId)
     let ownerId = req.user.id
+
+    console.log('runnign create file!!!!')
     console.log(file, parentId)
     const newFile = await filesModel.newFile(
         file, parentId, ownerId
@@ -34,7 +36,7 @@ async function getFile(req, res) {
 async function renameFile(req, res) {
     let fileId = parseInt(req.params.id)
     let newName = req.body.newName
-    let file = await filesModel.renameFolder(fileId, newName)
+    let file = await filesModel.renameFile(fileId, newName)
 
     res.json(file) 
 }

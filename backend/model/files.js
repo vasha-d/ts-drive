@@ -13,7 +13,7 @@ async function newFile(file, parentId, ownerId) {
     let cldUpload = await uploadToCloudinary(file)
     let link = cldUpload.secure_url
     let size = cldUpload.bytes
-    console.log(cldUpload)
+    console.log('cld:', cldUpload)
     
     let newFile = await prisma.file.create({
         data: {
@@ -33,6 +33,7 @@ async function newFile(file, parentId, ownerId) {
             extension: extension
         }
     })
+    console.log('file:', newFile);
     return newFile
 }
 
@@ -41,6 +42,9 @@ async function getFile(fileId) {
         where: {
             id: fileId
         },
+        include: {
+            parentFolder: true
+        }
     })
     return file
 }
@@ -51,7 +55,7 @@ async function renameFile(fileId, newName) {
             id: fileId
         },
         data: {
-            username: newName
+            name: newName
         }
     })
 }

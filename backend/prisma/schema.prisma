@@ -33,7 +33,6 @@ model Folder {
   owner User @relation("ownedByUser", fields: [ownerId], references: [id], onDelete: Cascade)
   parentId Int?
   parentFolder Folder? @relation("ChildFolder", fields: [parentId], references: [id], onDelete:  Cascade)
-  childrenIds Int[]
   childrenFolders Folder[] @relation("ChildFolder")
   files File[] @relation("fileParent")
   drive Boolean @default(false)

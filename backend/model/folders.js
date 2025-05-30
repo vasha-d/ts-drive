@@ -24,6 +24,11 @@ async function getFolder(folderId) {
     const folder = await prisma.folder.findUnique({
         where: {
             id: folderId
+        },
+        include: {
+            parentFolder: true,
+            childrenFolders: true,
+            files: true
         }
     })
 
@@ -71,19 +76,37 @@ async function moveFolder(folderId, newParentId) {
     return folder
 }
 async function deleteFolder(folderId) {
+    
     let del = await prisma.folder.delete({
+
         where: {
-            id: folderId
+            id: folderId,
+            drive: false
         }
     })
     return del
 }
+async function getDrive(userId) {
 
+    let drive = await prisma.folder.findFirst({
+        where: {
+            ownerId: userId,
+            drive: true
+        },
+        include: {
+            childrenFolders: true,
+            files: true
+        }   
+    })
+    console.log(drive)
+    return drive
+}
 module.exports = {
     newFolder,
     getFolder,
     renameFolder,
     shareFolder,
     moveFolder,
-    deleteFolder
+    deleteFolder,
+    getDrive
 }

@@ -63,9 +63,18 @@ async function deleteFolder(req, res) {
     res.json(del)
 }
 
+async function getDrive(req, res) {
+    let userId = req.user.id
+
+    let drive =  await foldersModel.getDrive(userId)
+
+    res.json(drive)
+}
+
 module.exports = {
     postFolder,
     getFolder,
     folderPatchOrganizer,
-    deleteFolder
+    deleteFolder,
+    getDrive
 }

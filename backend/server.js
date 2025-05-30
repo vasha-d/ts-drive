@@ -4,7 +4,11 @@ const port = 7070
 const app = express()
 const driveControllers = require('./controllers/files')
 const authControllers = require('./controllers/auth')
-
+const cors = require('cors')
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}))
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())

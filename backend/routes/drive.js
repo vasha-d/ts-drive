@@ -10,16 +10,18 @@ const upload = multer({
     storage: memoryStorage()
 })
 router.post('/folders', foldersControllers.postFolder)
+router.get('/folders/drive', foldersControllers.getDrive)
+
 router.route('/folders/:id')
     .get(foldersControllers.getFolder)
     .patch(foldersControllers.folderPatchOrganizer)
     .delete(foldersControllers.deleteFolder)
+
+
 router.post('/files', upload.single('fileUpload'), filesControllers.postFile)
 router.route('/files/:id')
     .get(filesControllers.getFile)
     .patch(filesControllers.filePatchOrganizer)
     .delete(filesControllers.deleteFile)
-
-
 
 module.exports = router

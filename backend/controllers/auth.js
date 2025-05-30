@@ -4,9 +4,12 @@ const { getUser, createUser, getUserById, getUserByName } = require("../model/us
 async function signIntoUser(req, res) {
     const {username, password} = req.body
     const user = await getUserByName(username)
+    console.log()
     const foundUser = !!user.password
     if (!foundUser) {
-        res.sendStatus(404)
+        res.status(404).json({
+            error: 'Username not found'
+        })
         return
     }
     if (password != user.password) {
@@ -24,18 +27,18 @@ async function signIntoUser(req, res) {
         expiresIn: '1d'
         }
     )
+    console.log(token)
     res.cookie('token', token, {
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000
+        maxAge: 24 * 60 * 60 * 1000,
+        sameSite: 'Lax'
     })
     res.json(user)
 }
 async function authorizeMiddleware(req, res, next) {
     const token = req.cookies.token
     let verify;
-    console.log('running')
     if (!token) {
-        console.log('ending')
         res.sendStatus(401)
         return
     }

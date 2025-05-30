@@ -7,7 +7,6 @@ import CreateAccount from './components/auth/CreateAccount'
 import Drive from './components/drive/Drive'
 function App() {
   const [count, setCount] = useState(0)
-  console.log(location)
   return (
     <BrowserRouter>
       <Routes>
