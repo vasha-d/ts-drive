@@ -62,3 +62,20 @@ export async function moveFile(fileId, newParentId, setRefresh) {
     setRefresh(r => !r)
 }
 
+export async function downloadFile(link, fileName) {
+    let res = await axios.get(link, {
+        responseType: 'blob'
+    })
+    let blob = res.data
+    let blobUrl = URL.createObjectURL(blob)
+
+    let docLink = document.createElement("a")
+
+    docLink.href = blobUrl
+    docLink.download = fileName
+
+    docLink.click()
+
+    URL.revokeObjectURL(blob)
+    
+}

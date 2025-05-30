@@ -12,7 +12,7 @@ async function createUser(username, password) {
             Folders: {
                 create: {
                     name: 'drive',
-                    drive: true   
+                    drive: true,
                 }
             }
         }

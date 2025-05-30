@@ -4,8 +4,6 @@ async function  postFile(req, res) {
     let parentId = parseInt(req.body.parentId)
     let ownerId = req.user.id
 
-    console.log('runnign create file!!!!')
-    console.log(file, parentId)
     const newFile = await filesModel.newFile(
         file, parentId, ownerId
     )

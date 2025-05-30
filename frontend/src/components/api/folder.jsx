@@ -44,3 +44,12 @@ export async function newFolder(folderName, parentId, setRefresh) {
     
 }
 
+export async function moveFolder(folderId, newParentId, setRefesh) {
+
+    let url = apiUrl + `/users/folder/${folderId}`
+    let data = new URLSearchParams({newParentId})
+
+    let req = await axios.patch(url, data, {withCredentials: true})
+
+    setRefesh(r => !r)
+}

@@ -37,6 +37,7 @@ model Folder {
   files File[] @relation("fileParent")
   drive Boolean @default(false)
   sharedWithUsers User[]
+  createdAt DateTime @default(now())
 }
 
 model File {
@@ -50,4 +51,5 @@ model File {
   extension String
   link String
   sharedWithUsers User[]
+  createdAt DateTime @default(now())
 }

@@ -14,7 +14,7 @@ async function newFolder(name, parentId, ownerId) {
                     id: parentId
                 }
             },
-            name: name
+            name: name,
         }
     })
     return newFolder
@@ -28,7 +28,8 @@ async function getFolder(folderId) {
         include: {
             parentFolder: true,
             childrenFolders: true,
-            files: true
+            files: true,
+            sharedWithUsers: true
         }
     })
 

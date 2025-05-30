@@ -30,7 +30,7 @@ async function newFile(file, parentId, ownerId) {
             name: name,
             link: link,
             size: size,
-            extension: extension
+            extension: extension,
         }
     })
     console.log('file:', newFile);
@@ -43,7 +43,8 @@ async function getFile(fileId) {
             id: fileId
         },
         include: {
-            parentFolder: true
+            parentFolder: true,
+            sharedWithUsers: true
         }
     })
     return file
