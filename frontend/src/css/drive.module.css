@@ -1,46 +1,44 @@
-.driveWrapper {
-    --navbar-height: 15vh;
+:global(#root) {
+    --navbar-height: 14vh;
     --sidebar-width: 25vh;
     --pathbar-height: 13vh;
 }
-.bodyWrapper {
-    display: flex;   
-}
-.navbarShadow {
-    height: var(--navbar-height);
+h1, h2, h3, h4, h5 {
+    margin: 0;
 }
 .navbar {   
-    position: fixed;
+    position: sticky;
     background-color: aquamarine;
     top: 0;
+    width: 100%;
     height: var(--navbar-height);
     display: flex;
-    width: 100%;
-}
-.sidebarShadow {
-    width: var(--sidebar-width);
 }
 .sidebar {
-    position: fixed;
+    display: inline-block;
+    position: sticky;
     width: var(--sidebar-width);
+    top: var(--navbar-height);
+    vertical-align: top;
 }
-.pathbarShadow {
-    height: var(--pathbar-height);
-    margin-bottom: 10px;
+.contentsWrapper {
+    display: inline-block;
 }
+
+.childrenContainer {
+    display: grid;
+    grid-template-columns: repeat(5, min-content);
+    margin-top: 3vh;
+}
+
 .pathbar {
     height: var(--pathbar-height);
-    position: fixed;
+    position: sticky;
     border-bottom: 1px solid black;
     background-color: whitesmoke;
     width: 100%;
+    box-sizing: border-box;
+    display: inline;
+    top: var(--navbar-height);
 }
-
-
-
-.contentsContainer {
-    display: inline-grid;
-    grid-template-columns: repeat(5, min-content)
-}
-
 

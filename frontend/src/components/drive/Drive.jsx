@@ -29,9 +29,6 @@ parent = axios.get(api/users/drive/parentid)
 children = axios.get(api/users/drive/parentid)
 */
     let {folder, loading, error, setRefresh, setCurrentFolderId} = useGetFolder()
-
-   
-
     let toReturn = <>Error...</>
     let notAuthorized = error && error.status == 401
     if (loading) {
@@ -43,18 +40,13 @@ children = axios.get(api/users/drive/parentid)
     else {
         toReturn =  
             <DriveContext.Provider value={
-                { setRefresh, setCurrentFolderId, currentFolder: folder}
-            }>  
-                <div className={styles.driveWrapper}>
+                { setRefresh, setCurrentFolderId, currentFolder: folder}}>  
                     <Navbar></Navbar>
-                    <div className={styles.navbarShadow}></div>
                     <div className={styles.bodyWrapper}>
-                    <Sidebar></Sidebar>
-                        <div className={styles.sidebarShadow}></div>
+                        <Sidebar></Sidebar>
                         <div className={styles.contentsWrapper}>
-                        <PathBar></PathBar>
-                        <div className={styles.pathbarShadow}></div>
-                            <div className={styles.contentsContainer}>
+                            <PathBar></PathBar>
+                            <div className={styles.childrenContainer}>
                                 <Children
                                     childrenFolders={folder.childrenFolders}
                                     files={folder.files}
@@ -63,7 +55,7 @@ children = axios.get(api/users/drive/parentid)
                             </div>
                         </div>
                     </div>
-                </div>
+
             </DriveContext.Provider>
     }
 
