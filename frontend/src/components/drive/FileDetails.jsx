@@ -6,7 +6,6 @@ function FileDetails({fileObj}) {
     let {createdAt, extension, name, size, } = fileObj
     let date = new Date(createdAt)
     date = date.toDateString()
-    console.log(fileObj);
     function clickViewDetails () {
         setVisible(v => !v) 
     }

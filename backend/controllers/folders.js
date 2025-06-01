@@ -29,6 +29,8 @@ async function folderPatchOrganizer(req, res) {
     }
     else if (req.body.newName) {
         funcToUse = renameFolder
+    } else if (req.body.star) {
+        funcToUse = setFolderStar
     }
 
     return funcToUse(req, res)
@@ -69,6 +71,13 @@ async function getDrive(req, res) {
     let drive =  await foldersModel.getDrive(userId)
 
     res.json(drive)
+}
+
+async function setFolderStar(req, res) {
+
+    let folderId = parseInt(req.params.id)
+    let star = await foldersModel.setFolderStar(folderId)
+    res.json(star)
 }
 
 module.exports = {

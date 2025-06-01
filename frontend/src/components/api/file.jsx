@@ -79,3 +79,13 @@ export async function downloadFile(link, fileName) {
     URL.revokeObjectURL(blob)
     
 }
+
+export async function starFile(fileId, setRefesh) {
+
+    let url = apiUrl + `/${fileId}`
+
+    let data = new URLSearchParams({star: true})
+    let req = await axios.patch(url, data, {withCredentials:true})
+
+    setRefesh(r => !r)
+}

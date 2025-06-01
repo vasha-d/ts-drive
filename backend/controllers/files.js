@@ -19,6 +19,8 @@ async function filePatchOrganizer(req, res) {
     }
     else if (req.body.newName) {
         funcToUse = renameFile
+    } else if (req.body.star) {
+        funcToUse = setFileStar
     }
 
     return funcToUse(req, res)
@@ -57,6 +59,13 @@ async function deleteFile(req, res) {
     console.log(fileId)
     let del = await filesModel.deleteFile(fileId)
     res.json(del)
+}
+async function setFileStar(req, res) {
+    let fileId= parseInt(req.params.id)
+
+    let star = await filesModel.setFileStar(fileId)
+    
+    res.json(star)
 }
 module.exports = {
     postFile,

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-const { getUser, createUser, getUserById, getUserByName } = require("../model/users")
+const { createUser, getUserById, getUserByName } = require("../model/users")
 
 async function signIntoUser(req, res) {
     const {username, password} = req.body
@@ -51,7 +51,13 @@ async function authorizeMiddleware(req, res, next) {
     req.user = verify.user
     next()
 }
+async function getSelfUser(req, res) {
+    let user = await getUserById(req.user.id)
+    res.json(user)
+}
+
 module.exports = {
     signIntoUser,
-    authorizeMiddleware
+    authorizeMiddleware,
+    getSelfUser
 }

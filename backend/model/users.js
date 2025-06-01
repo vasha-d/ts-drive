@@ -21,8 +21,13 @@ async function createUser(username, password) {
     return newUser
 }
 
-async function getUserById(req, res) {
-    
+async function getUserById(id) {
+    const user = await prisma.user.findUnique({
+        where: {
+            id: id
+        }
+    })
+    return user
 }
 async function getUserByName(username) {
     try {
@@ -36,8 +41,28 @@ async function getUserByName(username) {
         return error 
     }
 }
+async function updateUserTotalStorage(userId, amount) {
+    
+    let user = await prisma.user.findFirst({
+        where: {
+            id: userId
+        }
+    })
+    let newSize = user.totalStored + amount
+
+    let update = await prisma.user.update({
+        where: {
+            id: userId
+        },
+        data: {
+            totalStored: newSize
+        }
+    })
+    
+}
 module.exports = {
     createUser,
     getUserById,
-    getUserByName
+    getUserByName,
+    updateUserTotalStorage
 }

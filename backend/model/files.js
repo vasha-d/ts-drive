@@ -1,5 +1,6 @@
 const {PrismaClient} = require('../generated/prisma')
 const cloudinary = require('cloudinary').v2
+const {updateUserTotalStorage} = require('./users')
 const prisma = new PrismaClient()
 
 function getExtension(name) {
@@ -33,6 +34,7 @@ async function newFile(file, parentId, ownerId) {
             extension: extension,
         }
     })
+    let updateUser = await updateUserTotalStorage(ownerId, size)
     console.log('file:', newFile);
     return newFile
 }
@@ -117,7 +119,28 @@ async function deleteFile(fileId) {
             id: fileId
         }
     })
+    let amount = del.size * (-1)
+    let ownerId = del.ownerId
+    updateUserTotalStorage(ownerId, amount)
     return del
+}
+async function setFileStar(fileId) {
+
+    let current = await prisma.file.findUnique({
+        where: {
+            id: fileId
+        }
+    })
+    let newStar = !current.starred
+    let update = await prisma.file.update({
+        where: {
+            id: fileId
+        },
+        data: {
+            starred: newStar
+        }
+    })
+    return update   
 }
 module.exports = {
     newFile,
@@ -125,5 +148,6 @@ module.exports = {
     renameFile,
     shareFile,
     moveFile,
-    deleteFile
+    deleteFile,
+    setFileStar
 }

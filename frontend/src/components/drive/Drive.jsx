@@ -5,8 +5,9 @@ import { Navigate } from 'react-router-dom';
 import Children from './Children';
 import styles from '../../css/drive.module.css'
 import DriveContext from './DriveContext';
-import NewFolderButton from './NewFolderButton';
-import NewFileButton from './NewFileButton';
+import Navbar from './navbar/Navbar'
+import Sidebar from './sidebar/Sidebar';
+import PathBar from './navbar/PathBar';
 const Drive = () => {
 /*
 at all times keep all parentid and  names, and childrens ids and names in state, render the rest
@@ -29,9 +30,7 @@ children = axios.get(api/users/drive/parentid)
 */
     let {folder, loading, error, setRefresh, setCurrentFolderId} = useGetFolder()
 
-    function onClickFile (fileId) {
-
-    }
+   
 
     let toReturn = <>Error...</>
     let notAuthorized = error && error.status == 401
@@ -44,20 +43,26 @@ children = axios.get(api/users/drive/parentid)
     else {
         toReturn =  
             <DriveContext.Provider value={
-                {onClickFile, setRefresh, setCurrentFolderId}
-            }>
-
-                <div className={styles.contentsContainer}>
-                    <Children 
-                        childrenFolders={folder.childrenFolders}
-                        files={folder.files}
-                    ></Children>
-                    <NewFolderButton
-                        parentId = {folder.id}
-                    ></NewFolderButton>
-                    <NewFileButton
-                        parentId = {folder.id}
-                    ></NewFileButton>
+                { setRefresh, setCurrentFolderId, currentFolder: folder}
+            }>  
+                <div className={styles.driveWrapper}>
+                    <Navbar></Navbar>
+                    <div className={styles.navbarShadow}></div>
+                    <div className={styles.bodyWrapper}>
+                    <Sidebar></Sidebar>
+                        <div className={styles.sidebarShadow}></div>
+                        <div className={styles.contentsWrapper}>
+                        <PathBar></PathBar>
+                        <div className={styles.pathbarShadow}></div>
+                            <div className={styles.contentsContainer}>
+                                <Children
+                                    childrenFolders={folder.childrenFolders}
+                                    files={folder.files}
+                                ></Children>
+                            
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </DriveContext.Provider>
     }

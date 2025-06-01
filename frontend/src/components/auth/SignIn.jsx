@@ -30,6 +30,7 @@ const SignIn = () => {
 
             if (req.status == 200) {
                 console.log(req)
+                navigate('/drive')
             }
         }
         postUser()

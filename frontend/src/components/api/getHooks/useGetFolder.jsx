@@ -22,7 +22,8 @@ export function useGetFolder() {
                 let req = await axios.get(url, {
                     withCredentials: true
                 })
-                setFolder(req.data)
+                let folderObj = req.data
+                setFolder(folderObj)
                 setLoading(false)
             } catch (error) {
                 setError(error)

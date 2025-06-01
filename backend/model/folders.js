@@ -102,6 +102,26 @@ async function getDrive(userId) {
     console.log(drive)
     return drive
 }
+async function setFolderStar(folderId) {
+
+    let current = await prisma.folder.findUnique({
+        where: {
+            id: folderId
+        }
+    })
+    let newStar = !current.starred
+    let update = await prisma.folder.update({
+        where: {
+            id: folderId
+        },
+        data: {
+            starred: newStar
+        }
+
+
+    })
+    return update
+}
 module.exports = {
     newFolder,
     getFolder,
@@ -109,5 +129,6 @@ module.exports = {
     shareFolder,
     moveFolder,
     deleteFolder,
-    getDrive
+    getDrive,
+    setFolderStar
 }

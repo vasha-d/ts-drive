@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Folder from './Folder';
 import File from './File';
-
+import DriveContext from './DriveContext'
 function childrenList (childrenFolders, files) {
     childrenFolders = childrenFolders.map(folder => {
         let newFolder = Object.assign({type: 'folder'}, folder)
@@ -16,9 +16,10 @@ function childrenList (childrenFolders, files) {
     return toReturn
 }
 
-const Children = ({childrenFolders, files, onClickFile}) => {
+const Children = () => {
 
-
+    let {currentFolder} = useContext(DriveContext);
+    let {childrenFolders, files} = currentFolder
     let childrenElements = childrenList(childrenFolders, files)
         .map(child => {
             if (child.type == 'folder') {
@@ -31,7 +32,6 @@ const Children = ({childrenFolders, files, onClickFile}) => {
                 return <File 
                 key={`file-${child.id}`} 
                 fileObj={child}
-                onClickFile={onClickFile}
                 ></File>
             }
         })

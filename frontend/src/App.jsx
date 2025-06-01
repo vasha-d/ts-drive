@@ -8,21 +8,23 @@ import Drive from './components/drive/Drive'
 function App() {
   const [count, setCount] = useState(0)
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Navigate to="/drive" replace/>}></Route>
-        <Route path='/drive' element={<Drive></Drive>}></Route>
-        <Route path='/auth' element={<Authentication></Authentication>}>
-            <Route path='sign-in' 
-              element={<SignIn></SignIn>}>
-            </Route>
-            <Route path='create-account' 
-              element={<CreateAccount></CreateAccount>}>
-            </Route>
-        </Route>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Navigate to="/drive" replace/>}></Route>
+          <Route path='/drive' element={<Drive></Drive>}></Route>
+          <Route path='/auth' element={<Authentication></Authentication>}>
+              <Route path='sign-in' 
+                element={<SignIn></SignIn>}>
+              </Route>
+              <Route path='create-account' 
+                element={<CreateAccount></CreateAccount>}>
+              </Route>
+          </Route>
 
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </>
   )
 }
 

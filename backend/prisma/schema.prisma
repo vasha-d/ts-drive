@@ -24,6 +24,7 @@ model User {
   files File[] @relation("fileOwnedByUser")
   shareFilesRecieved File[]
   shareFolderRecieved Folder[] 
+  totalStored Int @default(0)
 }
 
 model Folder {
@@ -38,6 +39,7 @@ model Folder {
   drive Boolean @default(false)
   sharedWithUsers User[]
   createdAt DateTime @default(now())
+  starred Boolean @default(false)
 }
 
 model File {
@@ -52,4 +54,5 @@ model File {
   link String
   sharedWithUsers User[]
   createdAt DateTime @default(now())
+  starred Boolean @default(false)
 }

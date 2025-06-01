@@ -8,7 +8,6 @@ async function postNewUser(req, res) {
     res.json(newUser)
 }
 
-
 module.exports = {
     postNewUser
 }
