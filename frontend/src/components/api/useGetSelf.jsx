@@ -9,7 +9,6 @@ export default function useGetSelf() {
     let [error, setError] = useState('')
     let [loading, setLoading] = useState(true)
 
-    console.log(user);
     useEffect(() => {
         async function getSelf(params) {
             

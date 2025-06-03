@@ -1,8 +1,18 @@
 
 
 .folder {
-    border: 1px solid rgb(37, 62, 161);
-    height: 200px;
     width: 200px;
     cursor: pointer;
+    display: flex;
+    gap: 2vh;
+    align-items: center;
+    background-color: rgb(195, 211, 247);
+    padding-block: 1vh 0.4vh;   
+    padding-inline: 2vh 0vh;
+    border-radius: 2vh;
+    justify-content: center;
+}
+
+.folderIcon img {
+    height: 8vh;
 }

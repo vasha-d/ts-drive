@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import useGetSelf from '../../api/useGetSelf'
-import PathBar from './PathBar'
 import styles from '../../../css/drive.module.css'
 
 function Navbar() {
@@ -11,10 +10,9 @@ function Navbar() {
     return (
         <div className={styles.navbar}>
             <h1>Ovur.drive</h1>
-            <h2>Search Bar</h2>
-            <div>
+            <h2>
                 {user.username}
-            </div>
+            </h2>
         </div>
     ) 
 }

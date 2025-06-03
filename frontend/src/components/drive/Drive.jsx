@@ -7,7 +7,7 @@ import styles from '../../css/drive.module.css'
 import DriveContext from './DriveContext';
 import Navbar from './navbar/Navbar'
 import Sidebar from './sidebar/Sidebar';
-import PathBar from './navbar/PathBar';
+import ContentBar from './navbar/ContentBar';
 const Drive = () => {
 /*
 at all times keep all parentid and  names, and childrens ids and names in state, render the rest
@@ -45,14 +45,11 @@ children = axios.get(api/users/drive/parentid)
                     <div className={styles.bodyWrapper}>
                         <Sidebar></Sidebar>
                         <div className={styles.contentsWrapper}>
-                            <PathBar></PathBar>
-                            <div className={styles.childrenContainer}>
-                                <Children
-                                    childrenFolders={folder.childrenFolders}
-                                    files={folder.files}
-                                ></Children>
-                            
-                            </div>
+                            <ContentBar></ContentBar>
+                            <Children
+                                childrenFolders={folder.childrenFolders}
+                                files={folder.files}>
+                            </Children>
                         </div>
                     </div>
 

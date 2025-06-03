@@ -2,22 +2,24 @@ import React, { useState, useRef } from 'react'
 import axios from 'axios'
 
 
-function PatchButton({buttonText, onSubmit, defaultValue=''}) {
+function PatchButton({buttonText, onSubmit, defaultValue='', imgSrc=null}) {
     const [visible, setVisible] = useState(false)
     const [fieldValue, setFieldValue] = useState(defaultValue)
 
     function clickOnButton(e) {
-        if (e.target !== e.currentTarget) return;
+        e.stopPropagation()
         setVisible(true)
     }
     function handleChangeForm(e) { 
         setFieldValue(e.target.value)
     }
     function handleSubmitForm(e) {
+        e.stopPropagation()
         setVisible(false)
         onSubmit(fieldValue)
     }
     function handleCancelForm(e) {
+        e.stopPropagation()
         setFieldValue(defaultValue)
         setVisible(false)
     }
@@ -35,7 +37,10 @@ function PatchButton({buttonText, onSubmit, defaultValue=''}) {
     
     return (
         <>
-        <button onClick={clickOnButton}>{buttonText}</button>
+        <button onClick={clickOnButton}>
+            <img src={imgSrc} alt="" />
+            {buttonText}
+        </button>
         {form}
         </>
     )

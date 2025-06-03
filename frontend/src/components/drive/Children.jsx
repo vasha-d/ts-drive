@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import Folder from './Folder';
 import File from './File';
 import DriveContext from './DriveContext'
+import styles from '../../css/children.module.css'
 function childrenList (childrenFolders, files) {
     childrenFolders = childrenFolders.map(folder => {
         let newFolder = Object.assign({type: 'folder'}, folder)
@@ -37,7 +38,7 @@ const Children = () => {
         })
 
     return (
-        <div>
+        <div className={styles.childrenGrid}>
             {childrenElements}
         </div>
     );

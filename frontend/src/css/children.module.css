@@ -1,0 +1,62 @@
+:global(#root) {
+    --dark-font: rgb(49, 49, 65);
+}
+.childrenGrid {
+    display: grid;
+    grid-template-columns: repeat(2, min-content);
+    gap: 28px 32px;
+    color: var(--dark-font);
+}
+.openControls {
+    position: relative;
+    display: flex;
+    background-color: rgba(18, 55, 165, 0.62);
+    border-radius: 4vh;
+    align-self: flex-end;
+    margin-left: auto;
+    margin-right: 1vh;
+    margin-bottom: 0.3vh;
+}
+
+.openControls img {
+    height: 2.5vh;
+    padding: 1vh;
+    border-radius: 2vh;
+    color: rgb(93, 66, 66);
+}
+
+.controls {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 60%;
+    left: 45%;
+    box-sizing: border-box;
+    background-color: rgb(243, 245, 247);
+    border-radius: 2vh;
+    border: 0.5px solid gray;
+    overflow: hidden;
+}
+
+.controls button {
+    width: 22vh;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    background-color: inherit;
+    color: inherit;
+    border: 0;
+    border-bottom: 0.5px solid gray;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--dark-font);
+    font-weight: 600;
+    padding: 6px 9px;
+}   
+
+.controls button > img {
+    background-color: inherit;
+    height: 3vh;
+    padding: 0;
+}
