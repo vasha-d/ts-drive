@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useRef} from 'react'
 import DriveContext from '../DriveContext'
-import NewFolderButton from '../NewFolderButton';
-import NewFileButton from '../NewFileButton';
+import NewFolderButton from './NewFolderButton';
+import NewFileButton from './NewFileButton';
 import mainStyles from '../../../css/drive.module.css'
 import pbStyles from '../../../css/contentbar.module.css'
 import back from '../../../assets/back.svg'
@@ -11,9 +11,9 @@ import chevronRight from '../../../assets/chevron-right.svg'
 let styles = Object.assign({}, mainStyles, pbStyles)    
 
 function elemSizes(multipliers) {
-    let fontSize = 3
-    let imgHeight = 4
-    let n = 8
+    let fontSize = 2.8
+    let imgHeight = 2.5
+    let n = 7
     for (const m of multipliers) {
         fontSize = Math.floor(fontSize*m*n)/10
         imgHeight = Math.floor(imgHeight*m*n)/10
@@ -64,6 +64,7 @@ function ContentBar() {
                 setSizeMultipliers(m => {
                     let copy = m
                     copy.splice(-1)
+                    console.log(copy);
                     return copy
                 })
                 console.log(sizeMultipliers);
@@ -105,11 +106,13 @@ function ContentBar() {
             <div className= {styles.backButton}onClick={clickBackButton}>
                 <img src={back} alt="" />
             </div>
-            <PathBar ref={pbRef}
-                pathComp={pathComp}
-                imgHeight={imgHeight}    
-                fontSize={fontSize}
-            ></PathBar>
+            <div className={styles.pbWrapper}>
+                <PathBar ref={pbRef}
+                    pathComp={pathComp}
+                    imgHeight={imgHeight}
+                    fontSize={fontSize}
+                ></PathBar>
+            </div>
             <NewFolderButton
                 parentId = {id}
             ></NewFolderButton>

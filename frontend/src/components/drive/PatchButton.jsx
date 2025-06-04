@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import axios from 'axios'
 
 
-function PatchButton({buttonText, onSubmit, defaultValue='', imgSrc=null}) {
+function PatchButton({buttonText, onSubmit, defaultValue='', imgSrc=null, buttonClass=''}) {
     const [visible, setVisible] = useState(false)
     const [fieldValue, setFieldValue] = useState(defaultValue)
 
@@ -37,7 +37,7 @@ function PatchButton({buttonText, onSubmit, defaultValue='', imgSrc=null}) {
     
     return (
         <>
-        <button onClick={clickOnButton}>
+        <button className={buttonClass} onClick={clickOnButton}>
             <img src={imgSrc} alt="" />
             {buttonText}
         </button>
@@ -48,7 +48,7 @@ function PatchButton({buttonText, onSubmit, defaultValue='', imgSrc=null}) {
 
 
 
-export function FilePatchButton({buttonText, onSubmit, defaultValue}) {
+export function FilePatchButton({buttonText, buttonClass = '', onSubmit, defaultValue}) {
 
     
     const [visible, setVisible] = useState(false)
@@ -85,7 +85,7 @@ export function FilePatchButton({buttonText, onSubmit, defaultValue}) {
     
     return (
         <>
-        <button onClick={clickOnButton}>{buttonText}</button>
+        <button className={buttonClass} onClick={clickOnButton}>{buttonText}</button>
         {form}
         </>
     )

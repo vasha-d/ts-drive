@@ -1,8 +1,10 @@
 import React, { useContext,} from 'react'
-import { newFolder } from '../api/folder'
-import DriveContext from './DriveContext'
-import PatchButton from './PatchButton'
+import { newFolder } from '../../api/folder'
+import DriveContext from '../DriveContext'
+import PatchButton from '../PatchButton'
 import { useState } from 'react'
+import pbStyles from '../../../css/contentbar.module.css'
+
 function NewFolderButton({parentId}) {
     let {setRefresh} = useContext(DriveContext)
 
@@ -11,15 +13,15 @@ function NewFolderButton({parentId}) {
     }
 
     return (
-    <div>
-        
 
+    
         <PatchButton
             buttonText={'New Folder'}
             onSubmit={submitForm}
             defaultValue='New Folder'
+            buttonClass = {pbStyles.newFolderButton}
         ></PatchButton>
-    </div>
+    
   )
 }
 

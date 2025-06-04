@@ -1,5 +1,17 @@
 
 
+@keyframes shine {
+    0% {
+        left: -20%;
+    }
+
+    80% {
+        left: 100%;
+    }
+    100% {
+        left: 120%;
+    }
+}
 
 .contentbar {
     display: flex;
@@ -7,19 +19,41 @@
     margin-top: 3vh;
     align-items: center;
     overflow: hidden;
+    --tr-time: 0.15s;
+}
+
+.pbWrapper {
+    width: 65%;
+    position: relative;
+    overflow: hidden;
 }
 
 
 .pathbar {
     display: flex;
-    border-block: 1px solid black;
-    background-color: rgb(166, 206, 243);
+    background-color: var(--light-blue);
     letter-spacing: -0.1px;
-    padding: 0 10px;
-    width: 60%;
+    padding: 0 10px 0 24px;
     align-items: center;
     overflow: hidden;
+    border: black 1px solid;
+    border-radius: 5vh;
+
 }
+.pathbar::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    background-color: rgba(255, 255, 255, 0.291);
+    transform: rotateZ(60deg);
+    height: 35vh;
+    filter: blur(10px);
+    animation: shine 8s infinite linear;
+    width: 6vh;
+    pointer-events: none;
+}
+
+
 .pathbarChild {
     display: flex;
     height: 6vh;
@@ -29,14 +63,64 @@
     flex-shrink: 1.3;
     text-wrap: nowrap;
     min-width: 0;
+    
+}
+.pathbarPath:hover {
+    position: relative;
+    cursor: pointer;
+    background-color: var(--mid-blue);
+    border: 2px solid var(--deep-blue);
+    color: var(--white-blue);
+    scale: 1.03;
 }
 
-.pathbarChild > img {
-    height: 80%;
-}
 .pathbarPath { 
     font-size: 3vh;
+    transition: color 0.15s linear,
+                background-color 0.15s linear,
+                border-color 0.15s linear,
+                scale 0.15s linear;
+    padding: 4px 8px;
+    background-color: var(--light-blue);
+    box-sizing: border-box;
+    border: 2px solid  var(--light-blue);
+    border-radius: 1.6vh;
+    max-width: 20ch;
+    text-overflow: ellipsis;
 }
+
+
+
+.newFileButton, .newFolderButton {
+    background-color: var(--white-blue);
+    color: var(--black-blue);
+    
+    border: 2px solid var(--mid-blue);
+    width: 16vh;
+    font-size: 16px;
+    transition: background-color var(--tr-time) linear,
+                color var(--tr-time) linear,
+                scale var(--tr-time) linear,
+                border var(--tr-time) linear
+    ;
+}
+
+.newFileButton:hover, .newFolderButton:hover {
+    background-color: var(--deep-blue);
+    border: 2px solid  var(--white-blue);
+    scale: 1.1;
+    color: rgb(226, 244, 249);
+}
+
+.newFileButton {
+    margin-right: 16px;
+}   
+
+.newFolderButton {
+    margin-left: auto;
+    margin-right: 16px;
+}
+
 
 .backButton {
     margin-right: 3vh;
@@ -45,4 +129,13 @@
 
 .backButton img{
     height: inherit;
+    transition: scale 0.01s ease-in-out;
+}
+.backButton img:active {
+    scale: 1.03;
+}
+
+.backButton:hover {
+    cursor: pointer;
+    scale: 1.03;
 }

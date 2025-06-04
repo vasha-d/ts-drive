@@ -1,5 +1,13 @@
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  --white-font: rgb(237, 240, 243);
+  --white-blue: rgb(231, 241, 251);
+  --light-blue: rgb(166, 206, 243);
+  --mid-blue:  rgb(80, 133, 202);
+  --deep-blue: rgb(33, 77, 118);
+  --black-blue: rgb(21, 46, 77);
+
 }
 
 html, body {
