@@ -88,7 +88,6 @@ function ContentBar() {
     useEffect(() => {
         let ref = pbRef.current
         if (!ref) return;
-        console.log(ref);
         let approximatedContentWidth = ref.clientWidth 
         if (ref.scrollWidth > approximatedContentWidth) {
             console.log('adding multiplier');
@@ -99,8 +98,6 @@ function ContentBar() {
         }
     }, [pathComp]) 
     let {imgHeight, fontSize} = elemSizes(sizeMultipliers)
-    console.log(imgHeight, fontSize);
-    console.log(sizeMultipliers);
     return (
         <div className={styles.contentbar}>
             <div className= {styles.backButton}onClick={clickBackButton}>

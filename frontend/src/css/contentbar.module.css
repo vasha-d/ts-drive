@@ -15,8 +15,8 @@
 
 .contentbar {
     display: flex;
-    margin-bottom: 3vh;
-    margin-top: 3vh;
+    margin-bottom: 4px;
+    margin-top: 12px;
     align-items: center;
     overflow: hidden;
     --tr-time: 0.15s;

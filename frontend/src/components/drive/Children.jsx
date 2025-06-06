@@ -21,25 +21,38 @@ const Children = () => {
 
     let {currentFolder} = useContext(DriveContext);
     let {childrenFolders, files} = currentFolder
-    let childrenElements = childrenList(childrenFolders, files)
-        .map(child => {
-            if (child.type == 'folder') {
-                return <Folder 
-                key={`folder-${child.id}`} 
-                folderObj={child}
-                ></Folder>
-            }
-            if (child.type == 'file') {
-                return <File 
-                key={`file-${child.id}`} 
-                fileObj={child}
-                ></File>
-            }
-        })
 
+    let folderElements = childrenFolders.map(folder => {
+        return <Folder 
+           key={`folder-${folder.id}`} 
+           folderObj={folder}
+        >
+
+        </Folder>
+    })
+    let fileElements = files.map(file => {
+        return <File 
+            key={`file-${file.id}`} 
+            fileObj={file}
+        >
+
+        </File>
+    })
     return (
-        <div className={styles.childrenGrid}>
-            {childrenElements}
+        <div className={styles.childrenContainer}>
+            <div className={styles.foldersSection}>
+                <h2>Folders</h2>
+                <div className={styles.foldersGrid}>
+                    {folderElements}
+                </div>
+            </div>
+            <div className={styles.filesSection}>
+                <h2>Files</h2>
+                <div className={styles.filesGrid}>
+                    {fileElements}   
+                </div>
+            </div>
+
         </div>
     );
 }

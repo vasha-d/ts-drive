@@ -1,8 +1,8 @@
 :global(#root) {
-    --navbar-height: 14vh;
+    --navbar-height: 10vh;
     --sidebar-width: 23vh;
     --pathbar-height: 13vh;
-    --sidebar-height: 86vh;
+    --sidebar-height: calc(100vh - var(--navbar-height));
 
 }
 .bodyWrapper {
@@ -67,7 +67,7 @@ button {
 .contentsWrapper {
     display: inline-block;
     flex-grow: 1;
-    margin-inline: 10vh 15vh;
+    padding-inline: 10vh 15vh;
     overflow: hidden;
 }
 

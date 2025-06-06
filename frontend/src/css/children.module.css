@@ -1,21 +1,117 @@
 :global(#root) {
     --dark-font: rgb(49, 49, 65);
 }
+
+@keyframes shake {
+    0% {
+    }
+
+    20% {
+        transform: rotateZ(-10deg);
+    }
+    60% {
+        transform: rotateZ(0);
+    }
+    80% {
+        transform: rotateZ(10deg);
+    }
+
+    100% {
+        transition: rotateZ(0);
+    }
+}
+
+
 .childrenGrid {
     display: grid;
-    grid-template-columns: repeat(2, min-content);
-    gap: 28px 32px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px 32px;
     color: var(--dark-font);
+    --child-width: 200px;
+    position: relative;
 }
+
+.childrenContainer {
+
+}
+
+.childrenContainer h2 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    width: 100%;
+    border-bottom: 2px solid var(--black-blue);
+    padding-bottom: 6px;
+}
+.foldersGrid, .filesGrid {
+    composes: childrenGrid;
+}
+.child {
+    display: grid;
+    grid-template-columns: 8vh 1fr min-content;
+    cursor: pointer;
+    align-items: center;
+    background-color: var(--deep-blue);
+    border-radius: 2vh;
+    color: var(--white-blue);
+    box-sizing: border-box;
+    font-size: 1rem;
+    font-weight: bold;
+    gap: 8px;
+    height: 11vh;
+    padding: 1vh 1vh 1vh 2vh;
+    box-shadow: 0 5px 16px 6px rgba(65, 76, 101, 0.397);
+    border: 1px solid var(--black-blue);
+    transition: scale 0.08s linear,
+                box-shadow 0.08s linear,
+                background-color 0.08s linear;
+}
+
+
+.child:hover {
+    scale: 1.03;
+    box-shadow: 0 5px 16px 4px rgba(61, 117, 228, 0.503);
+    border: 1px solid var(--white-blue);
+    background-color: var(--black-blue);
+}
+
+.folder {
+    height: 10vh;
+    composes: child;
+}
+.file {
+    height: 11vh;
+    composes: child;
+}   
+
+.folderIcon img {
+    height: 6vh;
+}
+.fileIcon {
+    height: 6vh;
+}
+
+.fileIcon > img {
+    height: inherit;
+}
+
+.openControlsWrapper {
+    position: relative;
+    align-self: end;
+    display: flex;
+    align-items: end;
+}
+
 .openControls {
     position: relative;
     display: flex;
-    background-color: rgba(18, 55, 165, 0.62);
+    background-color: var(--mid-blue);
     border-radius: 4vh;
-    align-self: flex-end;
-    margin-left: auto;
-    margin-right: 1vh;
-    margin-bottom: 0.3vh;
+}
+.wrenchShake {
+    animation: shake 0.2s ease-in-out;
+}
+.wrench {
+    position: relative;
 }
 
 .openControls img {
@@ -59,4 +155,8 @@
     background-color: inherit;
     height: 3vh;
     padding: 0;
+}
+
+.zprio {
+    z-index: 9;
 }

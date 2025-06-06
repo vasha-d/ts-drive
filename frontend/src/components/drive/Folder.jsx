@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import folderStyles from '../../css/folder.module.css'
-import { useContext } from 'react';
+import folderStyles from '../../css/child.module.css'
+import { useContext, useRef } from 'react';
 import DriveContext from './DriveContext';
 import PatchButton from './PatchButton';
 import { renameFolder, shareFolder, deleteFolder, starFolder } from '../api/folder';
@@ -17,12 +17,22 @@ import moveIcon from '../../assets/move.svg'
 let styles = Object.assign({}, childrenStyles, folderStyles)
 
 
+function isTargetControls (e, current) {
+    let children = current.children[0]
+    let nested = children.children[0]
+    let all = [children, nested]
+    
+    return all.includes(e.target)
+}
+
 const Folder = ({folderObj}) => {
     let {name, id} = folderObj
     let {setCurrentFolderId, setRefresh} = useContext(DriveContext)
     let [controlsOpen, setControlsOpen] = useState(false)
+    let wrenchRef = useRef()
+    let controlsRef = useRef()
     function handleClick(e) {
-        if (e.target !== e.currentTarget) return;
+        if (isTargetControls(e, controlsRef.current)) {return}
         setCurrentFolderId(id)
     }
     function submitRenameForm(newName) {
@@ -45,19 +55,27 @@ const Folder = ({folderObj}) => {
         setControlsOpen(false)
     }
     function clickOpenControls(e) {
-        e.stopPropagation()
-        setControlsOpen(o => !o)
-    }
+        let button = wrenchRef.current
+        button.classList.remove(styles.wrenchShake)
+        void button.clientWidth
 
+        button.classList.add(styles.wrenchShake)
+        setControlsOpen(o => !o)
+
+    }
     useEffect(() => {
         function closeControls (e) {
+            if (isTargetControls(e, controlsRef.current)) {return}
             setControlsOpen(false)
-        }
+        }   
         if (controlsOpen) {
-            console.log('running');
+            controlsRef.current.parentNode.classList.add(styles.zprio)
             document.addEventListener('click', closeControls)
         } else {
+            controlsRef.current.parentNode.classList.remove(styles.zprio)
+
             document.removeEventListener('click', closeControls)
+
         }
 
         return () => {
@@ -65,7 +83,6 @@ const Folder = ({folderObj}) => {
         }
 
     }, [controlsOpen])
-
     let controls = !controlsOpen ? null : 
             <div className={styles.controls}>
                 <PatchButton 
@@ -89,15 +106,17 @@ const Folder = ({folderObj}) => {
                     <img src={moveIcon} alt="" />
                     Move Folder</button>
             </div>
-
     return (
         <div className={styles.folder}onClick={handleClick}>
             <div className={styles.folderIcon}>
                 <img src={folderIcon} alt="" />
             </div>
-            <h3>{name}</h3>
-            <div onClick={clickOpenControls} className={styles.openControls}>
-                <img src={wrenchIcon} alt="" />
+            <div>{name}</div>
+
+            <div ref={controlsRef} className={styles.openControlsWrapper}>
+                <div onClick={clickOpenControls} className={styles.openControls}>
+                    <img ref={wrenchRef} src={wrenchIcon} className={styles.wrench} alt="" />
+                </div>
                 {controls}
             </div>
         </div>
