@@ -1,0 +1,30 @@
+.sidebar {
+    position: sticky;
+    display: inline-flex;
+    top: var(--navbar-height);
+    flex-direction: column;
+    width: var(--sidebar-width);
+    box-sizing: border-box;
+    vertical-align: top;
+    height: var(--sidebar-height);
+    background-color: rgb(88, 99, 114);
+    gap: 30px;
+    align-items: center;
+    padding-top: 5vh;
+    grid-area: sidebar;
+}
+.sidebarChild {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1vh;
+    font-weight: bold;
+    color: rgb(237, 240, 243);
+
+}
+.sidebarChild img {
+    color: rgb(88, 99, 114);
+    fill: rgb(212, 216, 221);
+    stroke: white;
+    height: 4vh;
+}

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import folderStyles from '../../css/child.module.css'
 import { useContext, useRef } from 'react';
 import DriveContext from './DriveContext';
 import PatchButton from './PatchButton';
@@ -14,7 +13,7 @@ import starIcon from '../../assets/star.svg'
 import moveIcon from '../../assets/move.svg'
 
 
-let styles = Object.assign({}, childrenStyles, folderStyles)
+let styles = Object.assign({}, childrenStyles)
 
 
 function isTargetControls (e, current) {

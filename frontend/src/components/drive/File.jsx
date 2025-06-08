@@ -1,5 +1,4 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
-import mainStyles from '../../css/child.module.css'
 import childrenStyles from '../../css/children.module.css'
 import {deleteFile, renameFile, shareFile, moveFile, downloadFile, starFile} from '../api/file'
 import PatchButton from './PatchButton';
@@ -7,7 +6,7 @@ import DriveContext from './DriveContext';
 import FileDetails from './FileDetails';
 import wrenchIcon from '../../assets/wrench.svg'
 import fileIcon from '../../assets/file.svg'
-let styles = Object.assign({}, mainStyles, childrenStyles)
+let styles = Object.assign({}, childrenStyles)
 
 
 function isTargetControls (e, current) {

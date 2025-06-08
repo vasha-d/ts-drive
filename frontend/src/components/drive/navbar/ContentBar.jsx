@@ -11,7 +11,7 @@ import chevronRight from '../../../assets/chevron-right.svg'
 let styles = Object.assign({}, mainStyles, pbStyles)    
 
 function elemSizes(multipliers) {
-    let fontSize = 2.8
+    let fontSize = 2.8  
     let imgHeight = 2.5
     let n = 7
     for (const m of multipliers) {
@@ -110,12 +110,14 @@ function ContentBar() {
                     fontSize={fontSize}
                 ></PathBar>
             </div>
-            <NewFolderButton
-                parentId = {id}
-            ></NewFolderButton>
-            <NewFileButton
-                parentId = {id}
-            ></NewFileButton>
+            <div className={styles.newButtonsContainer}>
+                <NewFolderButton
+                    parentId = {id}
+                ></NewFolderButton>
+                <NewFileButton
+                    parentId = {id}
+                ></NewFileButton>
+            </div>
         </div>
     )
 }

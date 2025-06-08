@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../../../css/drive.module.css'
+import styles from '../../../css/sidebar.module.css'
 import recent from '../../../assets/recent.svg'
 import share from '../../../assets/share.svg'
 import star from '../../../assets/star.svg'

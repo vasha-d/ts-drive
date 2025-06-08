@@ -41,17 +41,17 @@ children = axios.get(api/users/drive/parentid)
         toReturn =  
             <DriveContext.Provider value={
                 { setRefresh, setCurrentFolderId, currentFolder: folder}}>  
-                    <Navbar></Navbar>
-                    <div className={styles.bodyWrapper}>
+                <div className={styles.drive}>
+                        <Navbar></Navbar>
+                        <ContentBar></ContentBar>   
                         <Sidebar></Sidebar>
                         <div className={styles.contentsWrapper}>
-                            <ContentBar></ContentBar>
                             <Children
                                 childrenFolders={folder.childrenFolders}
                                 files={folder.files}>
                             </Children>
                         </div>
-                    </div>
+                </div>
 
             </DriveContext.Provider>
     }

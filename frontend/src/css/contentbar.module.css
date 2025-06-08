@@ -1,31 +1,29 @@
 
 
-@keyframes shine {
-    0% {
-        left: -20%;
-    }
-
-    80% {
-        left: 100%;
-    }
-    100% {
-        left: 120%;
-    }
+.contentbar { 
+    position: sticky;
+    top: var(--navbar-height);
+    grid-area: contentbar;
 }
 
 .contentbar {
-    display: flex;
-    margin-bottom: 4px;
-    margin-top: 12px;
+    display: grid;  
+    grid-template-columns: var(--contents-padding-left) minmax(0, 1fr) max-content;
     align-items: center;
+    grid-template-rows: var(--contentbar-height);
     overflow: hidden;
-    --tr-time: 0.15s;
+    z-index: 99;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--black-blue);
+    background-color: white;
+    padding-right: var(--contents-padding-right);
+    box-shadow: 2vh 1vh 10px 2px rgba(16, 15, 80, 0.377);
 }
 
 .pbWrapper {
-    width: 65%;
     position: relative;
     overflow: hidden;
+    min-width: 0;
 }
 
 
@@ -38,7 +36,7 @@
     overflow: hidden;
     border: black 1px solid;
     border-radius: 5vh;
-
+    height: 6vh;
 }
 .pathbar::before {
     content: '';
@@ -89,6 +87,12 @@
     text-overflow: ellipsis;
 }
 
+.newButtonsContainer {
+    display: flex;
+    gap: 24px;
+    padding-left: 16px;
+}
+
 
 
 .newFileButton, .newFolderButton {
@@ -112,19 +116,13 @@
     color: rgb(226, 244, 249);
 }
 
-.newFileButton {
-    margin-right: 16px;
-}   
-
-.newFolderButton {
-    margin-left: auto;
-    margin-right: 16px;
-}
 
 
 .backButton {
-    margin-right: 3vh;
-    height: 52px;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .backButton img{
@@ -138,4 +136,135 @@
 .backButton:hover {
     cursor: pointer;
     scale: 1.03;
+}
+
+
+.cover {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    backdrop-filter: blur(10px);
+    background-color: rgba(26, 37, 67, 0.229);
+}
+.unclick {
+    composes: cover;
+    z-index: 10;
+    opacity: 0.7;
+}
+
+.newForm {
+    border: 2px solid var(--deep-blue);
+    background-color: var(--white-blue);
+    padding: 20px;
+    border-radius: 3vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    height: 36vh;
+    width: 60vh;
+    z-index: 11;
+    display: grid;
+    justify-content: center;
+    grid-template-rows: min-content 1fr  min-content;
+    animation: fadeIn 0.5s;
+    box-shadow: 0 40px 80px 10px rgba(255, 255, 255, 0.243);
+    gap: 20px;
+}
+
+.fileInputContainer {
+    border: 1px solid var(--black-blue);
+    border-style: dashed;
+    font-size: 1.2rem;  
+    position: relative;
+    color: var(--black-blue);
+    font-weight: bold;
+    width: 260px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4vh;
+
+}
+
+
+.fileInput {
+    position: absolute;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0;
+    height: 100%;
+
+}
+.textInput {
+    height: 4vh;
+    width: 320px;
+    font-size: 1.2rem;
+    margin-top: 4vh;
+}
+
+.newForm label {
+    text-align: center;
+}
+.newFormButtons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 260px;
+    justify-self: center;
+}
+.newFormButton {
+    padding: 12px;
+    font-size: 1rem;
+    background-color: var(--black-blue);
+}
+    
+.fadeOut {
+    animation: fadeOut 0.2s linear;
+    opacity: 0;
+}
+
+.freezeScroll {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+
+
+
+
+@keyframes shine {
+    0% {
+        left: -20%;
+    }
+
+    80% {
+        left: 100%;
+    }
+    100% {
+        left: 120%;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }

@@ -1,5 +1,5 @@
 ##To do:
-Add proper form elemennt for new file or nnew folder
+...Add proper form elemennt for new file or nnew folder
 
 Add move folder visuals
 
