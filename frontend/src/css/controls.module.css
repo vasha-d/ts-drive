@@ -1,0 +1,77 @@
+
+.openControls {
+    z-index: 1;
+}
+.controlsList {
+    composes: controlsList from './children.module.css';
+    z-index: 3;
+}
+.openControls {
+    height: 4vh;
+    width: 4vh;
+    align-self: flex-end;
+    padding: 0;
+    margin: 0;
+    background-color: var(--mid-blue);
+    padding: 3px;
+    border-radius: 4vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.openControls > img {
+    height: 80%;
+}
+.controlsList {
+    position: absolute;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: 140px;
+    width: max-content;
+    color: black;
+    top: 75%;
+    left: 88%;
+    border: 1px solid black;
+    border-radius: 16px;
+    overflow: hidden;
+    z-index: 2;
+    box-sizing: border-box;
+}
+.controlButton {
+    background-color: inherit;
+    border: 0;
+    border-bottom: 0.5px solid black;
+    border-radius: 0;
+    color: inherit;
+    background-color: var(--white-blue);
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+.buttonImg {
+    height: 3vh;
+}
+
+
+@keyframes shake {
+    0% {
+    }
+
+    20% {
+        transform: rotateZ(-10deg);
+    }
+    60% {
+        transform: rotateZ(0);
+    }
+    80% {
+        transform: rotateZ(10deg);
+    }
+
+    100% {
+        transition: rotateZ(0);
+    }
+}
+

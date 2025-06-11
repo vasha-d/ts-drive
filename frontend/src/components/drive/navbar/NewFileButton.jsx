@@ -3,7 +3,7 @@ import {newFile} from '../../api/file'
 import DriveContext from '../DriveContext'
 import {FilePatchButton} from '../PatchButton'
 import pbStyles from '../../../css/contentbar.module.css'
-import NewChildForm from './NewChildForm'
+import ModalForm from '../ModalForm'
 function NewFileButton({parentId}) {
 
     let {setRefresh} = useContext(DriveContext)
@@ -20,13 +20,14 @@ function NewFileButton({parentId}) {
     }
 
     let form = !formVisible ? null :
-        <NewChildForm
-            visible = {formVisible}
+        <ModalForm
             onCancel = {cancelForm}
             onSubmit = {submitForm}
+            formText={'Upload File'}
+            defaultValue={null}
             isFile={true}
         >
-        </NewChildForm> 
+        </ModalForm> 
     
     return (
        

@@ -1,39 +1,30 @@
 import React, { useState, useRef } from 'react'
-import axios from 'axios'
+import ModalForm from './ModalForm'
 
 
 function PatchButton({buttonText, onSubmit, defaultValue='', imgSrc=null, buttonClass=''}) {
     const [visible, setVisible] = useState(false)
-    const [fieldValue, setFieldValue] = useState(defaultValue)
-
     function clickOnButton(e) {
         e.stopPropagation()
         setVisible(true)
     }
-    function handleChangeForm(e) { 
-        setFieldValue(e.target.value)
-    }
-    function handleSubmitForm(e) {
-        e.stopPropagation()
+    function handleSubmitForm(val) {
         setVisible(false)
-        onSubmit(fieldValue)
+        onSubmit(val)
     }
-    function handleCancelForm(e) {
-        e.stopPropagation()
-        setFieldValue(defaultValue)
+    function handleCancelForm() {
         setVisible(false)
     }
-
     let form = !visible ? null :
-    <div onClick={clickOnButton}>
-        <label htmlFor="field"> </label>
-        <input type="text" name='field' id='field' 
-            value={fieldValue}
-            onChange={handleChangeForm}
-        />
-        <button onClick={handleCancelForm}>Cancel</button>
-        <button onClick={handleSubmitForm}>Submit</button>
-    </div>
+        <ModalForm
+            visible = {visible}
+            formText={'Create Folder'}
+            onCancel = {handleCancelForm}
+            onSubmit = {handleSubmitForm}
+            placeHolder={'Enter folder name...'}
+            defaultValue={''}           
+        >
+        </ModalForm> 
     
     return (
         <>
@@ -57,10 +48,10 @@ export function FilePatchButton({buttonText, buttonClass = '', onSubmit, default
         if (e.target !== e.currentTarget) return;
         setVisible(true)
     }
-    function handleSubmitForm(e) {
+    function handleSubmitForm() {
         onSubmit(fileRef.current)
     }
-    function handleCancelForm(e) {
+    function handleCancelForm() {
         fileRef.current = 0
         setVisible(false)
     }

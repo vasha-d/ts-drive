@@ -21,7 +21,7 @@ async function getFolder(req, res) {
 }
 async function folderPatchOrganizer(req, res) {
     let funcToUse = () => console.error('Invalid put request')
-    if (req.body.usernameToShareWith) {
+    if (req.body.usernameToShareWith) { 
         funcToUse = shareFolder
     } 
     else if (req.body.newParentId) {

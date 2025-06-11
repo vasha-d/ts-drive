@@ -1,4 +1,9 @@
 ##To do:
+
+refactor patchbutton/controls
+
+refactor pathbar in contentbar
+
 ...Add proper form elemennt for new file or nnew folder
 
 Add move folder visuals

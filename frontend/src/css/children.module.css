@@ -2,26 +2,9 @@
     --dark-font: rgb(49, 49, 65);
 }
 
-@keyframes shake {
-    0% {
-    }
-
-    20% {
-        transform: rotateZ(-10deg);
-    }
-    60% {
-        transform: rotateZ(0);
-    }
-    80% {
-        transform: rotateZ(10deg);
-    }
-
-    100% {
-        transition: rotateZ(0);
-    }
+.childrenContainer {
+    padding-bottom: 30vh;
 }
-
-
 .childrenGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -30,11 +13,6 @@
     --child-width: 200px;
     position: relative;
 }
-
-.childrenContainer {
-
-}
-
 .childrenContainer h2 {
     font-size: 1.4rem;
     margin-bottom: 10px;
@@ -45,34 +23,45 @@
 .foldersGrid, .filesGrid {
     composes: childrenGrid;
 }
+
+
 .child {
     display: grid;
     grid-template-columns: 8vh 1fr min-content;
+    --transition-time: 0.08s;
     cursor: pointer;
     align-items: center;
-    background-color: var(--deep-blue);
-    border-radius: 2vh;
     color: var(--white-blue);
     box-sizing: border-box;
     font-size: 1rem;
     font-weight: bold;
     gap: 8px;
-    height: 11vh;
+    height: 11vh;   
     padding: 1vh 1vh 1vh 2vh;
-    box-shadow: 0 5px 16px 6px rgba(65, 76, 101, 0.397);
+    transition: 
+                box-shadow var(--transition-time) linear,
+                background-color var(--transition-time) linear;
+    position: relative;
+    background-color: var(--deep-blue);
     border: 1px solid var(--black-blue);
-    transition: scale 0.08s linear,
-                box-shadow 0.08s linear,
-                background-color 0.08s linear;
-}
-
+    border-radius: 2vh;
+    box-shadow: 0 5px 16px 6px rgba(65, 76, 101, 0.397);
+    }
 
 .child:hover {
-    scale: 1.03;
+
     box-shadow: 0 5px 16px 4px rgba(61, 117, 228, 0.503);
     border: 1px solid var(--white-blue);
     background-color: var(--black-blue);
 }
+
+.childScaler {
+    transition: scale 0.08s linear;
+}
+.childScaler:hover {
+    scale: 1.03;
+}
+
 
 .folder {
     height: 14vh;
@@ -82,6 +71,7 @@
     height: 15vh;
     composes: child;
 }   
+
 
 .folderIcon img {
     height: 6vh;
@@ -94,69 +84,14 @@
     height: inherit;
 }
 
-.openControlsWrapper {
-    position: relative;
-    align-self: end;
-    display: flex;
-    align-items: end;
-}
-
-.openControls {
-    position: relative;
-    display: flex;
-    background-color: var(--mid-blue);
-    border-radius: 4vh;
-}
-.wrenchShake {
-    animation: shake 0.2s ease-in-out;
-}
-.wrench {
-    position: relative;
-}
-
-.openControls img {
-    height: 2.5vh;
-    padding: 1vh;
-    border-radius: 2vh;
-    color: rgb(93, 66, 66);
-}
-
-.controls {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    top: 60%;
-    left: 45%;
-    box-sizing: border-box;
-    background-color: rgb(243, 245, 247);
-    border-radius: 2vh;
-    border: 0.5px solid gray;
-    overflow: hidden;
-}
-
-.controls button {
-    width: 22vh;
-    border-radius: 0;
-    padding: 0;
-    margin: 0;
-    background-color: inherit;
-    color: inherit;
-    border: 0;
-    border-bottom: 0.5px solid gray;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--dark-font);
-    font-weight: 600;
-    padding: 6px 9px;
-}   
-
-.controls button > img {
-    background-color: inherit;
-    height: 3vh;
-    padding: 0;
-}
-
-.zprio {
+.controlsOpenPrio {
     z-index: 9;
+}
+.modalOpenPrio {
+    z-index: 900;
+}
+
+/* Applied when modal opens */
+.disableTransition {
+    transition: none;
 }

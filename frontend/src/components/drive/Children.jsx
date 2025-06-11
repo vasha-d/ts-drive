@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
-import Folder from './Folder';
-import File from './File';
+import Folder from './folder/Folder';
+import File from './file/File';
 import DriveContext from './DriveContext'
 import styles from '../../css/children.module.css'
 function childrenList (childrenFolders, files) {
