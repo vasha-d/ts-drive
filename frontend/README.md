@@ -1,16 +1,11 @@
 ##To do:
 
-refactor patchbutton/controls
 
-refactor pathbar in contentbar
 
 ...Add proper form elemennt for new file or nnew folder
 
 Add move folder visuals
 
-add pathbar navigation
-
-add patch button icons to file editing
 
 add side bar funcntions
 

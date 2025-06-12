@@ -15,10 +15,9 @@ export default function useGetSelf() {
             let res = await axios.get(apiUrl, {withCredentials: true})
             setUser(res.data)
         }
-
         getSelf()
     }, [])
-
+    
     return {user, error, loading}
 }
 

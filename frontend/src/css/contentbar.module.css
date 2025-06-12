@@ -138,3 +138,21 @@
     scale: 1.03;
 }
 
+.fadePath {
+    animation: fadeOut 0.2s linear forwards;
+    transform-origin: left;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+    100% {
+        transform: scaleX(0.8);
+
+        opacity: 0;
+        display: none;
+    }
+    
+}
