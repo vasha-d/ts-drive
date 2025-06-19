@@ -1,9 +1,10 @@
 import React, {useContext, useState} from 'react'
 import {newFile} from '../../api/file'
 import DriveContext from '../DriveContext'
-import {FilePatchButton} from '../PatchButton'
 import pbStyles from '../../../css/contentbar.module.css'
 import ModalForm from '../ModalForm'
+import fileIcon from '../../../assets/create-file.svg'
+
 function NewFileButton({parentId}) {
 
     let {setRefresh} = useContext(DriveContext)
@@ -14,6 +15,7 @@ function NewFileButton({parentId}) {
     }
     function submitForm (file) {
         newFile(file, parentId, setRefresh)
+        setFormVisible(false)
     }
     function cancelForm () {
         setFormVisible(false)
@@ -21,11 +23,12 @@ function NewFileButton({parentId}) {
 
     let form = !formVisible ? null :
         <ModalForm
+            headerImg={fileIcon}
             onCancel = {cancelForm}
             onSubmit = {submitForm}
             formText={'Upload File'}
             defaultValue={null}
-            isFile={true}
+            creatingFile={true}
         >
         </ModalForm> 
     

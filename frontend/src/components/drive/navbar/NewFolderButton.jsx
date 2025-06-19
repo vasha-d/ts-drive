@@ -4,16 +4,17 @@ import DriveContext from '../DriveContext'
 import { useState } from 'react'
 import pbStyles from '../../../css/contentbar.module.css'
 import ModalForm from '../ModalForm'
-
+import folderIcon from '../../../assets/create-folder.svg'
 function NewFolderButton({parentId}) {
     let {setRefresh} = useContext(DriveContext)
     let [formVisible, setFormVisible] = useState(false)
 
     function submitForm (folderName) {
         newFolder(folderName, parentId, setRefresh)
+        setFormVisible(false)
+        
     }
     function clickButton() {
-        console.log('running');
         setFormVisible(true)
     }
     function cancelForm () {
@@ -22,6 +23,7 @@ function NewFolderButton({parentId}) {
     
     let form = !formVisible ? null : 
             <ModalForm
+                headerImg={folderIcon}
                 formText={'Create Folder'}
                 onCancel = {cancelForm}
                 onSubmit = {submitForm}

@@ -31,9 +31,19 @@ async function signIntoUser(req, res) {
     res.cookie('token', token, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
-        sameSite: 'Lax'
+        sameSite: 'Lax',
     })
     res.json(user)
+}
+async function signOutOfUser(req, res) {
+    console.log('running');
+    res.clearCookie('token',{
+        sameSite: 'Lax',
+        path: '/'
+
+    })
+    res.sendStatus(200)
+    
 }
 async function authorizeMiddleware(req, res, next) {
     const token = req.cookies.token
@@ -59,5 +69,6 @@ async function getSelfUser(req, res) {
 module.exports = {
     signIntoUser,
     authorizeMiddleware,
-    getSelfUser
+    getSelfUser,
+    signOutOfUser
 }

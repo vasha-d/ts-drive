@@ -3,7 +3,7 @@
     position: fixed;
     width: 100vw;
     height: 100vh;
-    z-index: 999;
+    z-index: 9999;
     top: 0;
     left: 0;
     opacity: 1;
@@ -25,7 +25,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -70%);
-    height: 36vh;
+    height: 40vh;
     width: 60vh;
     z-index: 11;
     display: grid;
@@ -34,6 +34,13 @@
     animation: fadeIn 0.5s;
     box-shadow: 0 40px 80px 10px rgba(255, 255, 255, 0.243);
     gap: 20px;
+}
+
+.formHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
 }
 
 .fileInputContainer {
@@ -49,23 +56,24 @@
     align-items: center;
     justify-content: center;
     border-radius: 4vh;
-
+    margin-top: 20px;
 }
-
-
 .fileInput {
     position: absolute;
     cursor: pointer;
     width: 100%;
     opacity: 0;
     height: 100%;
-
 }
 .textInput {
     height: 4vh;
     width: 320px;
     font-size: 1.2rem;
     margin-top: 4vh;
+    border: 1.6px solid var(--deep-blue);
+    padding: 8px 12px;
+    border-radius: 12px;
+    color: var(--black-blue);
 }
 
 .newForm label {
@@ -79,16 +87,28 @@
     justify-self: center;
 }
 .newFormButton {
-    padding: 12px;
+    padding: 8px 12px 8px 8px;
     font-size: 1rem;
     background-color: var(--black-blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
-    
+
+.confirmImg {
+    height: 3vh;
+}
+.cancelImg {
+    height: 4vh;
+}
 .fadeOut {
     animation: fadeOut 0.2s linear;
     opacity: 0;
 }
-
+.headerImg {
+    height: 8vh;
+}
 .freezeScroll {
     position: fixed;
     top: 0;

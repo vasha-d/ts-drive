@@ -8,19 +8,9 @@ import Controls from '../controls/Controls';
 let styles = Object.assign({}, childrenStyles)
 
 
-function isTargetControls (e, current) {
-    let children = current.children[0]
-    let nested = children.children[0]
-    let all = [children, nested]
-    
-    return all.includes(e.target)
-}
-
-
 const File = ({fileObj}) => {
 
     const {setRefresh} = useContext(DriveContext)
-    const [controlsOpen, setControlsOpen] = useState(false)
     let fileRef = useRef()
 
     let {name, id, link} = fileObj
@@ -29,10 +19,6 @@ const File = ({fileObj}) => {
         deleteFile(fileObj.id, setRefresh)
     }
     function clickViewDetails() {
-
-    }
-    function clickDownloadFile () {
-        downloadFile(link, name)
 
     }
     function submitShareForm(usernameToShareWith) {
@@ -47,14 +33,19 @@ const File = ({fileObj}) => {
     function StarFile() {
         starFile(id, setRefresh)
     }
+    function clickDownloadFile() {
+        downloadFile(link, name)
+    }
     function controlsOpenPrio() {
-        fileRef.current.classList.toggle(styles.zprio)
+        fileRef.current.classList.toggle(styles.controlsOpenPrio)
     }
     function toggleScaler() {
         console.log('toggling scaler');
         fileRef.current.classList.toggle(styles.childScaler)
+        fileRef.current.classList.toggle(styles.modalOpenPrio)
+
     }
-    let onSubmits = [submitRenameForm, submitShareForm, DeleteFile, StarFile]
+    let onSubmits = [submitRenameForm, submitShareForm, DeleteFile, StarFile, clickDownloadFile]
 
 
     return (
@@ -62,7 +53,7 @@ const File = ({fileObj}) => {
             <div className={styles.fileIcon}>
                 <img src={fileIcon} alt="" />
             </div>
-            <div>{name}</div>
+            <div>{name + fileObj.extension}</div>
             <Controls
                 forFile={true}
                 onSubmits={onSubmits}

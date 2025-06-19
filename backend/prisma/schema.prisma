@@ -22,37 +22,59 @@ model User {
   Folders Folder[] @relation("ownedByUser")
   fileIds Int[]
   files File[] @relation("fileOwnedByUser")
-  shareFilesRecieved File[]
-  shareFolderRecieved Folder[] 
   totalStored Int @default(0)
+  sharedFolderId Int @unique
+  sharedFolder SharedFolder @relation("sharedWithMe", fields: [sharedFolderId], references: [id])
+  starredFolderId Int @unique
+  starredFolder StarredFolder @relation("starredOwner", fields: [starredFolderId], references: [id])
 }
+
 
 model Folder {
   id Int @id @default(autoincrement())
   name String
+  drive Boolean @default(false)
+  createdAt DateTime @default(now())
+  starred Boolean @default(false)
+  lastModified DateTime @default(now())
+  lastAccessed DateTime @default(now())
   ownerId Int
   owner User @relation("ownedByUser", fields: [ownerId], references: [id], onDelete: Cascade)
   parentId Int?
   parentFolder Folder? @relation("ChildFolder", fields: [parentId], references: [id], onDelete:  Cascade)
   childrenFolders Folder[] @relation("ChildFolder")
   files File[] @relation("fileParent")
-  drive Boolean @default(false)
-  sharedWithUsers User[]
-  createdAt DateTime @default(now())
-  starred Boolean @default(false)
+  sharedFolders SharedFolder[] 
+  starredParentId Int? 
+  starredParentFolder StarredFolder? @relation("starredParentOfFolder", fields: [starredParentId], references: [id])
 }
-
 model File {
   id Int @id @default(autoincrement())
   name String
+  size Int
+  extension String
+  link String
+  starred Boolean @default(false)
+  createdAt DateTime @default(now())
+  lastModified DateTime @default(now())
+  lastAccessed DateTime @default(now())
   ownerId Int
   owner User @relation("fileOwnedByUser", fields: [ownerId], references: [id], onDelete: Cascade)
   parentId Int
   parentFolder Folder @relation("fileParent", fields: [parentId], references: [id], onDelete: Cascade)
-  size Int
-  extension String
-  link String
-  sharedWithUsers User[]
-  createdAt DateTime @default(now())
-  starred Boolean @default(false)
+  sharedFolders SharedFolder[]
+  starredParentId Int? 
+  starredParentFolder StarredFolder? @relation("starredParentOfFile", fields: [starredParentId], references: [id])
+}
+model StarredFolder {
+  id Int @id @default(autoincrement())
+  owner User? @relation("starredOwner")
+  childrenFolders Folder[] @relation("starredParentOfFolder")
+  files File[] @relation("starredParentOfFile")
+}
+model SharedFolder {
+  id Int @id @default(autoincrement())
+  owner User? @relation("sharedWithMe")
+  childrenFolders Folder[]
+  files File[]
 }

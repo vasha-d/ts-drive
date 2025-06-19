@@ -11,13 +11,13 @@ const upload = multer({
 })
 router.post('/folders', foldersControllers.postFolder)
 router.get('/folders/drive', foldersControllers.getDrive)
+router.route('/folders/starred').get(foldersControllers.getStarredFolder)
+router.route('/folders/shared').get(foldersControllers.getSharedFolder)
 
 router.route('/folders/:id')
     .get(foldersControllers.getFolder)
     .patch(foldersControllers.folderPatchOrganizer)
     .delete(foldersControllers.deleteFolder)
-
-
 router.post('/files', upload.single('fileUpload'), filesControllers.postFile)
 router.route('/files/:id')
     .get(filesControllers.getFile)

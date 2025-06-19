@@ -8,18 +8,29 @@
     vertical-align: top;
     height: var(--sidebar-height);
     background-color: rgb(88, 99, 114);
+    background-color: var(--deep-blue);
     gap: 30px;
     align-items: center;
     padding-top: 5vh;
     grid-area: sidebar;
 }
 .sidebarChild {
-    display: flex;
+    display: grid;
+    grid-template-columns: 4vh 80px;
     align-items: center;
     justify-content: center;
-    gap: 1vh;
+    gap: 12px;
     font-weight: bold;
     color: rgb(237, 240, 243);
+    padding-left: 2vh;
+    transition: scale 0.01s linear;
+}
+.sidebarChild:hover {
+    scale: 1.05;
+    cursor: pointer;
+}
+.sidebarChild:active {
+    scale: 1.1;
 
 }
 .sidebarChild img {
@@ -27,4 +38,8 @@
     fill: rgb(212, 216, 221);
     stroke: white;
     height: 4vh;
+}
+.signOut {
+    margin-top: auto;
+    margin-bottom: 10vh;
 }

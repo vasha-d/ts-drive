@@ -1,26 +1,11 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import Folder from './folder/Folder';
 import File from './file/File';
 import DriveContext from './DriveContext'
 import styles from '../../css/children.module.css'
-function childrenList (childrenFolders, files) {
-    childrenFolders = childrenFolders.map(folder => {
-        let newFolder = Object.assign({type: 'folder'}, folder)
-        return newFolder
-    })
-    files = files.map(file => {
-        let newFile = Object.assign({type: 'file'}, file)
-        return newFile
-    })  
 
-    let toReturn = [...childrenFolders, ...files]
-    return toReturn
-}
 
-const Children = () => {
-
-    let {currentFolder} = useContext(DriveContext);
-    let {childrenFolders, files} = currentFolder
+const Children = ({childrenFolders, files}) => {
 
     let folderElements = childrenFolders.map(folder => {
         return <Folder 
@@ -38,21 +23,32 @@ const Children = () => {
 
         </File>
     })
+    const isDirectoryEmpty = !folderElements.length && !fileElements.length
+    const emptyMessage = !isDirectoryEmpty ? null :
+        <h2 className={styles.emptyMessage}>
+            This directory is currently empty...
+        </h2>
+
     return (
         <div className={styles.childrenContainer}>
             <div className={styles.foldersSection}>
-                <h2>Folders</h2>
+                {folderElements.length ?
+                    <h2>Folders</h2>
+                 : ''}
                 <div className={styles.foldersGrid}>
                     {folderElements}
                 </div>
             </div>
             <div className={styles.filesSection}>
-                <h2>Files</h2>
+                
+                {fileElements.length ?
+                    <h2>Files</h2>
+                 : ''}
                 <div className={styles.filesGrid}>
                     {fileElements}   
                 </div>
             </div>
-
+            {emptyMessage}
         </div>
     );
 }

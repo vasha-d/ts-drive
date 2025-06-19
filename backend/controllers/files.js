@@ -11,6 +11,7 @@ async function  postFile(req, res) {
 }
 async function filePatchOrganizer(req, res) {
     let funcToUse = () => console.error('Invalid put request')
+    console.log(req.body);
     if (req.body.userToShareWithName) {
         funcToUse = shareFile
     } 
@@ -19,8 +20,12 @@ async function filePatchOrganizer(req, res) {
     }
     else if (req.body.newName) {
         funcToUse = renameFile
-    } else if (req.body.star) {
+    }
+    else if (req.body.star) {
         funcToUse = setFileStar
+    } 
+    else if (req.body.accessed) {
+        funcToUse = setJustAccesssed
     }
 
     return funcToUse(req, res)
@@ -33,10 +38,14 @@ async function getFile(req, res) {
     
     res.json(file)
 }
+
+
 async function renameFile(req, res) {
     let fileId = parseInt(req.params.id)
     let newName = req.body.newName
     let file = await filesModel.renameFile(fileId, newName)
+    console.log('renaming');
+    console.log(file);
 
     res.json(file) 
 }
@@ -66,6 +75,13 @@ async function setFileStar(req, res) {
     let star = await filesModel.setFileStar(fileId)
     
     res.json(star)
+}
+async function setJustAccesssed(req, res) {
+    let fileId = parseInt(req.params.id) 
+
+    let setAccessed = await filesModel.setJustAccesed(fileId)
+
+    res.status(400)
 }
 module.exports = {
     postFile,

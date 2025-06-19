@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Authentication from './components/auth/SignIn'
@@ -6,13 +5,13 @@ import SignIn from './components/auth/SignIn'
 import CreateAccount from './components/auth/CreateAccount'
 import Drive from './components/drive/Drive'
 function App() {
-  const [count, setCount] = useState(0)
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Navigate to="/drive" replace/>}></Route>
-          <Route path='/drive' element={<Drive></Drive>}></Route>
+          <Route path='/drive/*' element={<Drive></Drive>}></Route>
+
           <Route path='/auth' element={<Authentication></Authentication>}>
               <Route path='sign-in' 
                 element={<SignIn></SignIn>}>

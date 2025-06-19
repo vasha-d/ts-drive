@@ -3,7 +3,7 @@ import styles from '../../../css/controls.module.css'
 import ModalForm from '../ModalForm'
 
 
-function FormButton({buttonText, buttonImg, formText, placeHolder, defaultValue, submitForm, toggleScaler=null}) {
+function FormButton({modalImg, buttonText, buttonImg, formText, placeHolder, defaultValue, submitForm, toggleScaler=null}) {
     
     let [formVisible, setFormVisible] = useState(false)
     function clickButton(e) {
@@ -22,10 +22,15 @@ function FormButton({buttonText, buttonImg, formText, placeHolder, defaultValue,
         }
     }
     function handleSubmitForm(val) {
+        setFormVisible(false)
         submitForm(val)
+        if(toggleScaler) {
+            toggleScaler()
+        }
     }
     let form = formVisible ?
         <ModalForm
+            headerImg={modalImg}
             formText={formText}
             placeHolder={placeHolder}
             defaultValue={defaultValue}           

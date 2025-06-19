@@ -32,7 +32,7 @@ export async function renameFile(fileId, newName, setRefresh) {
     let req = await axios.patch(url, data, {
         withCredentials: true
     })
-
+    console.log(req, url);
     setRefresh(r => !r)
     
 }
@@ -56,7 +56,7 @@ export async function moveFile(fileId, newParentId, setRefresh) {
     let data = new URLSearchParams({newParentId})
 
     let req = await axios.patch(url, data, {
-        withCredentials
+        withCredentials: true
     })
 
     setRefresh(r => !r)

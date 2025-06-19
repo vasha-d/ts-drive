@@ -16,7 +16,6 @@ async function getFolder(req, res) {
     let folderId = parseInt(req.params.id)
     
     let folder = await foldersModel.getFolder(folderId)
-    console.log(folder)
     res.json(folder)
 }
 async function folderPatchOrganizer(req, res) {
@@ -76,14 +75,32 @@ async function getDrive(req, res) {
 async function setFolderStar(req, res) {
 
     let folderId = parseInt(req.params.id)
-    let star = await foldersModel.setFolderStar(folderId)
+    let star = await foldersModel.setFolderStar(folderId, req.user.id)
     res.json(star)
 }
+
+async function getStarredFolder(req, res) {
+    let userId = parseInt(req.user.id)
+    
+    let folder = await foldersModel.getStarred(userId)
+    console.log(folder);
+    res.json(folder)
+}
+async function getSharedFolder(req, res) {
+    let userId = parseInt(req.user.id)
+    console.log("running get shared controller!");
+    let folder = await foldersModel.getShared(userId)
+    
+    res.json(folder)
+}
+
 
 module.exports = {
     postFolder,
     getFolder,
     folderPatchOrganizer,
     deleteFolder,
-    getDrive
+    getDrive,
+    getStarredFolder,
+    getSharedFolder
 }

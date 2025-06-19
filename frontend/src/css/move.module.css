@@ -1,0 +1,135 @@
+
+.cover {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    backdrop-filter: blur(10px);
+    background-color: rgba(26, 37, 67, 0.229);
+    cursor: default;
+    display: flex;
+    justify-content: center;
+}
+
+.moveModal {
+    --list-height: 350px;
+    height: 520px;
+    width: 400px;
+    margin-top: 60px;
+    color: white;
+    background-color: rgba(197, 203, 216, 0.839);
+    padding-block: 4vh;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 3vh;
+    display: grid;
+    grid-template-rows: 40px var(--list-height) 20px;   
+    align-items: start;
+    justify-content: center;
+    gap: 16px;
+}
+.dirList {
+    border-block: 3px solid var(--black-blue);
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: center;
+    overflow-y: scroll;
+    height: var(--list-height);
+    width: 30ch;
+    padding: 5px;
+    grid-row: 2/3;
+    box-sizing: border-box;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.enterDir {
+    display: flex;
+    align-self: flex-end;
+    margin-left: auto;
+}
+.folderImg  {
+    height: 3vh;
+}
+.directory {
+    width: 100%;
+    background-color: var(--deep-blue);
+    border: 1px solid black;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    border-radius: 1vh;
+    height: 6vh;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    gap: 6px;
+}
+.enterDir > img {
+    height: 3vh;
+    padding: 0.5vh;
+    background-color: var(--black-blue);
+    border-radius: 4vh;
+    border: 1px solid var(--black-blue);
+    
+    transition: background-color 0.3s linear,
+                border-color 0.3s linear;
+}
+.enterDir > img:hover {
+    scale: 1.1;
+    border-color: var(--white-blue);
+
+    background-color: var(--light-blue);
+}
+.directory:hover {
+    background-color: var(--black-blue);
+    cursor: pointer;
+}
+
+.dirSelected {
+    border: 1px solid var(--white-blue);
+    box-shadow: 0 0 5px 3px rgba(227, 238, 255, 0.565);
+    scale: 1.02;
+}
+
+.goBack {
+    height: 7vh;
+    font-size: 1.4rem;
+    gap: 10px;
+    color: var(--black-blue);
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 2px 12px;
+    box-sizing: content-box;
+}
+.goBack > img {
+    height: 6vh;
+    transition: scale 0.1s linear;
+
+}
+
+.formButtons {
+    grid-row: 3/4;
+    display: flex;
+    padding-inline: 3vh;
+    justify-content: space-between;
+}
+
+.formButtons img {
+    height: 6vh;
+    background-color: var(--white-blue);
+    padding: 1vh;
+    border-radius: 7vh;
+    border: 1px solid var(--black-blue);
+    transition: scale 0.1s linear;
+}
+.formButtons img:hover, .goBack > img:hover{
+    scale: 1.05;
+    cursor: pointer;
+}

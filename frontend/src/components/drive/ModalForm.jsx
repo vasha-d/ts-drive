@@ -1,8 +1,8 @@
 import React from 'react'
 import styles from '../../css/modalForm.module.css'
 import { useState, useRef } from 'react'
-
-
+import cancelIcon from '../../assets/cancel.svg'
+import confirmIcon from '../../assets/confirm.svg'
 /**
  * 
  * Types: Create file, Create Folder
@@ -14,39 +14,51 @@ import { useState, useRef } from 'react'
  * all normal text inputs except create file
  */
 
-
-
-function NewChildForm({formText, placeHolder, defaultValue, onCancel, onSubmit, creatingFile=false}) {
+function NewChildForm({headerImg, formText, placeHolder, defaultValue, onCancel, onSubmit, creatingFile=false}) {
     let [value, setValue] = useState(defaultValue)
+    let [fileName, setFileName] = useState('')
     let formRef = useRef()
     function handleTextChange (e) {
         setValue(e.target.value)
     }
     function handleFileChange (e) {
         let file = e.target.files[0]
+        
+        setFileName(file.name)
         setValue(file)
     }
-    function clickCancel(e) {
-        let clickedOnCover = e.target.id == 'cover'
-        if (!clickedOnCover) return;
-        e.stopPropagation()
+    function doClose(e, didSubmit=false) {
         formRef.current.classList.add(styles.fadeOut)
         function cancelForm() {
             formRef.current.classList.remove(styles.fadeOut)
             formRef.current.removeEventListener('animationend', cancelForm)
             setValue(defaultValue)
-            onCancel(e)
+            if (didSubmit) {onSubmit(value)}
+            if(!didSubmit) {onCancel(e)}
         }
         formRef.current.addEventListener('animationend', cancelForm)
     }
-    function submitForm() {
-        onSubmit(value)
+    function clickCancel(e) {
+        let clickedOnCover = e.target.id == 'cover'
+        console.log(e.target.id);
+        if (!clickedOnCover) return;
+        console.log('canceling from ')
+        e.stopPropagation()
+        doClose(e, false)
+       
+    }
+    function clickCancelButton(e) {
+        e.stopPropagation()
+        doClose(e, false)
+    }
+    function submitForm(e) {
+        doClose(e, true)
     }
 
 
     let input = creatingFile ? 
         <div className={styles.fileInputContainer}>
-            Drag Here
+            {fileName || 'Click Here'} 
             <input placeholder={placeHolder} className={styles.fileInput}
             type='file'  name='fileUpload' onChange={handleFileChange}/>
         </div>
@@ -57,15 +69,23 @@ function NewChildForm({formText, placeHolder, defaultValue, onCancel, onSubmit, 
         <div onClick={clickCancel} id='cover' className={styles.cover}>
             <div ref={formRef} className={styles.newForm}>
                 <label htmlFor="value">
-                    <h1>
+                    <h1 className={styles.formHeader}>
+                    <img src={headerImg} className={styles.headerImg} alt="" />
                     {formText}
+
                     </h1>
                 </label>
                 {input}
                 <div className={styles.newFormButtons}>
                     
-                    <button className={styles.newFormButton} onClick={submitForm}>Confirm</button>
-                    <button className={styles.newFormButton} onClick={clickCancel}>Cancel</button>
+                    <button id="confirm" className={styles.newFormButton} onClick={submitForm}>
+                        <img className={styles.confirmImg}src={confirmIcon} alt="" />
+                        Confirm
+                    </button>
+                    <button id="cancel" className={styles.newFormButton} onClick={clickCancelButton}>
+                        <img className={styles.cancelImg}src={cancelIcon} alt="" />
+                        Cancel
+                    </button>
                 </div>
             </div>
         </div>

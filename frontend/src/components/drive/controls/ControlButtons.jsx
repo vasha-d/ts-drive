@@ -2,9 +2,25 @@ import renameIcon from '../../../assets/rename.svg'
 import shareIcon from '../../../assets/share.svg'
 import deleteIcon from '../../../assets/delete.svg'
 import starIcon from '../../../assets/star.svg'
+import downloadIcon from '../../../assets/download.svg'
 import FormButton from './FormButton'
-
 import styles from '../../../css/controls.module.css'
+
+
+
+export function DownloadButton({submitFunction}) {
+    
+    console.log('running dl button');
+
+    return (
+        <button className={styles.controlButton +` `+ styles.forFile} onClick={submitFunction}>
+            <img className={styles.buttonImg} src={downloadIcon} alt="" />
+            <div className={styles.btnText}>
+                Download
+            </div>
+        </button>
+    )
+}
 
 export function StarButton({forFile=false, submitFunction}) {
     
@@ -33,15 +49,17 @@ export function RenameButton({forFile=false, submitFunction, toggleScaler}) {
         buttonText:'Rename ' + (forFile? 'File' : 'Folder'),
         buttonImg: renameIcon,
         formText: 'Rename ' + (forFile? 'File' : 'Folder'),
-        placeHolder: 'Enter username',
+        placeHolder: 'Enter new name',
         defaultValue: '',
         submitForm: submitFunction,
-        toggleScaler
+        toggleScaler,
+        modalImg: renameIcon
     }
     return (
         <FormButton {...props}/>
     )
 }
+
 export function ShareButton({forFile=false, submitFunction, toggleScaler}) {
 
     let props = {
@@ -51,7 +69,8 @@ export function ShareButton({forFile=false, submitFunction, toggleScaler}) {
         placeHolder: 'Enter username',
         defaultValue: '',
         submitForm: submitFunction,
-        toggleScaler
+        toggleScaler,
+        modalImg: shareIcon
     }
     return (
         <FormButton {...props}/>

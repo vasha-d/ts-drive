@@ -19,6 +19,7 @@ export function useGetFolder() {
             try {
                 
                 let url = `${apiUrl}/users/folders/${currentFolderId}`
+                console.log('running get', url);
                 let req = await axios.get(url, {
                     withCredentials: true
                 })
@@ -35,7 +36,6 @@ export function useGetFolder() {
         getFolder()
 
     }, [refresh, currentFolderId])
-
     return {loading, folder, error, setRefresh, setCurrentFolderId}
 }
 

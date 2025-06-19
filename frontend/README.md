@@ -1,22 +1,15 @@
 ##To do:
 
+add validation to forms 
 
-
-...Add proper form elemennt for new file or nnew folder
+hanlde pathbar overflow
 
 Add move folder visuals
+add file details
+add move 
 
-
-add side bar funcntions
-
-add logo
-
+fix back button
 add search function
 
-make default sorting by creation daate
-
-add recently altered
-
-add yyou currentlyl have no folders/files in this directory
-
-add log out
+add sign in page
+add create account

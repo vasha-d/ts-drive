@@ -1,29 +1,34 @@
 import React, { useState, useRef } from 'react'
 import styles from '../../../css/controls.module.css'
-import {RenameButton, ShareButton, DeleteButton, StarButton} from './ControlButtons'
+import {RenameButton, ShareButton, DeleteButton, StarButton, DownloadButton} from './ControlButtons'
 import wrenchIcon from '../../../assets/wrench.svg'
+import MoveButton from './MoveModal/MoveButton'
 
-/* Both: Rename, Share, Delete, Star, Move
- * File only: download, view details 
- * Each button will have submit, so submit delete or submitRename
- * Button = {onSubmit, buttonText, buttonImg, form}
- * Form = {formText, placeHolder, defaultValue, submitForm}
- * FormButton makes it so that form is create and handle when buutton is clicked
-*/
 
-function Controls({forFile=false, onSubmits, controlsOpenPrio, toggleScaler}) {
+    
+function Controls({toMoveId, forFile=false, onSubmits, controlsOpenPrio, toggleScaler}) {
 
     let [visible, setVisible] = useState(false)
     let controlsRef = useRef()
     let wrenchRef = useRef()
-    function handleClick(e) {
+    function animateWrench() {
+        function removeShake() {
+                wrenchRef.current.classList.remove(styles.wrenchShake)
+                wrenchRef.current.removeEventListener('animationend', removeShake)
+            }
+            wrenchRef.current.classList.add(styles.wrenchShake)
+            wrenchRef.current.addEventListener('animationend', removeShake)
+    }
+    function handleClick() {
         if (visible) {
             setVisible(false)   
             controlsOpenPrio() 
+            animateWrench()
         } else {
             setVisible(true)
             document.addEventListener('click', closeControls)
             controlsOpenPrio()
+            animateWrench()
         }
     }   
     function closeControls(e) {
@@ -41,6 +46,7 @@ function Controls({forFile=false, onSubmits, controlsOpenPrio, toggleScaler}) {
                 <img src={wrenchIcon} alt="" />
             </div>            
             <ControlsList
+                toMoveId={toMoveId}
                 visible={visible}
                 forFile={forFile}
                 onSubmits={onSubmits}
@@ -51,29 +57,43 @@ function Controls({forFile=false, onSubmits, controlsOpenPrio, toggleScaler}) {
     )
 }
 
-let ControlsList = React.forwardRef(({visible, forFile, onSubmits, toggleScaler}, ref) => {
+let ControlsList = React.forwardRef(({toMoveId, visible, forFile, onSubmits, toggleScaler}, ref) => {
 
     if (!visible) return null;
     return (
-        <div ref={ref} id="controls" className={styles.controlsList}>
-            <RenameButton 
-                forFile={forFile}
-                submitFunction={onSubmits[0]}
-                toggleScaler={toggleScaler}
-            />
-            <ShareButton 
-                forFile={forFile}
-                submitFunction={onSubmits[1]}
-                toggleScaler={toggleScaler}
-            />
-            <DeleteButton
-                forFile={forFile}
-                submitFunction={onSubmits[2]}
-            />
-            <StarButton
-                forFile={forFile}
-                submitFunction={onSubmits[3]}
-            />
+        <div className={styles.foldingWrapper}>    
+            <div ref={ref} id="controls" className={styles.controlsList}>
+
+                <RenameButton
+                    forFile={forFile}
+                    submitFunction={onSubmits[0]}
+                    toggleScaler={toggleScaler}
+                />
+                <ShareButton
+                    forFile={forFile}
+                    submitFunction={onSubmits[1]}
+                    toggleScaler={toggleScaler}
+                />
+                <DeleteButton
+                    forFile={forFile}
+                    submitFunction={onSubmits[2]}
+                />
+                <StarButton
+                    forFile={forFile}
+                    submitFunction={onSubmits[3]}
+                />
+                <MoveButton
+                    toMoveId={toMoveId}
+                    forFile={forFile}
+                    toggleScaler={toggleScaler}
+                ></MoveButton>
+                {!forFile ? null :
+                    <DownloadButton
+                        submitFunction={onSubmits[4]}
+                    />
+                }
+            </div>
+            <div className={styles.heightFixer}></div>
         </div>
     )
 })

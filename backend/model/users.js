@@ -13,8 +13,17 @@ async function createUser(username, password) {
                 create: {
                     name: 'drive',
                     drive: true,
+                    }
+            },
+            sharedFolder: {
+                create: {
+                    
                 }
-            }
+            },
+            starredFolder: {create: {
+                childrenFolders: {},
+                files: {}
+            }}
         }
     })
     console.log(newUser)

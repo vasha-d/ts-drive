@@ -6,16 +6,21 @@ const prisma = new PrismaClient()
 function getExtension(name) {
     let split = name.split('.')
 
-    return split[split.length-1]
+    return '.'+split[split.length-1]
+}
+function stripExtension(name, extension) {
+    let lastIndex = name.lastIndexOf(extension)
+    console.log(lastIndex);
+    return name.substring(0, lastIndex)
 }
 async function newFile(file, parentId, ownerId) {
     let name = file.originalname
     let extension = getExtension(name)
+    let withOutExtension = stripExtension(name, extension)
     let cldUpload = await uploadToCloudinary(file)
     let link = cldUpload.secure_url
     let size = cldUpload.bytes
     console.log('cld:', cldUpload)
-    
     let newFile = await prisma.file.create({
         data: {
             owner: {
@@ -28,7 +33,7 @@ async function newFile(file, parentId, ownerId) {
                     id: parentId
                 }
             },
-            name: name,
+            name: withOutExtension,
             link: link,
             size: size,
             extension: extension,
@@ -53,27 +58,37 @@ async function getFile(fileId) {
 }
 
 async function renameFile(fileId, newName) {
-    const file = await prisma.folder.update({
-        where: {
-            id: fileId
-        },
-        data: {
-            name: newName
-        }
-    })
-}
-
-async function shareFile(fileId, userToShareWith) {
+    console.log('running in model');
     const file = await prisma.file.update({
         where: {
             id: fileId
         },
         data: {
-            sharedWithUsers: {
+            name: newName,
+            lastModified: new Date()
+        }
+    })
+    return file
+}
+
+async function shareFile(fileId, userToShareWith) {
+    const user = await prisma.user.findUnique({
+        where: {
+            username: userToShareWith
+        }
+    })
+    const toShareWithId = user.sharedFolderId
+    const file = await prisma.file.update({
+        where: {
+            id: fileId
+        },
+        data: {
+            sharedFolders: {
                 connect: {
-                    name: userToShareWith
+                    id: toShareWithId
                 }
-            }
+            },
+            lastModified: new Date()
         }
     })
     return file
@@ -89,7 +104,8 @@ async function moveFile(fileId, newParentId) {
                 connect: {
                     id: newParentId
                 }
-            }
+            },
+            lastModified: new Date()
         }
     })
     return file
@@ -131,16 +147,46 @@ async function setFileStar(fileId) {
             id: fileId
         }
     })
-    let newStar = !current.starred
-    let update = await prisma.file.update({
+    if (current.starred) {
+        let updateFileStarred = await prisma.file.update({
+            where: {id: fileId},
+            data: {
+                starred: false,
+                starredParentFolder: {
+                    disconnect: true
+                },
+            }
+        })
+    } else {
+        let user = await prisma.user.findUnique({
+            where: {id: userId}
+        })
+        let parentStarFolderId = user.starredFolderId
+        let updateFileStarred = await prisma.file.update({
+            where: {id: fileId},
+            data: {
+                starred: true,
+                starredParentFolder: {
+                    connect: {
+                        id: parentStarFolderId
+                    }
+                }
+            }
+        })
+    }
+    return    
+}
+async function setJustAccesed(fileId) {
+
+    let file = await prisma.file.update({
         where: {
             id: fileId
         },
         data: {
-            starred: newStar
+            lastAccessed: new Date()
         }
     })
-    return update   
+    
 }
 module.exports = {
     newFile,
@@ -149,5 +195,6 @@ module.exports = {
     shareFile,
     moveFile,
     deleteFile,
-    setFileStar
+    setFileStar,
+    setJustAccesed
 }
