@@ -6,7 +6,7 @@ import React from 'react'
 
 
 
-const PathBar = React.forwardRef((props, ref) => {    
+const PathBar = React.forwardRef(({pathComp, goBackToId}, ref) => {    
 
     let [sizeMultipliers, setSizeMultipliers] = useState([])
 
@@ -14,41 +14,18 @@ const PathBar = React.forwardRef((props, ref) => {
 
     let {currentFolder, setCurrentFolderId} = useContext(DriveContext)
     let pbRef = useRef()
-    let [pathComp, setPathComp] = useState([])
     let imgStyle = {height: `${imgHeight}vh`}
     let textStyle = {fontSize: `${fontSize}vh`}
-
-    useEffect(() => {
-        let {id} = currentFolder
-        
-
-        setPathComp(pathComp => {
-            let cleanedComp = pathComp.filter(pObj => !pObj.fade)
-            let isGoingBack = cleanedComp.some(pObj => pObj.id == id)
-            if (isGoingBack) {
-                let spliceIndex = cleanedComp.findIndex(pObj => pObj.id == id) + 1
-                let copy = cleanedComp
-                let splicedElems = cleanedComp.splice(spliceIndex)
-                splicedElems.forEach(pObj => pObj.fade = true)
-                return [...copy, ...splicedElems]
-            }
-            if (!isGoingBack) {
-                let newComp = [...cleanedComp, {id, name: currentFolder.name, fade: false}]
-                return newComp
-            }
-        })
-
-    }, [currentFolder])
-
-    useEffect(() => {
-        return () => setPathComp([])
-    }, [])
-
-
-    let elements = pathComp.map(pObj => {   
+    let fadingPaths = [...pathComp.fading]
+    fadingPaths = fadingPaths.map(pObj => {
+        let newObj = {...pObj, fade: true}
+        return newObj
+    })
+    let combined = [...pathComp.current, ...fadingPaths]
+    let elements = combined.map(pObj => {   
         let {id, name} = pObj 
         function clickPath() {
-            setCurrentFolderId(id)
+            goBackToId(id)
         }  
         let fadeClass = pObj.fade ? styles.fadePath : styles.pathbarChild 
 

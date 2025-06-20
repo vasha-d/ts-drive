@@ -5,12 +5,13 @@ import DriveContext from './DriveContext'
 import styles from '../../css/children.module.css'
 
 
-const Children = ({childrenFolders, files}) => {
+const Children = ({childrenFolders, files, addToDir}) => {
 
     let folderElements = childrenFolders.map(folder => {
         return <Folder 
            key={`folder-${folder.id}`} 
            folderObj={folder}
+           addToDir={addToDir}
         >
 
         </Folder>

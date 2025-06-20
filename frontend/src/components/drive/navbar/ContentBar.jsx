@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef} from 'react'
+import React, { useContext} from 'react'
 import NewFolderButton from './NewFolderButton';
 import NewFileButton from './NewFileButton';
 import mainStyles from '../../../css/drive.module.css'
@@ -11,13 +11,12 @@ let styles = Object.assign({}, mainStyles, pbStyles)
 
 
 
-function ContentBar() {
+function ContentBar({goBackOne, goBackToId, pathComp}) {
 
     let {currentFolder, setCurrentFolderId} = useContext(DriveContext)
     let {id, parentId} = currentFolder
     function clickBackButton() {
-        if (!parentId) return;
-        setCurrentFolderId(parentId)
+        goBackOne()
     }
     
 
@@ -29,6 +28,8 @@ function ContentBar() {
             </div>
             <div className={styles.pbWrapper}>
                 <PathBar 
+                pathComp={pathComp}
+                goBackToId={goBackToId}
                 ></PathBar>
             </div>
             <div className={styles.newButtonsContainer}>

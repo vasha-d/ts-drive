@@ -1,6 +1,5 @@
 ##To do:
 
-add validation to forms, empty or taken folder names...
 
 hanlde pathbar overflow
 

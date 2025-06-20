@@ -60,7 +60,7 @@ export function RenameButton({forFile=false, submitFunction, toggleScaler, isVal
     )
 }
 
-export function ShareButton({forFile=false, submitFunction, toggleScaler}) {
+export function ShareButton({forFile=false, submitFunction, toggleScaler, isValid}) {
 
     let props = {
         buttonText:'Share ' + (forFile? 'File' : 'Folder'),
@@ -70,7 +70,8 @@ export function ShareButton({forFile=false, submitFunction, toggleScaler}) {
         defaultValue: '',
         submitForm: submitFunction,
         toggleScaler,
-        modalImg: shareIcon
+        modalImg: shareIcon,
+        isValid: isValid
     }
     return (
         <OpenModalButton {...props}/>

@@ -199,8 +199,8 @@ async function getStarred(userId) {
             files: true
         }
     })
-
-    return starredFolder
+    let toReturn = {...starredFolder, isStarredFolder: true}
+    return toReturn
 }
 async function getShared(userId) {
     console.log('running get shared!');
@@ -217,8 +217,8 @@ async function getShared(userId) {
         }
 
     })
-    console.log(sharedFolder);
-    return sharedFolder
+    let toReturn = {...sharedFolder, isSharedFolder: true}
+    return toReturn
 }
 module.exports = {
     newFolder,

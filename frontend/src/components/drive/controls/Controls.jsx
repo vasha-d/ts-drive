@@ -75,6 +75,7 @@ let ControlsList = React.forwardRef(({toMoveId, visible, forFile, onSubmits, tog
                     forFile={forFile}
                     submitFunction={onSubmits[1]}
                     toggleScaler={toggleScaler}
+                    isValid={isValids[1]}
                 />
                 <DeleteButton
                     forFile={forFile}

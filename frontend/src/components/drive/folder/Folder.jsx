@@ -16,7 +16,7 @@ function renameValid (newName, parentFolder) {
 }
 
 
-const Folder = ({folderObj}) => {
+const Folder = ({folderObj, addToDir}) => {
     let {name, id} = folderObj
     let {setCurrentFolderId, setRefresh} = useContext(DriveContext)
     let folderRef = useRef()
@@ -25,15 +25,21 @@ const Folder = ({folderObj}) => {
         let isFromControls = path.some(element => element.id =='controls')  
         if (isFromControls) return;
         setCurrentFolderId(id)
+        addToDir(name, id)
     }
     function renameValid(newName) {
-             let nameEmpty = newName.trim() == ''
+        let nameEmpty = newName.trim() == ''
         let nameTaken = !!(folderObj.parentFolder.childrenFolders.some(f => {
                 return f.name == newName
             })) 
         if (nameEmpty) {return 'Name cannot be empty!'}
         if (nameTaken) {return 'Folder with that name already exists!'}
 
+        return 'valid'
+    }
+    function shareValid(username) {
+        let nameEmpty = username.trim() == ''
+        if (nameEmpty) {return 'Name cannot be empty'}
         return 'valid'
     }
     function submitRenameForm(newName) { 
@@ -58,7 +64,7 @@ const Folder = ({folderObj}) => {
         folderRef.current.classList.toggle(styles.modalOpenPrio)
     }
     let onSubmits = [submitRenameForm, submitShareForm, DeleteFolder, StarFolder]
-    let isValids = [renameValid]
+    let isValids = [renameValid, shareValid]
     let starImg = !folderObj.starred ? null: 
                 <div className={styles.star}>
                     <img className={styles.starSpin} src={starIcon} alt="" />

@@ -3,7 +3,6 @@ import styles from '../../css/modalForm.module.css'
 import { useState, useRef } from 'react'
 import cancelIcon from '../../assets/cancel.svg'
 import confirmIcon from '../../assets/confirm.svg'
-import useValidate from './useValidate'
 /**
  * 
  * Types: Create file, Create Folder
@@ -58,16 +57,15 @@ function NewChildForm({headerImg, formText, placeHolder, defaultValue, onCancel,
             if (isValid(value) == 'valid') {
                 console.log(isValid(value), value);
                 doClose(e, true)
-            } {
+            } { 
+                console.log('Invalid form');
                 setInvalidMsg(isValid(value))
-                // add error to form
             }
         } else {
             doClose(e, true)
         }
     }
     
-    // let valid = useValidate(forFile, value, )
     let inputClass = styles.textInput + ` ` + (invalidMsg ? styles.formInvalid : '')
     let input = creatingFile ? 
         <div className={styles.fileInputContainer}>
