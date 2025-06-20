@@ -20,7 +20,7 @@
     width: 400px;
     margin-top: 60px;
     color: white;
-    background-color: rgba(197, 203, 216, 0.839);
+    background-color: rgba(205, 226, 255, 0.839);
     padding-block: 4vh;
     box-sizing: border-box;
     border: 1px solid black;
@@ -77,8 +77,8 @@
     border-radius: 4vh;
     border: 1px solid var(--black-blue);
     
-    transition: background-color 0.3s linear,
-                border-color 0.3s linear;
+    transition: background-color 0.15s linear,
+                border-color 0.15s linear;
 }
 .enterDir > img:hover {
     scale: 1.1;

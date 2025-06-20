@@ -3,6 +3,7 @@ import styles from '../../css/modalForm.module.css'
 import { useState, useRef } from 'react'
 import cancelIcon from '../../assets/cancel.svg'
 import confirmIcon from '../../assets/confirm.svg'
+import useValidate from './useValidate'
 /**
  * 
  * Types: Create file, Create Folder
@@ -14,9 +15,10 @@ import confirmIcon from '../../assets/confirm.svg'
  * all normal text inputs except create file
  */
 
-function NewChildForm({headerImg, formText, placeHolder, defaultValue, onCancel, onSubmit, creatingFile=false}) {
+function NewChildForm({headerImg, formText, placeHolder, defaultValue, onCancel, onSubmit, creatingFile=false, isValid=null}) {
     let [value, setValue] = useState(defaultValue)
     let [fileName, setFileName] = useState('')
+    let [invalidMsg, setInvalidMsg] = useState('')
     let formRef = useRef()
     function handleTextChange (e) {
         setValue(e.target.value)
@@ -52,10 +54,21 @@ function NewChildForm({headerImg, formText, placeHolder, defaultValue, onCancel,
         doClose(e, false)
     }
     function submitForm(e) {
-        doClose(e, true)
+        if (isValid) {
+            if (isValid(value) == 'valid') {
+                console.log(isValid(value), value);
+                doClose(e, true)
+            } {
+                setInvalidMsg(isValid(value))
+                // add error to form
+            }
+        } else {
+            doClose(e, true)
+        }
     }
-
-
+    
+    // let valid = useValidate(forFile, value, )
+    let inputClass = styles.textInput + ` ` + (invalidMsg ? styles.formInvalid : '')
     let input = creatingFile ? 
         <div className={styles.fileInputContainer}>
             {fileName || 'Click Here'} 
@@ -63,8 +76,13 @@ function NewChildForm({headerImg, formText, placeHolder, defaultValue, onCancel,
             type='file'  name='fileUpload' onChange={handleFileChange}/>
         </div>
         :
-        <input placeholder={placeHolder }type="text" 
-        className={styles.textInput} name='value' value={value} onChange={handleTextChange}/>    
+        <div>
+            <input placeholder={placeHolder }type="text" 
+            className={inputClass} name='value' value={value} onChange={handleTextChange}/>    
+            <div className={styles.formMsg}>
+                {invalidMsg}
+            </div>
+        </div>
     return (
         <div onClick={clickCancel} id='cover' className={styles.cover}>
             <div ref={formRef} className={styles.newForm}>

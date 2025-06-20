@@ -34,6 +34,7 @@ function ContentBar() {
             <div className={styles.newButtonsContainer}>
                 <NewFolderButton
                     parentId = {id}
+                    currentFolder = {currentFolder}
                 ></NewFolderButton>
                 <NewFileButton
                     parentId = {id}

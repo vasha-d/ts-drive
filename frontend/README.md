@@ -1,14 +1,12 @@
 ##To do:
 
-add validation to forms 
+add validation to forms, empty or taken folder names...
 
 hanlde pathbar overflow
 
-Add move folder visuals
 add file details
-add move 
 
-fix back button
+fix back button on starred, sso redo the pathbar
 add search function
 
 add sign in page

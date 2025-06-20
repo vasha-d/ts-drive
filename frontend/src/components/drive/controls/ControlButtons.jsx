@@ -3,14 +3,13 @@ import shareIcon from '../../../assets/share.svg'
 import deleteIcon from '../../../assets/delete.svg'
 import starIcon from '../../../assets/star.svg'
 import downloadIcon from '../../../assets/download.svg'
-import FormButton from './FormButton'
+import OpenModalButton from './OpenModalButton'
 import styles from '../../../css/controls.module.css'
 
 
 
 export function DownloadButton({submitFunction}) {
     
-    console.log('running dl button');
 
     return (
         <button className={styles.controlButton +` `+ styles.forFile} onClick={submitFunction}>
@@ -44,7 +43,7 @@ export function DeleteButton({forFile=false, submitFunction}) {
         </button>
     )
 }
-export function RenameButton({forFile=false, submitFunction, toggleScaler}) {
+export function RenameButton({forFile=false, submitFunction, toggleScaler, isValid}) {
     let props = {
         buttonText:'Rename ' + (forFile? 'File' : 'Folder'),
         buttonImg: renameIcon,
@@ -53,10 +52,11 @@ export function RenameButton({forFile=false, submitFunction, toggleScaler}) {
         defaultValue: '',
         submitForm: submitFunction,
         toggleScaler,
-        modalImg: renameIcon
+        modalImg: renameIcon,
+        isValid
     }
     return (
-        <FormButton {...props}/>
+        <OpenModalButton {...props}/>
     )
 }
 
@@ -73,6 +73,6 @@ export function ShareButton({forFile=false, submitFunction, toggleScaler}) {
         modalImg: shareIcon
     }
     return (
-        <FormButton {...props}/>
+        <OpenModalButton {...props}/>
     )
 }

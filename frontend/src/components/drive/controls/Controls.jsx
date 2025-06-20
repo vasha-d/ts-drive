@@ -6,7 +6,7 @@ import MoveButton from './MoveModal/MoveButton'
 
 
     
-function Controls({toMoveId, forFile=false, onSubmits, controlsOpenPrio, toggleScaler}) {
+function Controls({toMoveId, forFile=false, onSubmits, controlsOpenPrio, toggleScaler, isValids}) {
 
     let [visible, setVisible] = useState(false)
     let controlsRef = useRef()
@@ -52,12 +52,13 @@ function Controls({toMoveId, forFile=false, onSubmits, controlsOpenPrio, toggleS
                 onSubmits={onSubmits}
                 ref = {controlsRef}
                 toggleScaler={toggleScaler}
+                isValids={isValids}
             />
         </>
     )
 }
 
-let ControlsList = React.forwardRef(({toMoveId, visible, forFile, onSubmits, toggleScaler}, ref) => {
+let ControlsList = React.forwardRef(({toMoveId, visible, forFile, onSubmits, toggleScaler, isValids}, ref) => {
 
     if (!visible) return null;
     return (
@@ -68,6 +69,7 @@ let ControlsList = React.forwardRef(({toMoveId, visible, forFile, onSubmits, tog
                     forFile={forFile}
                     submitFunction={onSubmits[0]}
                     toggleScaler={toggleScaler}
+                    isValid={isValids[0]}
                 />
                 <ShareButton
                     forFile={forFile}

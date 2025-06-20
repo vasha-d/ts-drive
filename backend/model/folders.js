@@ -29,15 +29,26 @@ async function getFolder(folderId) {
             lastAccessed: new Date()
         },
         include: {
-            parentFolder: true,
-            childrenFolders: {
+            parentFolder: {
                 include: {
                     childrenFolders: true,
                     files: true
                 }
             },
+            childrenFolders: {
+                include: {
+                    parentFolder: {
+                        include: {
+                            childrenFolders: true,
+                            files: true,
+                        },
+                    },
+                    childrenFolders: true,
+                    files: true
+                }
+            },
             files: true,
-            
+            parentFolder: true
         }
     })
 
@@ -116,6 +127,12 @@ async function getDrive(userId) {
         include: {
             childrenFolders: {
                 include: {
+                    parentFolder: {
+                        include: {
+                            childrenFolders: true,
+                            files: true
+                        }
+                    },
                     childrenFolders: true,
                     files: true,
                 }

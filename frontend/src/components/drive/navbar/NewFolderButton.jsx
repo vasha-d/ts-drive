@@ -5,10 +5,20 @@ import { useState } from 'react'
 import pbStyles from '../../../css/contentbar.module.css'
 import ModalForm from '../ModalForm'
 import folderIcon from '../../../assets/create-folder.svg'
-function NewFolderButton({parentId}) {
+function NewFolderButton({currentFolder}) {
+    let {parentId, childrenFolders} =currentFolder
     let {setRefresh} = useContext(DriveContext)
     let [formVisible, setFormVisible] = useState(false)
+    function nameValid(newName) {
+        let nameEmpty = newName.trim() == ''
+        let nameTaken = !!(childrenFolders.some(f => {
+                return f.name == newName
+            })) 
+        if (nameEmpty) {return 'Name cannot be empty!'}
+        if (nameTaken) {return 'Folder with that name already exists!'}
 
+        return 'valid'
+    }
     function submitForm (folderName) {
         newFolder(folderName, parentId, setRefresh)
         setFormVisible(false)
@@ -20,7 +30,7 @@ function NewFolderButton({parentId}) {
     function cancelForm () {
         setFormVisible(false)
     }
-    
+
     let form = !formVisible ? null : 
             <ModalForm
                 headerImg={folderIcon}
@@ -29,6 +39,7 @@ function NewFolderButton({parentId}) {
                 onSubmit = {submitForm}
                 placeHolder={'Enter folder name...'}
                 defaultValue={''}
+                isValid={nameValid}
             >
             </ModalForm> 
     

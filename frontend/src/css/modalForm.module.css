@@ -116,8 +116,14 @@
 }
 
 
-
-
+.formInvalid {
+    border: 2px solid red;
+}
+.formMsg {
+    color: red;
+    margin-left: 5px;
+    font-weight: bold;
+}
 
 @keyframes shine {
     0% {

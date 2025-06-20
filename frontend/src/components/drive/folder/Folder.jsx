@@ -5,10 +5,15 @@ import childrenStyles from '../../../css/children.module.css'
 import folderIcon from '../../../assets/folder.svg'
 import Controls from '../controls/Controls';
 import starIcon from '../../../assets/star-enabled.svg'
+import useValidate from '../useValidate';
 
 
 let styles = Object.assign({}, childrenStyles)
 
+function renameValid (newName, parentFolder) {
+
+ 
+}
 
 
 const Folder = ({folderObj}) => {
@@ -21,7 +26,18 @@ const Folder = ({folderObj}) => {
         if (isFromControls) return;
         setCurrentFolderId(id)
     }
-    function submitRenameForm(newName) {
+    function renameValid(newName) {
+             let nameEmpty = newName.trim() == ''
+        let nameTaken = !!(folderObj.parentFolder.childrenFolders.some(f => {
+                return f.name == newName
+            })) 
+        if (nameEmpty) {return 'Name cannot be empty!'}
+        if (nameTaken) {return 'Folder with that name already exists!'}
+
+        return 'valid'
+    }
+    function submitRenameForm(newName) { 
+        console.log('running');
         renameFolder(id, newName, setRefresh)
     }
     function submitShareForm(usernameToShareWith) {
@@ -42,6 +58,7 @@ const Folder = ({folderObj}) => {
         folderRef.current.classList.toggle(styles.modalOpenPrio)
     }
     let onSubmits = [submitRenameForm, submitShareForm, DeleteFolder, StarFolder]
+    let isValids = [renameValid]
     let starImg = !folderObj.starred ? null: 
                 <div className={styles.star}>
                     <img className={styles.starSpin} src={starIcon} alt="" />
@@ -61,6 +78,7 @@ const Folder = ({folderObj}) => {
                     onSubmits={onSubmits}
                     controlsOpenPrio={controlsOpenPrio}
                     toggleScaler={toggleScaler}
+                    isValids={isValids}
                 />
             </div>
         </div>
