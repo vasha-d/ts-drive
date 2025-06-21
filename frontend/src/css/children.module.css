@@ -59,7 +59,14 @@
     background-position-y: 100%;
 }
 
+.childText {
+    max-width: 15cqw;
+    font-size: 0.85rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 
+}
 .childScaler {
     transition: scale 0.08s linear,box-shadow var(--transition-time) linear,
                 background-position-y 0.2s linear;
@@ -87,11 +94,11 @@
 }
 
 .folder {
-    height: 14vh;
+    height: 12vh;
     composes: child;
 }
 .file {
-    height: 15vh;
+    height: 13vh;
     composes: child;
 }   
 

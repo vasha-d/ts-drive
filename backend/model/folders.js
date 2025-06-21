@@ -213,7 +213,7 @@ async function getShared(userId) {
         where: {id: sharedFolderId},
         include: {
             childrenFolders: true,
-            files: true
+            files: true 
         }
 
     })

@@ -20,7 +20,8 @@ function NewFolderButton({currentFolder}) {
         return 'valid'
     }
     function submitForm (folderName) {
-        newFolder(folderName, parentId, setRefresh)
+        console.log('creating folder', parentId, folderName);
+        newFolder(folderName, currentFolder.id, setRefresh)
         setFormVisible(false)
         
     }

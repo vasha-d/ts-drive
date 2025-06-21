@@ -57,7 +57,7 @@ function NewChildForm({headerImg, formText, placeHolder, defaultValue, onCancel,
             if (isValid(value) == 'valid') {
                 console.log(isValid(value), value);
                 doClose(e, true)
-            } { 
+            } else { 
                 console.log('Invalid form');
                 setInvalidMsg(isValid(value))
             }

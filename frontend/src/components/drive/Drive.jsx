@@ -24,7 +24,6 @@ const Drive = () => {
     } 
     else {
         function addToDir(name, id) {
-            console.log('adding', name);
             let newObj = {name, id}
             setCurDir(currentDir =>{
                 let newDir = [...currentDir.current, newObj]
@@ -36,7 +35,6 @@ const Drive = () => {
                 let lastIndex = currentDir.current.findIndex(obj => obj.id == id)
                 let newDir = currentDir.current.slice(0, lastIndex + 1)
                 let newFading = currentDir.current.slice(lastIndex+1)
-                console.log(newDir, newFading);
                 setCurrentFolderId(id)
                 return {
                     current: newDir,
@@ -45,8 +43,6 @@ const Drive = () => {
             })
         }
         function goBackOne() {
-            console.log('going back one');
-            console.log(curDir.length);
             if (curDir.current.length == 1) {return}
             setCurDir(currentDir => {
                 let newDir = currentDir.current.slice(0, -1)
@@ -106,7 +102,6 @@ const Drive = () => {
         let [sortedFolders, sortedFiles] = sortChildren(
             driveMode, folder.childrenFolders, folder.files
         )
-        console.log(curDir);
         toReturn =  
             <DriveContext.Provider value={
                 { setRefresh, setCurrentFolderId, currentFolder: folder}}>  

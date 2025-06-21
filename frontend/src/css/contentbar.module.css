@@ -20,11 +20,6 @@
     box-shadow: 2vh 1vh 10px 2px rgba(16, 15, 80, 0.377);
 }
 
-.pbWrapper {
-    position: relative;
-    overflow: hidden;
-    min-width: 0;
-}
 
 
 .pathbar {
@@ -33,10 +28,22 @@
     letter-spacing: -0.1px;
     padding: 0 10px 0 24px;
     align-items: center;
+    justify-content: start;
     overflow: hidden;
     border: black 1px solid;
     border-radius: 5vh;
     height: 6vh;
+    padding-right: 5vh;
+    width: 630px;
+}
+.listContainer {
+    max-width: 630px;
+    display: flex;
+    
+}
+.fadingContainer {
+    composes: listContainer;
+    width: max-content;
 }
 .pathbar::before {
     content: '';
@@ -60,8 +67,13 @@
     font-style: italic;
     flex-shrink: 1.3;
     text-wrap: nowrap;
-    min-width: 0;
-    
+    min-width: max-content;
+}
+.pbImg {
+    height: 2.8vh;
+}
+.pbText {
+    font-size: 2.8vh;
 }
 .pathbarPath:hover {
     position: relative;
@@ -142,7 +154,25 @@
     animation: fadeOut 0.2s linear forwards;
     transform-origin: left;
 }
+.hidden {
+    opacity: 0;
+    animation: none;
+}
 
+.overflowFaded {
+    display: none;
+}
+
+.overflowElement {
+    composes: pathbarChild;
+    display: flex;
+    height: inherit;
+    align-items: center;
+}
+
+.overflowTxt {
+    margin-left: 10px;
+}
 @keyframes fadeOut {
     0% {
         opacity: 1;

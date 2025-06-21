@@ -5,15 +5,10 @@ import childrenStyles from '../../../css/children.module.css'
 import folderIcon from '../../../assets/folder.svg'
 import Controls from '../controls/Controls';
 import starIcon from '../../../assets/star-enabled.svg'
-import useValidate from '../useValidate';
-
 
 let styles = Object.assign({}, childrenStyles)
 
-function renameValid (newName, parentFolder) {
 
- 
-}
 
 
 const Folder = ({folderObj, addToDir}) => {
@@ -74,7 +69,7 @@ const Folder = ({folderObj, addToDir}) => {
             <div className={styles.folderIcon}>
                 <img src={folderIcon} alt="" />
             </div>
-            <div>{name}</div>
+            <div className={styles.childText}>{name}</div>
 
             <div className={styles.iconRow}>
                 {starImg}
