@@ -1,6 +1,74 @@
 const {PrismaClient} = require('../generated/prisma')
 const prisma = new PrismaClient()
 
+
+const {include} = {
+    include: {
+        parentFolder: {
+            include: {
+                childrenFolders: true,
+                files: true
+            }
+        },
+        childrenFolders: {
+            include: {
+                parentFolder: {
+                    include: {
+                        childrenFolders: true,
+                        files: true,
+                    },
+                },
+                childrenFolders: true,
+                files: true
+            }
+        },
+        files: {
+            include: {
+                parentFolder: {
+                    include: {
+                        childrenFolders: true
+                    }
+                }
+            },
+        },
+        parentFolder: true
+    }
+}
+const {includeSharedStarred} = {
+    includeSharedStarred: {
+        childrenFolders: {
+            include: {
+                parentFolder: {
+                    include: {
+                        childrenFolders: true,
+                        files: true,
+                    },
+                },
+                childrenFolders: true,
+                files: {
+                    include: {
+                        parentFolder: {
+                            include: {
+                                childrenFolders: true
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        files: {
+            include: {
+                parentFolder: {
+                    include: {
+                        childrenFolders: true
+                    }
+                }
+            },
+        },
+        owner: true
+    }
+}
+
 async function newFolder(name, parentId, ownerId) {
     let newFolder = await prisma.folder.create({
         data: {
@@ -20,36 +88,14 @@ async function newFolder(name, parentId, ownerId) {
     return newFolder
 }
 async function getFolder(folderId) {   
-    console.log('RUNNING CMD');
     const folder = await prisma.folder.update({
         where: {
-            id: folderId
+            id: folderId,
         },
         data: {
             lastAccessed: new Date()
         },
-        include: {
-            parentFolder: {
-                include: {
-                    childrenFolders: true,
-                    files: true
-                }
-            },
-            childrenFolders: {
-                include: {
-                    parentFolder: {
-                        include: {
-                            childrenFolders: true,
-                            files: true,
-                        },
-                    },
-                    childrenFolders: true,
-                    files: true
-                }
-            },
-            files: true,
-            parentFolder: true
-        }
+        include: include
     })
 
     return folder
@@ -117,32 +163,7 @@ async function deleteFolder(folderId) {
     })
     return del
 }
-async function getDrive(userId) {
 
-    let drive = await prisma.folder.findFirst({
-        where: {
-            ownerId: userId,
-            drive: true
-        },
-        include: {
-            childrenFolders: {
-                include: {
-                    parentFolder: {
-                        include: {
-                            childrenFolders: true,
-                            files: true
-                        }
-                    },
-                    childrenFolders: true,
-                    files: true,
-                }
-            },
-            files: true
-        }   
-    })
-    console.log(drive)
-    return drive
-}
 async function setFolderStar(folderId, userId) {
 
     let current = await prisma.folder.findUnique({
@@ -181,6 +202,17 @@ async function setFolderStar(folderId, userId) {
 
     return 
 }
+async function getDrive(userId) {
+
+    let drive = await prisma.folder.findFirst({
+        where: {
+            ownerId: userId,
+            drive: true
+        },
+        include: include
+    })
+    return drive
+}
 async function getStarred(userId) {
 
     let user = await prisma.user.findUnique({
@@ -194,12 +226,10 @@ async function getStarred(userId) {
 
     let starredFolder = await prisma.starredFolder.findUnique({
         where: {id: starredFolderId},
-        include: {
-            childrenFolders: true,
-            files: true
-        }
+        include: includeSharedStarred
     })
     let toReturn = {...starredFolder, isStarredFolder: true}
+    console.log(toReturn);
     return toReturn
 }
 async function getShared(userId) {
@@ -211,13 +241,12 @@ async function getShared(userId) {
     let sharedFolderId = user.sharedFolderId
     let sharedFolder = await prisma.sharedFolder.findUnique({
         where: {id: sharedFolderId},
-        include: {
-            childrenFolders: true,
-            files: true 
-        }
+        include: includeSharedStarred
 
     })
+    console.log(includeSharedStarred);
     let toReturn = {...sharedFolder, isSharedFolder: true}
+    console.log(toReturn);
     return toReturn
 }
 module.exports = {

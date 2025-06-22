@@ -34,6 +34,7 @@ function MoveButton({toMoveId, forFile, toggleScaler}) {
             toMoveId={toMoveId}
             closeModal={closeModal}
             modalVisible={modalVisible}
+            forFile={forFile}
         />
         </>
 

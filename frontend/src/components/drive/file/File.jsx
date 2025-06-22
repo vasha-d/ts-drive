@@ -34,7 +34,7 @@ const File = ({fileObj}) => {
         starFile(id, setRefresh)
     }
     function clickDownloadFile() {
-        downloadFile(link, name)
+        downloadFile(id)
     }
     function controlsOpenPrio() {
         fileRef.current.classList.toggle(styles.controlsOpenPrio)
@@ -46,7 +46,23 @@ const File = ({fileObj}) => {
 
     }
     let onSubmits = [submitRenameForm, submitShareForm, DeleteFile, StarFile, clickDownloadFile]
+    function renameValid(newName) {
+        let nameEmpty = newName.trim() == ''
+        console.log(fileObj);
+        let nameTaken = !!(fileObj.parentFolder.childrenFolders.some(f => {
+                return f.name == newName
+            })) 
+        if (nameEmpty) {return 'Name cannot be empty!'}
+        if (nameTaken) {return 'Folder with that name already exists!'}
 
+        return 'valid'
+    }
+    function shareValid(username) {
+        let nameEmpty = username.trim() == ''
+        if (nameEmpty) {return 'Name cannot be empty'}
+        return 'valid'
+    }
+    let isValids = [renameValid, shareValid]
 
     return (
         <div ref={fileRef} className={styles.file + ` ` + styles.childScaler}>
@@ -55,10 +71,12 @@ const File = ({fileObj}) => {
             </div>
             <div>{name + fileObj.extension}</div>
             <Controls
+                toMoveId={id}
                 forFile={true}
                 onSubmits={onSubmits}
                 controlsOpenPrio={controlsOpenPrio}
                 toggleScaler={toggleScaler}
+                isValids={isValids}
             />
         </div>
     );

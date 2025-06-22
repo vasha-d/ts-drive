@@ -53,7 +53,7 @@ export async function shareFile(fileId, usernameToShareWith, setRefresh) {
 export async function moveFile(fileId, newParentId, setRefresh) {
     let url = apiUrl + `/${fileId}`
 
-    let data = new URLSearchParams({newParentId})
+    let data = new URLSearchParams({id: fileId, newParentId})
 
     let req = await axios.patch(url, data, {
         withCredentials: true
@@ -62,22 +62,17 @@ export async function moveFile(fileId, newParentId, setRefresh) {
     setRefresh(r => !r)
 }
 
-export async function downloadFile(link, fileName) {
-    let res = await axios.get(link, {
-        responseType: 'blob'
+export async function downloadFile(id) {
+
+    let reqLink = apiUrl + `/download/` + id
+    let data = new URLSearchParams({id})
+    console.log(reqLink);
+
+    let req = await axios.patch(reqLink, data, {
+        withCredentials: true
     })
-    let blob = res.data
-    let blobUrl = URL.createObjectURL(blob)
-
-    let docLink = document.createElement("a")
-
-    docLink.href = blobUrl
-    docLink.download = fileName
-
-    docLink.click()
-
-    URL.revokeObjectURL(blob)
-    
+    console.log(reqLink, req);
+  
 }
 
 export async function starFile(fileId, setRefesh) {

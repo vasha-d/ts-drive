@@ -69,6 +69,20 @@
     font-size: 0.9rem;
     box-sizing: border-box;
     gap: 6px;
+    transition: background-color 0.05s linear, 
+                scale 0.1s linear,
+                border 0.05s linear;
+}
+
+.dirSelected {
+    border: 1px solid var(--white-blue);
+    scale: 1.03;
+    background-color: var(--black-blue);
+    border: 2px solid var(--mid-blue);
+}
+.directory:hover {
+    background-color: var(--black-blue);
+    cursor: pointer;
 }
 .enterDir > img {
     height: 3vh;
@@ -86,16 +100,7 @@
 
     background-color: var(--light-blue);
 }
-.directory:hover {
-    background-color: var(--black-blue);
-    cursor: pointer;
-}
 
-.dirSelected {
-    border: 1px solid var(--white-blue);
-    box-shadow: 0 0 5px 3px rgba(227, 238, 255, 0.565);
-    scale: 1.02;
-}
 
 .goBack {
     height: 7vh;
@@ -132,4 +137,14 @@
 .formButtons img:hover, .goBack > img:hover{
     scale: 1.05;
     cursor: pointer;
+}
+
+.dirDisabled {
+    background-color: rgb(136, 134, 134);
+    border: none;
+}
+.dirDisabled:hover {
+    background-color:  rgb(136, 134, 134);
+    box-shadow: none;
+    cursor: default;
 }

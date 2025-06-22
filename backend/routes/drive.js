@@ -23,5 +23,5 @@ router.route('/files/:id')
     .get(filesControllers.getFile)
     .patch(filesControllers.filePatchOrganizer)
     .delete(filesControllers.deleteFile)
-
+router.get('/files/download/:id', filesControllers.downloadFile)
 module.exports = router

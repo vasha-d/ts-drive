@@ -9,29 +9,19 @@ let styles = {...mainStyles, ...otherStyles}
 import React from 'react'
 
 function DirList({toMoveId, folder, enterDir, selected, setSelected}) {
-
+    console.log(folder);
     if (!folder) {return}
-
+    console.log('running the rest')
 
     let dirList = folder.childrenFolders.map(f => {
-        if (f.id == toMoveId) return null
-        function clickEnter() {
-            enterDir(f.id)
-        }
-        function selectSelf() {
-            setSelected(f.id)
-        }
-        let enterButton = 
-            <div className={styles.enterDir} onClick={clickEnter}>
-                <img src={enterDirImg} alt="" />
-            </div>
-        let whiteBorder = selected == f.id ? styles.dirSelected : ''
+        console.log('enteridg f obj-----', f)
+        let isDisabled = toMoveId == f.id
+        let isSelected = selected == f.id
+        console.log(selected);
         return (
-            <div onClick={selectSelf}key={f.id} className={styles.directory + ` ` + whiteBorder}>
-                <img className={styles.folderImg} src={folderImg}></img>
-                {f.name}
-                {f.childrenFolders.length ? enterButton : null}
-            </div>
+            <FolderDir isSelected={isSelected}  
+                      fObj={f} enterDir={enterDir} 
+                      setSelected={setSelected} isDisabled={isDisabled}/>
         )
     })
 
@@ -42,4 +32,32 @@ function DirList({toMoveId, folder, enterDir, selected, setSelected}) {
     )
 }
 
+function FolderDir({fObj, enterDir, setSelected, isDisabled, isSelected}) {
+    console.log(fObj);
+    const {id, name} = fObj
+    let clickEnter = isDisabled ? null : () => {
+        enterDir(id)
+    }
+    let selectSelf = isDisabled ? null : () => {
+        console.log('setting selectetd');
+        setSelected(id)
+    }
+
+    let enterButton = isDisabled ? null : 
+        <div className={styles.enterDir} onClick={clickEnter}>
+            <img src={enterDirImg} alt="" />
+        </div>
+
+    let whiteBorder = isSelected ? styles.dirSelected : ''
+    let disabledClass = isDisabled ? styles.dirDisabled : ''
+    let finalClassName = `${styles.directory} ${whiteBorder} ${disabledClass}`
+    return (
+        <div onClick={selectSelf} key={id} className={finalClassName}>
+            <img className={styles.folderImg} src={folderImg}></img>
+            {name}
+            {fObj.childrenFolders.length ? enterButton : null}
+        </div>
+        );
+}
+  
 export default DirList

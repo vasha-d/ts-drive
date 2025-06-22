@@ -12,7 +12,7 @@ async function  postFile(req, res) {
 async function filePatchOrganizer(req, res) {
     let funcToUse = () => console.error('Invalid put request')
     console.log(req.body);
-    if (req.body.userToShareWithName) {
+    if (req.body.usernameToShareWith) {
         funcToUse = shareFile
     } 
     else if (req.body.newParentId) {
@@ -51,16 +51,16 @@ async function renameFile(req, res) {
 }
 async function shareFile(req, res) {
     let fileId = parseInt(req.params.id)
-    let userToShareWithName = req.body.userToShareWithName
-    let file = await filesModel.shareFile(fileId, userToShareWithName)
+    let usernameToShareWith = req.body.usernameToShareWith
+    let file = await filesModel.shareFile(fileId, usernameToShareWith)
 
     res.json(file)
 }
 async function moveFile(req, res) {
     let fileId = parseInt(req.params.id)
     let newParentId = parseInt(req.body.newParentId)
+    console.log(fileId, newParentId);
     let file = await filesModel.moveFile(fileId, newParentId)
-
     res.json(file)
 }
 async function deleteFile(req, res) {
@@ -83,9 +83,23 @@ async function setJustAccesssed(req, res) {
 
     res.status(400)
 }
+async function downloadFile(req, res) {
+    console.log('running download route', req.params.id);
+    let fileId = parseInt(req.params.id)
+    try {
+        
+        let link = await filesModel.downloadFile(fileId)
+    } catch (error) {
+        console.log(error);
+    }
+
+    res.json(link)
+    
+}
 module.exports = {
     postFile,
     getFile,
     filePatchOrganizer,
-    deleteFile
+    deleteFile,
+    downloadFile
 }

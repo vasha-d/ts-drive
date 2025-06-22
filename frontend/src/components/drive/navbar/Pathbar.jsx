@@ -10,7 +10,6 @@ function isSwitchingToStarred(pathComp, displaying) {
     let c2 = pathComp.current[0]?.id == 'drive'
     let c3 = pathComp.current[1]?.id == 'starred'
     let c4 = displaying.current[1]?.id != 'starred'
-    console.log('starred?', c1, c2, c3, pathComp);
     return c1 && c2 && c3 && c4
 }
 function isSwitchingToShared(pathComp, displaying) {
@@ -19,11 +18,9 @@ function isSwitchingToShared(pathComp, displaying) {
     let c2 = pathComp.current[0]?.id == 'drive'
     let c3 = pathComp.current[1]?.id == 'shared'
     let c4 = displaying.current[1]?.id != 'shared'
-    console.log('starred?', c1, c2, c3, pathComp);
     return c1 && c2 && c3 && c4
 }
 function displayingReducer(displaying, action) {
-    console.log(action);
 
     if (action.type == 'check') {
         let {overflowing} = action.payload
@@ -32,7 +29,6 @@ function displayingReducer(displaying, action) {
         newCurrentPaths[newCurrentPaths.length-1].uncertain = false
         newCurrentPaths[newCurrentPaths.length-1].overflowing = overflowing
 
-        console.log('returninng checked', newCurrentPaths);
         return {current: newCurrentPaths, fading: displaying.fading}
     }
 
@@ -42,7 +38,6 @@ function displayingReducer(displaying, action) {
         let isAddingNew = pathComp.current.length > displaying.current.length
         let alreadyOverflowed = displaying.current[displaying.current.length-1].overflowing
         if (isSwitchingToStarred(pathComp, displaying)) {
-            console.log('going to starred!');
             return {
                 current: pathComp.current,
                 fading: displaying.current.slice(2)
@@ -66,7 +61,6 @@ function displayingReducer(displaying, action) {
             let newLength = pathComp.current.length
             let newCurrentPaths = displaying.current.slice(0, newLength)
             let newFading = displaying.current.slice(newLength)
-            console.log();
             return {current: newCurrentPaths, fading: newFading }
         }
     }

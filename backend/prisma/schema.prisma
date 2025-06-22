@@ -53,7 +53,6 @@ model File {
   name String
   size Int
   extension String
-  link String
   starred Boolean @default(false)
   createdAt DateTime @default(now())
   lastModified DateTime @default(now())
@@ -65,6 +64,8 @@ model File {
   sharedFolders SharedFolder[]
   starredParentId Int? 
   starredParentFolder StarredFolder? @relation("starredParentOfFile", fields: [starredParentId], references: [id])
+  publicId String
+  resourceType String
 }
 model StarredFolder {
   id Int @id @default(autoincrement())

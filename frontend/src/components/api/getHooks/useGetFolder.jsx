@@ -7,8 +7,8 @@ import React, { useEffect, useState } from 'react';
 
 const apiUrl = import.meta.env.VITE_API_URL
 
-export function useGetFolder() {
-    const [currentFolderId, setCurrentFolderId] = useState('drive')
+export function useGetFolder(defId='drive') {
+    const [currentFolderId, setCurrentFolderId] = useState(defId)
     const [folder, setFolder] = useState({})
     const [loading, setLoading] = useState({})
     const [error, setError] = useState('')

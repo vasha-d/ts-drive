@@ -18,8 +18,9 @@ async function newFile(file, parentId, ownerId) {
     let extension = getExtension(name)
     let withOutExtension = stripExtension(name, extension)
     let cldUpload = await uploadToCloudinary(file)
-    let link = cldUpload.secure_url
-    let size = cldUpload.bytes
+    let size = cldUpload.result.bytes
+    let rsrcType = cldUpload.result.resource_type
+    let public_id = cldUpload.result.public_id
     console.log('cld:', cldUpload)
     let newFile = await prisma.file.create({
         data: {
@@ -34,9 +35,11 @@ async function newFile(file, parentId, ownerId) {
                 }
             },
             name: withOutExtension,
-            link: link,
             size: size,
             extension: extension,
+            resourceType: rsrcType,
+            publicId: public_id
+
         }
     })
     let updateUser = await updateUserTotalStorage(ownerId, size)
@@ -56,7 +59,17 @@ async function getFile(fileId) {
     })
     return file
 }
+async function downloadFile(fileId) {
+    let file = await prisma.file.findUnique({
+        where: {
+            id: fileId
+        }
 
+    })
+    let dlName = file.name + file.extension
+    let link = getDownloadLink(dlName, file.publicId, file.resourceType)
+    return link
+}
 async function renameFile(fileId, newName) {
     console.log('running in model');
     const file = await prisma.file.update({
@@ -72,12 +85,14 @@ async function renameFile(fileId, newName) {
 }
 
 async function shareFile(fileId, userToShareWith) {
-    const user = await prisma.user.findUnique({
+    const sharingWith = await prisma.user.findFirst({
         where: {
             username: userToShareWith
-        }
+        },
+      
     })
-    const toShareWithId = user.sharedFolderId
+    const sharingWithId = sharingWith.sharedFolderId
+    console.log(sharingWith);
     const file = await prisma.file.update({
         where: {
             id: fileId
@@ -85,10 +100,9 @@ async function shareFile(fileId, userToShareWith) {
         data: {
             sharedFolders: {
                 connect: {
-                    id: toShareWithId
+                    id: sharingWithId
                 }
-            },
-            lastModified: new Date()
+            }
         }
     })
     return file
@@ -123,11 +137,25 @@ async function uploadToCloudinary(file) {
                     reject(err)
                     return
                 }
-                resolve(result)
+         
+                resolve({
+                    result
+                });
             }
         )
         uploadStream.end(file.buffer)
     })
+}
+async function getDownloadLink(fileName, public_id, resourceType) {
+
+
+    const downloadUrl = cloudinary.url(public_id, {
+        resource_type: resourceType,
+        flags: 'attachment',
+        attachment: fileName
+    });
+    return downloadUrl
+    
 }
 async function deleteFile(fileId) {
     let del = await prisma.file.delete({
@@ -196,5 +224,6 @@ module.exports = {
     moveFile,
     deleteFile,
     setFileStar,
-    setJustAccesed
+    setJustAccesed,
+    downloadFile
 }

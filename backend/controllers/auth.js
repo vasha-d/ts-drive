@@ -47,15 +47,20 @@ async function signOutOfUser(req, res) {
 }
 async function authorizeMiddleware(req, res, next) {
     const token = req.cookies.token
+
     let verify;
+    console.log(token);
     if (!token) {
         res.sendStatus(401)
+        console.log('not auth2');
         return
     }
     try {
         verify= jwt.verify(token, 'secret')
     } catch (error) {
         res.sendStatus(401)
+        console.log('not auth1');
+
         return
     }
     req.user = verify.user

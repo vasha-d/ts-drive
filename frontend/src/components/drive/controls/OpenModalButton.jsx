@@ -9,9 +9,7 @@ function OpenModalButton({isValid, modalImg, buttonText, buttonImg, formText, pl
     function clickButton(e) {
         e.stopPropagation()
         setFormVisible(true)
-        console.log('running toggle and make visible');
         if(toggleScaler) {
-            console.log(toggleScaler);
             toggleScaler()
         }
     }

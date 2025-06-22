@@ -14,12 +14,12 @@ async function postFolder(req, res) {
 }
 async function getFolder(req, res) {   
     let folderId = parseInt(req.params.id)
-    
     let folder = await foldersModel.getFolder(folderId)
     res.json(folder)
 }
 async function folderPatchOrganizer(req, res) {
-    let funcToUse = () => console.error('Invalid put request')
+    console.log(req, '!!!');
+    let funcToUse = () => console.error('Invalid put request b', req.body)
     if (req.body.usernameToShareWith) { 
         funcToUse = shareFolder
     } 

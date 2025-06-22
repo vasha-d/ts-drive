@@ -8,14 +8,15 @@ import backImg from '../../../../assets/back-dir.svg'
 import confirmImg from '../../../../assets/confirm-move.svg'
 import cancelImg from '../../../../assets/cancel.svg'
 import { moveFolder } from '../../../api/folder';
+import { moveFile } from '../../../api/file';
 let styles = {...mainStyles, ...otherStyles}
-function MoveModal ({toMoveId, modalVisible, closeModal}) {
+function MoveModal ({toMoveId, modalVisible, closeModal, forFile}) {
     let {currentFolder, setRefresh} = useContext(DriveContext)
     let {loading, folder, error, setCurrentFolderId} = useGetFolder(currentFolder.id)
     let [selected, setSelected] = useState(null)
 
-    console.log(folder);
     
+
     function enterDirectory (id) {
         setCurrentFolderId(id)
     }
@@ -27,7 +28,13 @@ function MoveModal ({toMoveId, modalVisible, closeModal}) {
     }
     function submitForm(e) {
         console.log(toMoveId);
-        moveFolder(toMoveId, selected, setRefresh)
+
+        if (forFile) {
+            moveFile(toMoveId, selected, setRefresh)
+        } else {
+            moveFolder(toMoveId, selected, setRefresh)
+        }
+
         
         closeModal(e)
     }
@@ -44,6 +51,9 @@ function MoveModal ({toMoveId, modalVisible, closeModal}) {
                     {/* {`/` + folder.parentFolder?.name} */}
                     Select Folder
             </div>
+    if (loading) {
+        return <div>Loading...</div>
+    }
     return (
         <div onClick={closeModal} className={styles.cover}>
             <div onClick={stopPropag}className={styles.moveModal}>
