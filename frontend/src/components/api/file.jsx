@@ -8,9 +8,13 @@ export async function newFile(file, parentId, setRefresh) {
     data.append('fileUpload', file)
     data.append('parentId', parentId)
     console.log(file);
-    let req = await axios.post(apiUrl, data, {
-        withCredentials: true
-    })
+    try {  
+        let req = await axios.post(apiUrl, data, {
+            withCredentials: true
+        })
+    } catch (error) {
+        console.log(error);
+    }
 
     setRefresh(r => !r)
 }
@@ -68,9 +72,12 @@ export async function downloadFile(id) {
     let data = new URLSearchParams({id})
     console.log(reqLink);
 
-    let req = await axios.patch(reqLink, data, {
+    let req = await axios.get(reqLink, {
+        params: data,
         withCredentials: true
     })
+    let link = req.data
+    console.log(link);
     console.log(reqLink, req);
   
 }

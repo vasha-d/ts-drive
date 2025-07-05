@@ -15,8 +15,9 @@
     z-index: 98;
 }
 .logoImg {
-    height: 10vh;
+    height: 7vh;
     padding-top: 1vh;
+    margin-right: 20px;
 }
 .logoHeader {
     display: flex;

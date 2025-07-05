@@ -4,7 +4,6 @@ const { createUser, getUserById, getUserByName } = require("../model/users")
 async function signIntoUser(req, res) {
     const {username, password} = req.body
     const user = await getUserByName(username)
-    console.log()
     const foundUser = !!user.password
     if (!foundUser) {
         res.status(404).json({
@@ -14,6 +13,7 @@ async function signIntoUser(req, res) {
     }
     if (password != user.password) {
         res.sendStatus(401)
+        return
     }
     const token = jwt.sign(
         {
@@ -27,7 +27,6 @@ async function signIntoUser(req, res) {
         expiresIn: '1d'
         }
     )
-    console.log(token)
     res.cookie('token', token, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
@@ -36,7 +35,6 @@ async function signIntoUser(req, res) {
     res.json(user)
 }
 async function signOutOfUser(req, res) {
-    console.log('running');
     res.clearCookie('token',{
         sameSite: 'Lax',
         path: '/'
@@ -49,17 +47,14 @@ async function authorizeMiddleware(req, res, next) {
     const token = req.cookies.token
 
     let verify;
-    console.log(token);
     if (!token) {
         res.sendStatus(401)
-        console.log('not auth2');
         return
     }
     try {
         verify= jwt.verify(token, 'secret')
     } catch (error) {
         res.sendStatus(401)
-        console.log('not auth1');
 
         return
     }

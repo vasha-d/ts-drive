@@ -1,33 +1,46 @@
-const {PrismaClient} = require('../generated/prisma')
+const {PrismaClient, Prisma} = require('../generated/prisma')
 
 const prisma = new PrismaClient()
 
 
 async function createUser(username, password) {
 
-    const newUser = await prisma.user.create({
-        data: {
-            username: username, 
-            password: password,
-            Folders: {
-                create: {
-                    name: 'drive',
-                    drive: true,
+    try {
+        
+        const newUser = await prisma.user.create({
+            data: {
+                username: username, 
+                password: password,
+                Folders: {
+                    create: {
+                        name: 'drive',
+                        drive: true,
+                        }
+                },
+                sharedFolder: {
+                    create: {
+                        
                     }
-            },
-            sharedFolder: {
-                create: {
-                    
-                }
-            },
-            starredFolder: {create: {
-                childrenFolders: {},
-                files: {}
-            }}
+                },
+                starredFolder: {create: {
+                    childrenFolders: {},
+                    files: {}
+                }}
+            }
+        })
+        return newUser
+    } catch (error) {
+        console.log(error);
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error.code == 'P2002') {
+                let msg = {error: 'Username not available'}
+                return msg
+            } else {
+                return {error}
+            } 
         }
-    })
-    console.log(newUser)
-    return newUser
+    }
+
 }
 
 async function getUserById(id) {

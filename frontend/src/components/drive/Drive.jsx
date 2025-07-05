@@ -12,6 +12,7 @@ const Drive = () => {
     let {folder, loading, error, setRefresh, setCurrentFolderId} = useGetFolder()
     let [curDir, setCurDir] = useState({current: [{name: 'drive', id: 'drive'}], fading: []})
     let toReturn = <>Error...</>
+    console.log(error);
     let notAuthorized = error && error.status == 401
     let path = useLocation().pathname
     let driveMode = path.split('/')[2]

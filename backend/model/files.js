@@ -10,7 +10,6 @@ function getExtension(name) {
 }
 function stripExtension(name, extension) {
     let lastIndex = name.lastIndexOf(extension)
-    console.log(lastIndex);
     return name.substring(0, lastIndex)
 }
 async function newFile(file, parentId, ownerId) {
@@ -18,10 +17,10 @@ async function newFile(file, parentId, ownerId) {
     let extension = getExtension(name)
     let withOutExtension = stripExtension(name, extension)
     let cldUpload = await uploadToCloudinary(file)
+    console.log('cld:', cldUpload)
     let size = cldUpload.result.bytes
     let rsrcType = cldUpload.result.resource_type
     let public_id = cldUpload.result.public_id
-    console.log('cld:', cldUpload)
     let newFile = await prisma.file.create({
         data: {
             owner: {
@@ -125,34 +124,44 @@ async function moveFile(fileId, newParentId) {
     return file
 }
 async function uploadToCloudinary(file) {
-    const publicId = `${Date.now()}-${file.originalname}`;
+    let newName = encodeURIComponent(file.originalname)
+    const publicId = `${Date.now()}-${newName}`;
+    console.log('uploading cld');
     return new Promise(async (resolve, reject) => {
-        let uploadStream = cloudinary.uploader.upload_stream(
-        {
-            resource_type: 'auto',
-            public_id: publicId
-        },
-        (err, result) => {
+        try {
+
+                let uploadStream = cloudinary.uploader.upload_stream(
+                    {
+                resource_type: 'auto',
+                public_id: publicId
+            },
+            (err, result) => {
                 if (err) {
-                    reject(err)
-                    return
+                    console.log('errored2', err);
+                        reject(err)
+                        return
+                    }
+
+                    console.log('resolved', result);
+                    resolve({
+                        result
+                    });
                 }
-         
-                resolve({
-                    result
-                });
-            }
-        )
-        uploadStream.end(file.buffer)
+            )
+            
+            uploadStream.end(file.buffer)
+        } catch (error) {
+            console.log('errored', error);
+        }
     })
 }
 async function getDownloadLink(fileName, public_id, resourceType) {
 
-
+    let name = encodeURIComponent(fileName)
+    console.log(name, public_id);
     const downloadUrl = cloudinary.url(public_id, {
         resource_type: resourceType,
-        flags: 'attachment',
-        attachment: fileName
+        flags: `attachment:${name}`
     });
     return downloadUrl
     

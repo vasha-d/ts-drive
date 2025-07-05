@@ -7,6 +7,7 @@ import stored from '../../../assets/stored.svg'
 import signOut from '../../../assets/sign-out.svg'
 import {  useNavigate } from 'react-router-dom'
 import apiSignOut from '../../api/signOut'
+import useGetSelf from '../../api/useGetSelf'
 
 function Sidebar({goToRecent, goToStarred, goToShared}) {
     let navigate = useNavigate()
@@ -40,10 +41,7 @@ function Sidebar({goToRecent, goToStarred, goToShared}) {
             <img src={share} alt="" />
             <span>Shared</span>
           </div>
-          <div className={styles.sidebarChild}>
-            <img src={stored}  alt="" />
-            <span>Stored</span>
-          </div>
+          <Stored/>
 
           <div onClick={handleSignOut} className={styles.sidebarChild + ` ` + styles.signOut}>
             <img src={signOut}  alt="" />
@@ -52,5 +50,33 @@ function Sidebar({goToRecent, goToStarred, goToShared}) {
       </div>
     )
 }
+
+
+function Stored() {
+
+
+    const user = useGetSelf()
+    const totalStored = user.user.totalStored
+    let gbAmount = Math.round(totalStored/1073741824, 2)
+    let percentage = Math.round(gbAmount/15 * 100, 2)
+    let mbAmount = Math.round(totalStored/1000000, 2)
+    console.log(mbAmount);
+    const styleAttr = {width: `${percentage}%`}
+    return (
+      <div className={styles.sidebarChild + ` ` + styles.stored}>
+        <img src={stored} alt="" />
+        <span>Stored</span>
+        <div className={styles.storedBar}>
+          <div className={styles.storedProgress} style={styleAttr}></div>
+        </div>
+        <div className={styles.storedTxt}>
+
+          {gbAmount || mbAmount} of 15GB
+        </div>
+      </div>
+    )
+}
+  
+
 
 export default Sidebar

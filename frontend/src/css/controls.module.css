@@ -29,7 +29,7 @@
     box-sizing: border-box;
     display: grid;
     grid-auto-flow: row;
-    grid-template-columns: 148px;
+    grid-template-columns: 148px 0;
     width: max-content;
     border: 1px solid black;
     border-radius: 16px;
@@ -49,11 +49,13 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    
+    padding: 6px 10px;
+    font-size: 13px;
     grid-column: 1 / 2;
 }
 .heightFixer {
     composes: controlButton;
+    padding: 0;
     grid-column: 2 / 3;
 }
 .buttonImg {
@@ -69,6 +71,18 @@
     z-index: 2;
     left: 88%;
     display: grid;
+}
+
+
+.adjustHorizontal {
+    left: 18%;
+}
+
+
+.adjustVertical {
+    top: auto;
+    bottom: 15%;
+    left: 86%;
 }
 
 @keyframes shake {

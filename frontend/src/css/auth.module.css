@@ -1,0 +1,294 @@
+
+
+
+.page {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--dark-blue);
+    background-color: var(--white-blue);
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.logo {
+    font-family: "WDXL Lubrifont SC", sans-serif;
+    letter-spacing: -0.5px;
+    color: var(--white-blue);
+    font-size: 3.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5vh;
+    padding: 0.5vh 5vh 0vh 3vh;
+    margin-bottom: 20px;
+    /* box-shadow: 0 15px 30px 5px rgba(119, 138, 210, 0.723); */
+}
+.logo > img {
+    height: 100px;
+    margin-right: 20px;
+    animation: cloudJump 10s infinite;
+}
+.formWrapper {
+    position: relative;
+    height: min-content;
+    margin-top: 60px;
+    box-shadow: 0 0 40px 20px rgba(73, 95, 174, 0.575);
+    border-radius: 2vh;
+    padding: 4px;
+    background-color: var(--light-blue);
+    overflow: hidden;
+}
+.createAccForm {
+    /* background-color: var(--grey-blue); */
+    width: 400px;
+    border-radius: 2vh;
+    color: white;
+
+    padding: 20px 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(rgb(40, 63, 95) 30%, var(--black-blue)70%);
+    background-size: 100% 200%;
+    background-position-y: 0%;
+    animation: moveBackground 5s linear alternate infinite;
+    box-sizing: border-box;
+    z-index: 2;
+    position: relative;
+}
+
+
+.formWrapper:before { 
+    animation: circleBorder 20s infinite linear,
+                adjustDimensions 20s infinite linear;
+    width: var(--elem-height);
+    height: var(--elem-height);
+    position: absolute;
+    background-color: rgb(139, 230, 180);
+    box-shadow: 0 0 40px 20px rgba(71, 184, 229, 0.575);
+    z-index: 1;
+    content: '';
+    border-radius: 5px;
+    --elem-height: 200px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    font-weight: bold;
+    gap: 4px;
+    align-items: center;
+}
+.form > input {
+
+    font-size: 1.1rem;
+    padding: 4px 8px;
+    border-radius: 10px;
+    border: 3px solid var(--mid-blue);
+}
+.nameForm, .passwordForm {
+    composes: form;
+}
+.passwordForm {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.formButtons {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.createButton {
+    background-color: var(--mid-blue);
+    padding: 12px 12px;
+    font-size: 0.9rem;
+    transition: color 0.15s linear,
+                background-color 0.15s linear,
+                scale 0.15s linear;
+    width: 140px;
+    border: 1px solid var(--black-blue);
+    background-position: 0%;
+    box-shadow: 0 2px 6px 2px rgba(172, 183, 255, 0.411);
+}
+.seperate {
+    font-weight: bold;
+    text-align: center;
+}
+.createButton:hover {
+    color: var(--grey-blue);
+    background-color: var(--white-blue);
+    scale: 1.05;
+}
+
+.signInButton {
+    composes: createButton;
+    background-color: var(--mid-blue);
+    border: 1px solid var(--black-blue);
+    box-shadow: none;
+    width: 200px;
+}
+.sampleUserMsg {
+    color: var(--black-blue);
+    font-weight: bold;
+    margin-top: 32px;
+
+}
+
+.sampleUser {
+    background-color: var(--mid-blue);
+    color: var(--white-blue);
+    padding: 2px 8px 4px 8px;
+    border: 1.5px solid var(--black-blue);
+    border-radius: 1vh;
+    box-sizing: border-box;
+    transition: color 0.15s linear,
+    background-color 0.15s linear,
+    scale 0.15s linear;
+}
+
+.sampleUser:hover {
+    color: var(--deep-blue);
+    background-color: var(--white-blue);
+    scale: 1.05;
+    cursor: pointer;
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position-y: 0%;
+    }
+
+    100% {
+        background-position-y: 100%;
+    }
+}
+
+@keyframes circleBorder {
+    0% {
+        left: 0;
+        top: 0;
+        }
+    5% {
+        left: 0;
+        top: 0;
+        transform: translate(0, 0);
+
+    }
+    25% {
+        left: 100%;
+        top: 0;
+        transform: translate(-100%, 0);
+        
+    }
+    30% {
+        transform: translate(-100%, 0);
+        top: 0;
+    }
+
+    50% {
+        left: 100%;
+        top: 100%;
+        transform: translate(-100%, -100%);
+     
+
+    }
+    55% {
+        left: 100%;
+        transform: translate(-100%, -100%);
+
+    }
+    75% {
+        left: 0;
+        top: 100%;
+        transform: translate(0, -100%);
+      
+    }
+    80% {
+        transform: translate(0, -100%);
+
+        top: 100%;
+    }
+    100% {
+        left: 0;
+        top: 0;
+
+    }
+}
+@keyframes adjustDimensions {
+    0% {
+        width: 6px;
+        height: var(--elem-height);
+    }
+    5% {
+        height: 6px;
+        width: var(--elem-height);
+    }
+    25% {
+        height: 6px;
+        width: var(--elem-height);
+    }
+    30% {
+        height: var(--elem-height);
+        width: 6px;
+    }
+    50% {
+        height: var(--elem-height);
+        width: 6px;
+    }
+    55% {
+        height: 6px;
+        width: var(--elem-height);
+
+    }
+    75% {
+        height: 6px;
+        width: var(--elem-height);
+    }
+    80% {
+        height: var(--elem-height);
+        width: 6px;
+    }
+
+    100% {
+        width: 6px;
+        height: var(--elem-height);
+    }
+}
+
+@keyframes cloudJump {
+    0% {
+
+    }
+    10% {
+        transform: rotateZ(5deg) translate(0%, -15%);
+
+    }
+    20% {
+        transform: rotateZ(-5deg) translate(0%, -15%);
+        scale: 1.03;
+    }
+    25% {
+        transform: rotateZ(-5deg) translate(0%, -15%);
+        
+    }   
+    40% {
+        transform: rotateZ(0deg) translate(0, 0);
+        scale: 1;
+
+    }
+
+
+
+}

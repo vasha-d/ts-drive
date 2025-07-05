@@ -9,7 +9,7 @@
     height: var(--sidebar-height);
     background-color: rgb(88, 99, 114);
     background-color: var(--deep-blue);
-    gap: 30px;
+    gap: 26px;
     align-items: center;
     padding-top: 5vh;
     grid-area: sidebar;
@@ -24,6 +24,7 @@
     color: rgb(237, 240, 243);
     padding-left: 2vh;
     transition: scale 0.01s linear;
+    font-size: 15px;
 }
 .sidebarChild:hover {
     scale: 1.05;
@@ -42,4 +43,36 @@
 .signOut {
     margin-top: auto;
     margin-bottom: 10vh;
+}
+
+.stored {
+    margin-top: 6vh;
+}
+.stored:hover {
+    scale: 1;
+    cursor: default;
+}
+.storedBar {
+    height: 12px;
+    width: inherit;
+    grid-column: 1/3;
+    background-color: white;
+    border-radius: 6px;
+    margin-right: 12px;
+    transform: translateX(-5%);
+    border: 2px solid var(--mid-blue);
+    box-sizing: border-box;
+
+}
+
+.storedProgress {
+    border-radius: 6px;
+    background-color: var(--mid-blue);
+    height: 100%;
+}
+.storedTxt {
+    grid-column: 1/3;
+    font-size: 13px;
+    text-align: center;
+    padding-right: 22px;
 }

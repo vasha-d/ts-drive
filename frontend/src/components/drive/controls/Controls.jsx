@@ -9,6 +9,7 @@ import MoveButton from './MoveModal/MoveButton'
 function Controls({toMoveId, forFile=false, onSubmits, controlsOpenPrio, toggleScaler, isValids}) {
 
     let [visible, setVisible] = useState(false)
+    let [adjustPosition, setAdjustPosition] = useState([false, false])
     let controlsRef = useRef()
     let wrenchRef = useRef()
     function animateWrench() {
@@ -26,6 +27,7 @@ function Controls({toMoveId, forFile=false, onSubmits, controlsOpenPrio, toggleS
             animateWrench()
         } else {
             setVisible(true)
+            positionRelativeToPage()
             document.addEventListener('click', closeControls)
             controlsOpenPrio()
             animateWrench()
@@ -40,6 +42,16 @@ function Controls({toMoveId, forFile=false, onSubmits, controlsOpenPrio, toggleS
         document.removeEventListener('click', closeControls)    
         controlsOpenPrio()
     }               
+    function positionRelativeToPage() {
+        const elemHeight = 160 + 40 * !!forFile
+        const elemWidth = 150 + 20
+        
+        const positions = wrenchRef.current.getBoundingClientRect()
+        const overflowingBottom = positions.bottom + elemHeight> window.innerHeight
+        const overflowingRight = positions.right + elemWidth > window.innerWidth
+        
+        setAdjustPosition([overflowingRight, overflowingBottom])
+    }
     return (    
         <>
             <div ref={wrenchRef}onClick={handleClick} id="controls" className={styles.openControls}>
@@ -53,16 +65,24 @@ function Controls({toMoveId, forFile=false, onSubmits, controlsOpenPrio, toggleS
                 ref = {controlsRef}
                 toggleScaler={toggleScaler}
                 isValids={isValids}
+                adjustPosition={adjustPosition}
             />
         </>
     )
 }
 
-let ControlsList = React.forwardRef(({toMoveId, visible, forFile, onSubmits, toggleScaler, isValids}, ref) => {
+let ControlsList = React.forwardRef(({toMoveId, visible, forFile, onSubmits, toggleScaler, isValids, adjustPosition}, ref) => {
 
     if (!visible) return null;
+
+    let classes = styles.foldingWrapper
+    console.log(adjustPosition);
+    if (adjustPosition[0]) classes += ` ${styles.adjustHorizontal}`
+    if (adjustPosition[1]) classes += ` ${styles.adjustVertical}`
+    console.log(classes, styles.adjustHorizontal);
+
     return (
-        <div className={styles.foldingWrapper}>    
+        <div className={classes}>    
             <div ref={ref} id="controls" className={styles.controlsList}>
 
                 <RenameButton

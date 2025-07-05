@@ -3,10 +3,11 @@ async function  postFile(req, res) {
     let file = req.file
     let parentId = parseInt(req.body.parentId)
     let ownerId = req.user.id
-
+    console.log('Running post file in controller');
     const newFile = await filesModel.newFile(
         file, parentId, ownerId
     )
+    console.log('new File in controller', newFile);
     res.json(newFile)
 }
 async function filePatchOrganizer(req, res) {
@@ -86,13 +87,10 @@ async function setJustAccesssed(req, res) {
 async function downloadFile(req, res) {
     console.log('running download route', req.params.id);
     let fileId = parseInt(req.params.id)
-    try {
+  
         
-        let link = await filesModel.downloadFile(fileId)
-    } catch (error) {
-        console.log(error);
-    }
-
+    let link = await filesModel.downloadFile(fileId)
+    
     res.json(link)
     
 }
