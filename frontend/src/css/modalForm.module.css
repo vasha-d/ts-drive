@@ -51,12 +51,22 @@
     color: var(--black-blue);
     font-weight: bold;
     width: 260px;
-    height: 80px;
+    height: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 4vh;
     margin-top: 20px;
+    padding: 0 16px;
+    box-sizing: content-box;
+}
+.fileName {
+    max-width: 26ch;
+    white-space: nowrap;
+    text-align: center;   
+    justify-self: flex-start;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .fileInput {
     position: absolute;

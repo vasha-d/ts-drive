@@ -8,14 +8,27 @@ function getExtension(name) {
 
     return '.'+split[split.length-1]
 }
+
 function stripExtension(name, extension) {
     let lastIndex = name.lastIndexOf(extension)
     return name.substring(0, lastIndex)
 }
+function shortenName(name) {
+    
+    let ext = getExtension(name)
+    let noExt = stripExtension(name, ext)
+    console.log('length ', noExt)
+    console.log('running shorten name')
+    if (noExt.length < 24) return name
+    noExt = noExt.substr(0, 24)
+    return (noExt+ext)
+}   
 async function newFile(file, parentId, ownerId) {
-    let name = file.originalname
+    let name = shortenName(file.originalname)
+    file.originalname = name
     let extension = getExtension(name)
     let withOutExtension = stripExtension(name, extension)
+    console.log(file)
     let cldUpload = await uploadToCloudinary(file)
     console.log('cld:', cldUpload)
     let size = cldUpload.result.bytes

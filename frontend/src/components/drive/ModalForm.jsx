@@ -69,7 +69,9 @@ function NewChildForm({headerImg, formText, placeHolder, defaultValue, onCancel,
     let inputClass = styles.textInput + ` ` + (invalidMsg ? styles.formInvalid : '')
     let input = creatingFile ? 
         <div className={styles.fileInputContainer}>
-            {fileName || 'Click Here'} 
+            <span className={styles.fileName}>
+                {fileName || 'Click Here'} 
+            </span>
             <input placeholder={placeHolder} className={styles.fileInput}
             type='file'  name='fileUpload' onChange={handleFileChange}/>
         </div>
