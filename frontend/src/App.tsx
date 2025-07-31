@@ -1,8 +1,8 @@
 import './App.css'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import SignIn from './components/auth/SignIn'
-import CreateAccount from './components/auth/CreateAccount'
-import Drive from './components/drive/Drive'
+import CreateAccount from './components/auth/CreateAccount.jsx'
+import Drive from './components/drive/Drive.js'
 function App() {
 
   return (
