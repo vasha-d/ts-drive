@@ -11,26 +11,20 @@ let styles = Object.assign({}, mainStyles, pbStyles)
 
 
 
-function ContentBar({goBackOne, goBackToId, pathComp}) {
-
-    let {currentFolder, setCurrentFolderId} = useContext(DriveContext)
+function ContentBar({children, goBackOne}) {
+    const {currentFolder, setCurrentFolderId} = useContext(DriveContext)
     let {id, parentId} = currentFolder
     function clickBackButton() {
         goBackOne()
     }
-    
-
-
+    const [pathBar] = React.Children.toArray(children)
     return (
         <div className={styles.contentbar}>
             <div className= {styles.backButton}onClick={clickBackButton}>
                 <img src={back} alt="" />
             </div>
             <div className={styles.pbWrapper}>
-                <PathBar 
-                pathComp={pathComp}
-                goBackToId={goBackToId}
-                ></PathBar>
+                {pathBar}
             </div>
             <div className={styles.newButtonsContainer}>
                 <NewFolderButton

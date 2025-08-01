@@ -6,25 +6,27 @@ import folderIcon from '../../../assets/folder.svg'
 import Controls from '../controls/Controls';
 import starIcon from '../../../assets/star-enabled.svg'
 
-let styles = Object.assign({}, childrenStyles)
+const styles = Object.assign({}, childrenStyles)
 
 
+import type { FolderObj } from '../../../types/main';
 
-
-const Folder = ({folderObj, addToDir}) => {
-    let {name, id} = folderObj
+const Folder = ({folderObj , addToDir} : {
+    folderObj: FolderObj, addToDir: (name, id) => void
+}) => {
+    const {name, id} = folderObj
     let {setCurrentFolderId, setRefresh} = useContext(DriveContext)
-    let folderRef = useRef()
+    const folderRef = useRef<HTMLDivElement>(null)
     function handleClick(e) {
-        let path = e.nativeEvent.composedPath()
-        let isFromControls = path.some(element => element.id =='controls')  
+        const path = e.nativeEvent.composedPath()
+        const isFromControls = path.some(element => element.id =='controls')  
         if (isFromControls) return;
         setCurrentFolderId(id)
         addToDir(name, id)
     }
     function renameValid(newName) {
-        let nameEmpty = newName.trim() == ''
-        let nameTaken = !!(folderObj.parentFolder.childrenFolders.some(f => {
+        const nameEmpty = newName.trim() == ''
+        const nameTaken = !!(folderObj.parentFolder.childrenFolders.some(f => {
                 return f.name == newName
             })) 
         if (nameEmpty) {return 'Name cannot be empty!'}
@@ -33,7 +35,7 @@ const Folder = ({folderObj, addToDir}) => {
         return 'valid'
     }
     function shareValid(username) {
-        let nameEmpty = username.trim() == ''
+        const nameEmpty = username.trim() == ''
         if (nameEmpty) {return 'Name cannot be empty'}
         return 'valid'
     }
@@ -51,16 +53,16 @@ const Folder = ({folderObj, addToDir}) => {
         starFolder(id, setRefresh)
     }
     function controlsOpenPrio() {
-        folderRef.current.classList.toggle(styles.controlsOpenPrio)
+        folderRef.current?.classList.toggle(styles.controlsOpenPrio)
     }
     function toggleScaler() {
         console.log('toggling scaler');
-        folderRef.current.classList.toggle(styles.childScaler)
-        folderRef.current.classList.toggle(styles.modalOpenPrio)
+        folderRef.current?.classList.toggle(styles.childScaler)
+        folderRef.current?.classList.toggle(styles.modalOpenPrio)
     }
-    let onSubmits = [submitRenameForm, submitShareForm, DeleteFolder, StarFolder]
-    let isValids = [renameValid, shareValid]
-    let starImg = !folderObj.starred ? null: 
+    const onSubmits = [submitRenameForm, submitShareForm, DeleteFolder, StarFolder]
+    const isValids = [renameValid, shareValid]
+    const starImg = !folderObj.starred ? null: 
                 <div className={styles.star}>
                     <img className={styles.starSpin} src={starIcon} alt="" />
                 </div>       

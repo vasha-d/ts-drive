@@ -7,99 +7,24 @@ import DriveContext from './DriveContext';
 import Navbar from './navbar/Navbar'
 import Sidebar from './sidebar/Sidebar';
 import ContentBar from './navbar/ContentBar';
+import PathBar from './navbar/Pathbar';
+import usePath from './usePath';
 const Drive = () => {
-
-    let {folder, loading, error, setRefresh, setCurrentFolderId} = useGetFolder()
-    let [curDir, setCurDir] = useState({current: [{name: 'drive', id: 'drive'}], fading: []})
+    const {folder, loading, error, setRefresh, setCurrentFolderId} = useGetFolder()
+    const  {addToDir, goBackToId, goBackOne, curDir, goToName} = usePath(
+        {folder, setCurrentFolderId}
+    )
     let toReturn = <>Error...</>
-    console.log(error);
-    let notAuthorized = error && error.status == 401
-    let path = useLocation().pathname
-    let driveMode = path.split('/')[2]
-
-    if (loading) {
+    const path = useLocation().pathname
+    const driveMode = path.split('/')[2]
+    if (loading || folder == null) {
         toReturn = <div>Loading...</div>
     } 
-    else if (notAuthorized) {
+    else if (error.message && error.status == 401) {
         toReturn = <Navigate to={'/auth/sign-in'}></Navigate>
     } 
     else {
-        function addToDir(name, id) {
-            let newObj = {name, id}
-            setCurDir(currentDir =>{
-                let newDir = [...currentDir.current, newObj]
-                return {current: newDir, fading: []}
-            })
-        }
-        function goBackToId(id) {
-            setCurDir(currentDir => {
-                let lastIndex = currentDir.current.findIndex(obj => obj.id == id)
-                let newDir = currentDir.current.slice(0, lastIndex + 1)
-                let newFading = currentDir.current.slice(lastIndex+1)
-                setCurrentFolderId(id)
-                return {
-                    current: newDir,
-                    fading: newFading
-                }
-            })
-        }
-        function goBackOne() {
-            if (curDir.current.length == 1) {return}
-            setCurDir(currentDir => {
-                let newDir = currentDir.current.slice(0, -1)
-                let fadingOne = currentDir.current.slice(-1)
-                let [lastElement] = newDir.slice(-1)
-                setCurrentFolderId(lastElement.id)
-                return {
-                    current: newDir,
-                    fading: fadingOne
-                }
-            })
-        }
-        function goToRecent() {
-            setCurDir(curDir =>{
-                let fading = curDir.current.slice(1)
-                return {
-
-                    current: [{name: 'drive', id: 'drive'}],
-                    fading
-                }
-            })
-            setCurrentFolderId('drive')
-        }
-        function goToStarred() {
-            if (folder.isStarredFolder) return;
-            let inStarredFolder = curDir.current[1]?.id == 'starred'
-            if (inStarredFolder) {
-                goBackToId('starred')
-                return
-            }
-            setCurrentFolderId('starred')  
-            setCurDir(curDir =>{
-                let fading = curDir.current.slice(1)
-                return {
-
-                    current: [{name: 'drive', id: 'drive'}, {name: 'starred', id: 'starred'}],
-                    fading
-                }
-            })
-        }
-        function goToShared() {
-            if (folder.isSharedFolder) return;
-            let inSharedFolder = curDir.current[1]?.id == 'shared'
-            if (inSharedFolder) {
-                goBackToId('shared')
-                return
-            }
-            setCurrentFolderId('shared')
-            setCurDir(curDir =>{
-                let fading = curDir.current.slice(1)
-                return {
-                    current: [{name: 'drive', id: 'drive'}, {name: 'shared', id: 'shared'}],
-                    fading
-                }
-            })
-        }
+        console.log(folder, 'loading')
         let [sortedFolders, sortedFiles] = sortChildren(
             driveMode, folder.childrenFolders, folder.files
         )
@@ -108,16 +33,14 @@ const Drive = () => {
                 { setRefresh, setCurrentFolderId, currentFolder: folder}}>  
                 <div className={styles.drive}>
                         <Navbar></Navbar>
-                        <ContentBar
-                            goBackOne={goBackOne}
-                            goBackToId={goBackToId}
-                            pathComp={curDir}
-                        ></ContentBar>   
+                        <ContentBar goBackOne={goBackOne}>
+                            <PathBar 
+                                pathComp={curDir}
+                                goBackToId={goBackToId}
+                            />    
+                        </ContentBar>   
                         <Sidebar
-                            goToRecent={goToRecent}
-                            goToStarred = {goToStarred}
-                            goToShared = {goToShared}
-
+                            goToName={goToName}
                         ></Sidebar>
                         <div className={styles.contentsWrapper}>
                             <Children

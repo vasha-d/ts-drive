@@ -1,27 +1,23 @@
-import React from 'react';
 import Folder from './folder/Folder';
 import File from './file/File';
-import DriveContext from './DriveContext'
 import styles from '../../css/children.module.css'
 
 
 const Children = ({childrenFolders, files, addToDir}) => {
 
-    let folderElements = childrenFolders.map(folder => {
+    const folderElements = childrenFolders.map(folder => {
         return <Folder 
            key={`folder-${folder.id}`} 
            folderObj={folder}
            addToDir={addToDir}
         >
-
         </Folder>
     })
-    let fileElements = files.map(file => {
+    const fileElements = files.map(file => {
         return <File 
             key={`file-${file.id}`} 
             fileObj={file}
         >
-
         </File>
     })
     const isDirectoryEmpty = !folderElements.length && !fileElements.length

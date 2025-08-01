@@ -9,19 +9,18 @@ import {  useNavigate } from 'react-router-dom'
 import apiSignOut from '../../api/signOut'
 import useGetSelf from '../../api/useGetSelf'
 
-function Sidebar({goToRecent, goToStarred, goToShared}) {
-    let navigate = useNavigate()
- 
+function Sidebar({goToName}) {
+    const navigate = useNavigate()
     function navigateToRecent () {
-      goToRecent()
+      goToName('recent')
       navigate('/drive/recent')
     }
     function navToStarred () {
-      goToStarred()
+      goToName('starred')
       navigate('/drive/starred')
     }
     function navToShared() {
-      goToShared()
+      goToName('shared')
       navigate('/drive/shared')
     }
     function handleSignOut() {
@@ -42,7 +41,6 @@ function Sidebar({goToRecent, goToStarred, goToShared}) {
             <span>Shared</span>
           </div>
           <Stored/>
-
           <div onClick={handleSignOut} className={styles.sidebarChild + ` ` + styles.signOut}>
             <img src={signOut}  alt="" />
             <span>Sign Out</span>
@@ -50,11 +48,7 @@ function Sidebar({goToRecent, goToStarred, goToShared}) {
       </div>
     )
 }
-
-
 function Stored() {
-
-
     const user = useGetSelf()
     const totalStored = user.user.totalStored
     let gbAmount = Math.round(totalStored/1073741824, 2)

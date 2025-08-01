@@ -5,16 +5,17 @@ import DriveContext from '../DriveContext';
 import FileDetails from './FileDetails';
 import fileIcon from '../../../assets/file.svg'
 import Controls from '../controls/Controls';
+import starIcon from '../../../assets/star-enabled.svg'
+
 let styles = Object.assign({}, childrenStyles)
 
 
 const File = ({fileObj}) => {
-
     const {setRefresh} = useContext(DriveContext)
-    let fileRef = useRef()
-
-    let {name, id, link} = fileObj
-
+    const fileRef = useRef(null)
+    const {name, id, link} = fileObj
+    console.log(fileObj)
+    console.log('entered file')
     function DeleteFile() {
         deleteFile(fileObj.id, setRefresh)
     }
@@ -41,9 +42,8 @@ const File = ({fileObj}) => {
     }
     function toggleScaler() {
         console.log('toggling scaler');
-        fileRef.current.classList.toggle(styles.childScaler)
-        fileRef.current.classList.toggle(styles.modalOpenPrio)
-
+        fileRef.current?.classList.toggle(styles.childScaler)
+        fileRef.current?.classList.toggle(styles.modalOpenPrio)
     }
     let onSubmits = [submitRenameForm, submitShareForm, DeleteFile, StarFile, clickDownloadFile]
     function renameValid(newName) {
@@ -54,7 +54,6 @@ const File = ({fileObj}) => {
             })) 
         if (nameEmpty) {return 'Name cannot be empty!'}
         if (nameTaken) {return 'Folder with that name already exists!'}
-
         return 'valid'
     }
     function shareValid(username) {
@@ -63,21 +62,27 @@ const File = ({fileObj}) => {
         return 'valid'
     }
     let isValids = [renameValid, shareValid]
-
+    const starImg = !fileObj.starred ? null: 
+                <div className={styles.star}>
+                    <img className={styles.starSpin} src={starIcon} alt="" />
+                </div>   
     return (
         <div ref={fileRef} className={styles.file + ` ` + styles.childScaler}>
             <div className={styles.fileIcon}>
                 <img src={fileIcon} alt="" />
             </div>
             <div>{name + fileObj.extension}</div>
-            <Controls
-                toMoveId={id}
-                forFile={true}
-                onSubmits={onSubmits}
-                controlsOpenPrio={controlsOpenPrio}
-                toggleScaler={toggleScaler}
-                isValids={isValids}
-            />
+             <div className={styles.iconRow}>
+                {starImg}
+                <Controls
+                    toMoveId={fileObj.id}
+                    forFile={true}
+                    onSubmits={onSubmits}
+                    controlsOpenPrio={controlsOpenPrio}
+                    toggleScaler={toggleScaler}
+                    isValids={isValids}
+                />
+            </div>
         </div>
     );
 }

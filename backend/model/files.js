@@ -190,7 +190,7 @@ async function deleteFile(fileId) {
     updateUserTotalStorage(ownerId, amount)
     return del
 }
-async function setFileStar(fileId) {
+async function setFileStar(fileId, userId) {
 
     let current = await prisma.file.findUnique({
         where: {

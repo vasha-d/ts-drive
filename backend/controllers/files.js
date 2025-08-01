@@ -73,7 +73,7 @@ async function deleteFile(req, res) {
 async function setFileStar(req, res) {
     let fileId= parseInt(req.params.id)
 
-    let star = await filesModel.setFileStar(fileId)
+    let star = await filesModel.setFileStar(fileId, req.user.id)
     
     res.json(star)
 }

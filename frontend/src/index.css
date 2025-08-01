@@ -1,68 +1,39 @@
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  
+  --white-font: rgb(237, 240, 243);
+  --white-blue: rgb(231, 241, 251);
+  --light-blue: rgb(166, 206, 243);
+  --mid-blue:  rgb(55, 106, 173);
+  --cyan-blue: rgb(69, 110, 135);
+  --deep-blue: rgb(33, 77, 118);
+  --black-blue: rgb(21, 46, 77);
+  --dark-blue: rgb(35, 38, 42);
+  --grey-blue: rgb(39, 59, 96);
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
+html, body {
+  padding: 0;
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+h1, h2, h3, h4, h5 {
+    margin: 0;
 }
-
+:global(#root) {
+    --navbar-height: 9vh;
+    --sidebar-width: 23vh;
+    --pathbar-height: 13vh;
+    --sidebar-height: calc(100vh - var(--navbar-height));
+    --contents-padding-left: 10vh;
+    --contents-padding-right: 15vh;
+}
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+    padding: 1.5vh 1vh;
+    border-radius: 2vh;
+    cursor: pointer;
+    border: 1px solid black;
+    background-color: var(--deep-blue);
+    font-weight: bold;
+    color: var(--white-font);
 }

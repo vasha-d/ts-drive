@@ -5,7 +5,6 @@ import styles from '../../../css/contentbar.module.css'
 import React from 'react'
 
 function isSwitchingToStarred(pathComp, displaying) {
-    
     let c1 = pathComp.current.length == 2
     let c2 = pathComp.current[0]?.id == 'drive'
     let c3 = pathComp.current[1]?.id == 'starred'
@@ -13,7 +12,6 @@ function isSwitchingToStarred(pathComp, displaying) {
     return c1 && c2 && c3 && c4
 }
 function isSwitchingToShared(pathComp, displaying) {
-    
     let c1 = pathComp.current.length == 2
     let c2 = pathComp.current[0]?.id == 'drive'
     let c3 = pathComp.current[1]?.id == 'shared'
@@ -68,16 +66,12 @@ function displayingReducer(displaying, action) {
     
     return displaying
 }
-
-const PathBar = React.forwardRef(({pathComp, goBackToId}, ref) => {    
-
-
-
+const PathBar = React.forwardRef<HTMLDivElement, any>(({pathComp, goBackToId}, ref) => {    
     let pbRef = useRef()
     let [displaying, dispatchDisplaying] = useReducer(displayingReducer, pathComp)
     let currentPaths = displaying.current.map(pObj => {  
         return (    
-            <PathElement pObj={pObj} goBackToId = {goBackToId}
+            <PathElement pObj={pObj} key={pObj.id}goBackToId = {goBackToId}
             />
         )
     })
@@ -146,8 +140,6 @@ function PathElement({pObj, goBackToId}) {
         </div>
     )
 }
-
-
 function OverflowElement({id, fade}) {
     let fadeClass = fade ? styles.fadePath : ''
     return (
@@ -157,7 +149,6 @@ function OverflowElement({id, fade}) {
         </div>
     );
 }
-
 function FadingPath({pObj}) {
     let {id, overflowing, name} = pObj
     if (overflowing) return <OverflowElement fade={true} id={id}></OverflowElement>
