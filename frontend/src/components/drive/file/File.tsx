@@ -10,10 +10,10 @@ let styles = Object.assign({}, childrenStyles)
 
 type FileProps = {
     fileObj: FileObjType,
-    openModal: (fileObj: FileObjType) => void,
+    toggleModal: (fileObj: FileObjType) => void,
 }
 
-const File = ({fileObj, openModal}: FileProps) => {
+const File = ({fileObj, toggleModal}: FileProps) => {
     const {setRefresh} = useContext<DriveContextType>(DriveContext)
     const fileRef = useRef<HTMLDivElement>(null)
     const {name, id} = fileObj
@@ -73,7 +73,7 @@ const File = ({fileObj, openModal}: FileProps) => {
             <div>{name + fileObj.extension}</div>
              <div className={styles.iconRow}>
                 <FileDetails fileObj={fileObj}
-                    openModal={openModal}
+                    toggleModal={toggleModal}
                 />
                 <Controls
                     toMoveId={fileObj.id}

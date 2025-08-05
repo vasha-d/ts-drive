@@ -4,13 +4,13 @@ import styles from '../../../css/children.module.css'
 import DetailsImg from '../../../assets/details.svg'
 type FileDetailsType = {
     fileObj: FileObjType,
-    openModal: (fileObj: FileObjType) => void,
+    toggleModal: (fileObj: FileObjType) => void,
 }
-function FileDetails({fileObj, openModal}: FileDetailsType) {
+function FileDetails({fileObj, toggleModal}: FileDetailsType) {
 
     
     function clickViewDetails () {
-        openModal(fileObj)
+        toggleModal(fileObj)
     }
     return (    
         <>
