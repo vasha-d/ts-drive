@@ -174,3 +174,71 @@ h2.emptyMessage {
 .star {
     animation: fadeInNormal 0.2s linear, spin 10s linear alternate-reverse infinite;
 }
+
+button.viewDetails {
+    display: none;  
+    align-items: start;
+    margin-bottom: auto;
+    padding: 2px;
+    background-color: var(--light-blue);
+    
+}
+.file:hover .viewDetails {
+    display: flex;
+    animation: fadeInNormal 0.3s ease-in forwards ;
+    transition: background-color 0.2s ease-out,
+        scale 0.2 ease-out;
+
+}
+.detailsImg {
+    height: 3vh;
+}
+.file:hover .star {
+    display: none;
+}
+.viewDetails:hover {
+    background-color: var(--white-blue);
+    scale: 1.03;
+}
+.viewDetails:active {
+    scale: 1.07;
+}
+.detailsModal {
+    position: fixed;
+    z-index: 6;
+    right: 0;
+    --top-pos:calc(var(--navbar-height) + var(--contentbar-height));
+    --height: calc(100vh - var(--top-pos)) ;
+    top: var(--top-pos);
+    height: var(--height);
+    background-color: var(--white-blue);
+    box-sizing: border-box;
+    padding: 20px;
+    border-left: var(--black-blue) 1px solid;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0px 0 30px 5px rgba(40, 40, 83, 0.538);
+}
+.closeModalBtn {
+    width: min-content;
+    background-color: inherit;
+    border: none;
+    padding: 0;
+    align-self: flex-end;
+}
+
+.closeModalBtn > img {
+    height: 5vh;
+}
+
+.detailsList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.detailName {
+    font-weight: bold;
+}

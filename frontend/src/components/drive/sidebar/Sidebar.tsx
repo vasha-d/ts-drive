@@ -54,7 +54,6 @@ function Stored() {
     let gbAmount = Math.round(totalStored/1073741824, 2)
     let percentage = Math.round(gbAmount/15 * 100, 2)
     let mbAmount = Math.round(totalStored/1000000, 2)
-    console.log(mbAmount);
     const styleAttr = {width: `${percentage}%`}
     return (
       <div className={styles.sidebarChild + ` ` + styles.stored}>

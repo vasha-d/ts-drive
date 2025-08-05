@@ -1,10 +1,21 @@
 import Folder from './folder/Folder';
 import File from './file/File';
 import styles from '../../css/children.module.css'
-
+import DetailsModal from './file/DetailsModal';
+import type { FileObjType } from '../../types/main';
+import { useState } from 'react';
 
 const Children = ({childrenFolders, files, addToDir}) => {
 
+    const [modalVisible, setModalVisible] = useState(false)
+    const [modalObj, setModalObj] = useState<FileObjType | null>(null)
+    function openModal(fileObj: FileObjType) {
+        setModalVisible(true)
+        setModalObj(fileObj)
+    }
+    function closeModal() {
+        setModalVisible(false)
+    }
     const folderElements = childrenFolders.map(folder => {
         return <Folder 
            key={`folder-${folder.id}`} 
@@ -17,15 +28,17 @@ const Children = ({childrenFolders, files, addToDir}) => {
         return <File 
             key={`file-${file.id}`} 
             fileObj={file}
+            openModal={openModal}
+            closeModal={closeModal}
         >
         </File>
     })
+
     const isDirectoryEmpty = !folderElements.length && !fileElements.length
     const emptyMessage = !isDirectoryEmpty ? null :
         <h2 className={styles.emptyMessage}>
             This directory is currently empty...
         </h2>
-
     return (
         <div className={styles.childrenContainer}>
             <div className={styles.foldersSection}>
@@ -46,6 +59,11 @@ const Children = ({childrenFolders, files, addToDir}) => {
                 </div>
             </div>
             {emptyMessage}
+            <DetailsModal
+                visible={modalVisible}
+                fileObj={modalObj}
+                closeModal={closeModal}
+            ></DetailsModal>
         </div>
     );
 }

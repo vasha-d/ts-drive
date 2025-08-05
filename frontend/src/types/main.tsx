@@ -19,22 +19,22 @@ export type FolderObj = {
     starredParentId: number,
     parentFolder: FolderObj,
     childrenFolders: FolderObj[],
-    files: FileObj,
-} | StarredFolderObj | SharedFolderObj
+    files: FileObjType,
+} 
 export type StarredFolderObj = {
     childrenFolders: FolderObj[],
-    files: FileObj[],
+    files: FileObjType[],
     isStarredFolder: true
 
 }
 export type SharedFolderObj = {
     childrenFolders: FolderObj[],
-    files: FileObj[],
+    files: FileObjType[],
     isSharedFolder: true
     
 }
 
-export type FileObj = {
+export type FileObjType = {
     id: number,
     name: string,
     size: number,
@@ -49,9 +49,14 @@ export type FileObj = {
     publicId: string,
     resourceType: string, // maybe add enum
     parentFolder: FolderObj
-}
+} 
 
 export type errObj = {
     message: string,
     status: number | undefined
+}
+export type DriveContextType = {
+    setRefresh: React.Dispatch<React.SetStateAction<boolean>>, 
+    setCurrentFolderId: React.Dispatch<React.SetStateAction<number | string>>
+    currentFolder: FolderObj
 }

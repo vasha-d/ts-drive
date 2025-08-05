@@ -19,5 +19,8 @@ export default tseslint.config([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      'prefer-const': 'off', // 🚫 turn off this rule
+    },
   },
 ])

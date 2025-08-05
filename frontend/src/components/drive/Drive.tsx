@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {useGetFolder} from '../api/getHooks/useGetFolder'
 import { Navigate, useLocation } from 'react-router-dom';
 import Children from './Children';
@@ -17,14 +16,13 @@ const Drive = () => {
     let toReturn = <>Error...</>
     const path = useLocation().pathname
     const driveMode = path.split('/')[2]
-    if (loading || folder == null) {
-        toReturn = <div>Loading...</div>
-    } 
-    else if (error.message && error.status == 401) {
+    if (error.message && error.status == 401) {
         toReturn = <Navigate to={'/auth/sign-in'}></Navigate>
     } 
+    else if (loading || folder == null) {
+        toReturn = <div>Loading...</div>
+    } 
     else {
-        console.log(folder, 'loading')
         let [sortedFolders, sortedFiles] = sortChildren(
             driveMode, folder.childrenFolders, folder.files
         )
