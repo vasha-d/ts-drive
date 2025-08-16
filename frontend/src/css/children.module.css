@@ -213,9 +213,9 @@ button.viewDetails {
     height: var(--height);
     background-color: var(--white-blue);
     box-sizing: border-box;
-    padding: 20px;
+    padding: 20px 20px 20px 10px;
     border-left: var(--black-blue) 1px solid;
-
+    width: 40vh;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -223,22 +223,25 @@ button.viewDetails {
 }
 .closeModalBtn {
     width: min-content;
+    height: 6vh;
     background-color: inherit;
     border: none;
     padding: 0;
     align-self: flex-end;
+    display: flex;
+    align-items: center;
 }
 
 .closeModalBtn > img {
-    height: 5vh;
+    height: 4vh;
 }
 
-.detailsList {
+.fileImg {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    height: 6vh;
 }
 
-.detailName {
-    font-weight: bold;
+.fileImg > img {
+    height: 4vh;
 }

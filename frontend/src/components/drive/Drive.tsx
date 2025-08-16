@@ -10,7 +10,7 @@ import PathBar from './navbar/Pathbar';
 import usePath from './usePath';
 const Drive = () => {
     const {folder, loading, error, setRefresh, setCurrentFolderId} = useGetFolder()
-    const  {addToDir, goBackToId, goBackOne, curDir, goToName} = usePath(
+    const  {addToDir, goBackToId, goBackOne, goToName, status} = usePath(
         {folder, setCurrentFolderId}
     )
     let toReturn = <>Error...</>
@@ -33,7 +33,7 @@ const Drive = () => {
                         <Navbar></Navbar>
                         <ContentBar goBackOne={goBackOne}>
                             <PathBar 
-                                pathComp={curDir}
+                                status={status}
                                 goBackToId={goBackToId}
                             />    
                         </ContentBar>   

@@ -1,0 +1,98 @@
+
+.detailIcons  {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 6vh;
+    margin-bottom: 20px;
+}
+.detailIcons > img {
+    height: 32px;
+}
+h2.detailName {
+    border: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+    font-size: 21px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+
+.detailsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-left: 16px;
+}
+
+.detailName {
+    font-weight: bold;
+    display: block;
+    text-wrap: nowrap;
+    color: var(--black-blue);
+
+}
+.fileDet {
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid rgb(51, 88, 189);
+    padding-bottom: 12px;
+    padding-left: 12px;
+    border-radius: 6px;
+    margin-right: 20px;
+    
+}
+.dateWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.detailNameWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.detailsList img {
+    height: 4vh;
+    display: inline;
+}
+
+
+.detailDate {
+    display: block;
+    text-wrap: nowrap;
+}
+
+.extensionDetail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    composes: fileDet;
+}
+.extensionDetail .detail {
+    color: blue;
+    font-weight: 500;
+}
+
+.closeModalBtn {
+    width: min-content;
+    height: 6vh;
+    background-color: inherit;
+    border: none;
+    padding: 0;
+    align-self: flex-end;
+    display: flex;
+    align-items: center;
+}
+
+.closeModalBtn > img {
+    height: 3vh;
+}
+
+.fileSizeDet {
+    composes: fileDet;
+    margin-top: 12px;
+}

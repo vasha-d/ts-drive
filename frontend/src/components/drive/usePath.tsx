@@ -1,17 +1,21 @@
 import {useState } from "react";
-import type { curDirType, usePathProps, usePathReturnType } from '../../types/pbtypes';
+import type { curDirType, lastDirActionType, usePathProps, usePathReturnType } from '../../types/pbtypes';
 
 
 const defaultDir: curDirType = {current: [{name: 'drive', id: 'drive'}], fading: []}
+
+
+
 function usePath({folder, setCurrentFolderId}: usePathProps): usePathReturnType {
     const [curDir, setCurDir] = useState<curDirType>(defaultDir)
-
+    const [lastAction, setLastAction] = useState<lastDirActionType>(null)
     function addToDir(name, id) {
             const newObj = {name, id}
             setCurDir(currentDir =>{
                 const newDir = [...currentDir.current, newObj]
                 return {current: newDir, fading: []}
             })
+            setLastAction('addToDir')
     }
     function goBackToId(id) {
         setCurDir(currentDir => {
@@ -24,6 +28,8 @@ function usePath({folder, setCurrentFolderId}: usePathProps): usePathReturnType 
                 fading: newFading
             }
         })
+        setLastAction('goBackToId')
+
     }
     function goBackOne() {
         if (curDir.current.length == 1) {return}
@@ -37,6 +43,7 @@ function usePath({folder, setCurrentFolderId}: usePathProps): usePathReturnType 
                 fading: fadingOne
             }
         })
+        setLastAction('goBackOne')
     }
 
     function goToRecent() {
@@ -49,6 +56,7 @@ function usePath({folder, setCurrentFolderId}: usePathProps): usePathReturnType 
           }
       })
       setCurrentFolderId('drive')
+      setLastAction('goToRecent')
     }
     function goToStarred() {
         if (folder == null) return
@@ -67,6 +75,7 @@ function usePath({folder, setCurrentFolderId}: usePathProps): usePathReturnType 
                 fading
             }
         })
+        setLastAction('goToStarred')
     }
     function goToShared() {
         if (folder == null) return
@@ -87,6 +96,7 @@ function usePath({folder, setCurrentFolderId}: usePathProps): usePathReturnType 
             }
             return newDir
         })
+        setLastAction('goToShared')
     }
     function goToName(name: 'recent' | 'starred' | 'shared'): void {
       if (name == 'recent') {
@@ -97,7 +107,8 @@ function usePath({folder, setCurrentFolderId}: usePathProps): usePathReturnType 
         goToShared()
       }
     }
-  return {addToDir, goBackToId, goBackOne, curDir, goToName}
+
+  return {addToDir, goBackToId, goBackOne, goToName, status :{curDir, lastAction}}
 }
 
 export default usePath

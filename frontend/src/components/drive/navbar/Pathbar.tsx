@@ -1,24 +1,18 @@
-import { useEffect, useRef, useReducer } from 'react'
-import DriveContext from '../DriveContext'
+import { useEffect, useRef, useReducer, act } from 'react'
 import chevronRight from '../../../assets/chevron-right.svg'
 import styles from '../../../css/contentbar.module.css'
 import React from 'react'
+import type { PathBarProps, pathStatusType } from '../../../types/pbtypes'
 
-function isSwitchingToStarred(pathComp, displaying) {
-    let c1 = pathComp.current.length == 2
-    let c2 = pathComp.current[0]?.id == 'drive'
-    let c3 = pathComp.current[1]?.id == 'starred'
-    let c4 = displaying.current[1]?.id != 'starred'
-    return c1 && c2 && c3 && c4
+
+type actionType = {
+    type: 'check', 
+    payload: {overflowing: boolean}
+} | {
+    type: 'updateComp',
+    payload: pathStatusType
 }
-function isSwitchingToShared(pathComp, displaying) {
-    let c1 = pathComp.current.length == 2
-    let c2 = pathComp.current[0]?.id == 'drive'
-    let c3 = pathComp.current[1]?.id == 'shared'
-    let c4 = displaying.current[1]?.id != 'shared'
-    return c1 && c2 && c3 && c4
-}
-function displayingReducer(displaying, action) {
+function displayingReducer(displaying, action: actionType) {
 
     if (action.type == 'check') {
         let {overflowing} = action.payload
@@ -31,32 +25,32 @@ function displayingReducer(displaying, action) {
     }
 
     if (action.type =='updateComp') {
-
-        let pathComp = action.payload
-        let isAddingNew = pathComp.current.length > displaying.current.length
-        let alreadyOverflowed = displaying.current[displaying.current.length-1].overflowing
-        if (isSwitchingToStarred(pathComp, displaying)) {
+        let {curDir, lastAction} = action.payload
+                let alreadyOverflowed = displaying.current[displaying.current.length-1].overflowing
+        
+        if (lastAction=='goToStarred') {
             return {
-                current: pathComp.current,
+                current: curDir.current,
                 fading: displaying.current.slice(2)
             }
         }
-        if (isSwitchingToShared(pathComp, displaying)) {
+        if (lastAction=='goToShared') {
             return {
-                current: pathComp.current,
+                current: curDir.current,
                 fading: displaying.current.slice(2)
             }
         }
-        if (isAddingNew) {
+        if (lastAction=="addToDir") {
             
             if (alreadyOverflowed) return displaying;
 
-            let newCurrentPaths = [...pathComp.current]
+            let newCurrentPaths = [...curDir.current]
             newCurrentPaths[newCurrentPaths.length-1].uncertain = true
 
-            return {current: newCurrentPaths, fading: pathComp.fading}     
-        } else {
-            let newLength = pathComp.current.length
+            return {current: newCurrentPaths, fading: curDir.fading}     
+        } 
+        if (lastAction=="goBackOne" || lastAction =="goBackToId" || lastAction=="goToRecent") {
+            let newLength = curDir.current.length
             let newCurrentPaths = displaying.current.slice(0, newLength)
             let newFading = displaying.current.slice(newLength)
             return {current: newCurrentPaths, fading: newFading }
@@ -66,9 +60,11 @@ function displayingReducer(displaying, action) {
     
     return displaying
 }
-const PathBar = React.forwardRef<HTMLDivElement, any>(({pathComp, goBackToId}, ref) => {    
-    let pbRef = useRef()
-    let [displaying, dispatchDisplaying] = useReducer(displayingReducer, pathComp)
+
+const PathBar = React.forwardRef<HTMLDivElement, PathBarProps>(({status, goBackToId}, ref) => {    
+    let pbRef = useRef<HTMLDivElement>(null)
+    let {curDir, lastAction} = status
+    let [displaying, dispatchDisplaying] = useReducer(displayingReducer, curDir)
     let currentPaths = displaying.current.map(pObj => {  
         return (    
             <PathElement pObj={pObj} key={pObj.id}goBackToId = {goBackToId}
@@ -82,9 +78,10 @@ const PathBar = React.forwardRef<HTMLDivElement, any>(({pathComp, goBackToId}, r
     })
     useEffect(() => {
 
-        dispatchDisplaying({type: 'updateComp', payload: pathComp})
-    }, [pathComp])
+        dispatchDisplaying({type: 'updateComp', payload: status})
+    }, [status])
     useEffect(() => {
+        //check if pathbar is overflowing
         let currentPaths = displaying.current
         let lastElem = currentPaths[currentPaths.length-1] 
         if (!lastElem.uncertain) return;
@@ -96,7 +93,7 @@ const PathBar = React.forwardRef<HTMLDivElement, any>(({pathComp, goBackToId}, r
             dispatchDisplaying({type: 'check', payload: {overflowing: false}})
         }
     }, [displaying])
-    //on pathcomp update, add the last element with opacity 0, meanig 
+    //on curDir update, add the last element with opacity 0, meanig 
     //the last object has attributed hidden by default
     //this should be done in the reducer,
     //after dom is updated, check if the pathbar is overflowing
