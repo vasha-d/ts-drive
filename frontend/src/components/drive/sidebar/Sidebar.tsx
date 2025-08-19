@@ -8,6 +8,7 @@ import signOut from '../../../assets/sign-out.svg'
 import {  useNavigate } from 'react-router-dom'
 import apiSignOut from '../../api/signOut'
 import useGetSelf from '../../api/useGetSelf'
+import useStorageUnits from '../useStorageUnits'
 
 function Sidebar({goToName}) {
     const navigate = useNavigate()
@@ -51,9 +52,10 @@ function Sidebar({goToName}) {
 function Stored() {
     const user = useGetSelf()
     const totalStored = user.user.totalStored
-    let gbAmount = Math.round(totalStored/1073741824, 2)
-    let percentage = Math.round(gbAmount/15 * 100, 2)
-    let mbAmount = Math.round(totalStored/1000000, 2)
+
+    let storageSize = useStorageUnits(totalStored)
+    let gbAmount = Math.round(totalStored/10737418)/100
+    let percentage = Math.round(gbAmount/15)/100
     const styleAttr = {width: `${percentage}%`}
     return (
       <div className={styles.sidebarChild + ` ` + styles.stored}>
@@ -64,7 +66,7 @@ function Stored() {
         </div>
         <div className={styles.storedTxt}>
 
-          {gbAmount || mbAmount} of 15GB
+          {storageSize} <b>/</b> 15GB
         </div>
       </div>
     )

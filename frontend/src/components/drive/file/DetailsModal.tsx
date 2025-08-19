@@ -9,6 +9,7 @@ import extensionImg from '../../../assets/extension.svg'
 import detailsImg from '../../../assets/details-img.svg'
 import mainStyles from '../../../css/children.module.css'
 import detStyles from './details.module.css'
+import useStorageUnits from '../useStorageUnits'
 
 const styles = Object.assign({}, mainStyles, detStyles)
 
@@ -35,7 +36,7 @@ function DetailsModal({visible, fileObj, closeModal}: DetailsModalType) {
         day: "numeric"
     })
     console.log(fileObj)
-
+    const fileSize = useStorageUnits(fileObj.size)
     return  (
         <div className={styles.detailsModal}> 
             <div className={styles.detailIcons}>
@@ -67,7 +68,7 @@ function DetailsModal({visible, fileObj, closeModal}: DetailsModalType) {
                     <span className={styles.detailNameWrapper}>
                         <img src={fileSizeImg} alt="" />
                         <span className={styles.detailName}>File Size:  </span>
-                        <span className={styles.detail}>{`${Math.round(size/10000,)/100} MB`}</span>
+                        <span className={styles.detail}>{fileSize}</span>
                     </span>
                 </div>
                 <div className={styles.extensionDetail}>

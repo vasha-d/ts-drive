@@ -26,3 +26,18 @@
     letter-spacing: 3px;
     color: var(--white-blue);
 }
+
+.account {
+    display: flex;
+    gap: 8px;
+    color: var(--white-blue);
+    font-size: 24px;
+    border: 1px solid var(--white-blue);
+    padding: 4px 18px;
+    border-radius: 6px;
+    background-color: var(--dark-blue);
+    align-items: center;
+}
+.accountImg {
+    height: 6vh;
+}

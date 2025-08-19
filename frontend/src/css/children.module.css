@@ -101,7 +101,7 @@
     border-radius: 2vh;
     border-bottom-left-radius: 10vh;
     border-bottom-right-radius: 10vh;
-    background-color: orange;
+    background-color: var(--light-blue);
 }
 
 .folder {

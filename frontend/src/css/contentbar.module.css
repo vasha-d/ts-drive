@@ -102,6 +102,7 @@
 .newButtonsContainer {
     display: flex;
     gap: 24px;
+    align-items: center;
     padding-left: 16px;
 }
 
@@ -110,21 +111,20 @@
 .newFileButton, .newFolderButton {
     background-color: var(--white-blue);
     color: var(--black-blue);
-    
     border: 2px solid var(--mid-blue);
-    width: 16vh;
+    width: 18vh;
     font-size: 16px;
-    transition: background-color var(--tr-time) linear,
-                color var(--tr-time) linear,
-                scale var(--tr-time) linear,
-                border var(--tr-time) linear
+    --tr-time: 0.15s;
+    transition: background-color var(--tr-time) ease-in,
+                color var(--tr-time) ease-in,
+                scale var(--tr-time) ease-in,
+                border var(--tr-time) ease-in
     ;
 }
 
 .newFileButton:hover, .newFolderButton:hover {
     background-color: var(--deep-blue);
     border: 2px solid  var(--white-blue);
-    scale: 1.1;
     color: rgb(226, 244, 249);
 }
 
