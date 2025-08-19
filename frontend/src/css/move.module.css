@@ -12,6 +12,7 @@
     cursor: default;
     display: flex;
     justify-content: center;
+
 }
 
 .moveModal {
@@ -148,3 +149,5 @@
     box-shadow: none;
     cursor: default;
 }
+
+

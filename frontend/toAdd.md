@@ -2,7 +2,6 @@
 
 
 
-style file details, make the individual details in different styles
 
 add colors
 

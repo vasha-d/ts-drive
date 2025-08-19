@@ -249,6 +249,19 @@ async function getShared(userId) {
     console.log(toReturn);
     return toReturn
 }
+async function setFolderColor(id, color) {
+    console.log('updating clor to', color)
+    const update = await prisma.folder.update({
+        where: {
+            id: id
+        },
+        data: {
+            color: color
+        }
+    })
+
+    
+}
 module.exports = {
     newFolder,
     getFolder,
@@ -259,5 +272,6 @@ module.exports = {
     getDrive,
     setFolderStar,
     getStarred,
-    getShared
+    getShared,
+    setFolderColor
 }

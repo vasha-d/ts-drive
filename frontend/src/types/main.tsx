@@ -20,6 +20,7 @@ export type FolderObj = {
     parentFolder: FolderObj,
     childrenFolders: FolderObj[],
     files: FileObjType,
+    color?: string
 } 
 export type StarredFolderObj = {
     childrenFolders: FolderObj[],

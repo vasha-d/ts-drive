@@ -30,6 +30,8 @@ async function folderPatchOrganizer(req, res) {
         funcToUse = renameFolder
     } else if (req.body.star) {
         funcToUse = setFolderStar
+    } else if (req.body.newColor) {
+        funcToUse = setFolderColor
     }
 
     return funcToUse(req, res)
@@ -93,7 +95,14 @@ async function getSharedFolder(req, res) {
     
     res.json(folder)
 }
-
+async function setFolderColor(req, res) {
+    let newColor = req.body.newColor
+    let folderId = parseInt(req.params.id)
+    
+    let update = await foldersModel.setFolderColor(folderId, newColor)
+    console.log(newColor, folderId)
+    res.json(update)
+}
 
 module.exports = {
     postFolder,

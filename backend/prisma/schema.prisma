@@ -47,6 +47,7 @@ model Folder {
   sharedFolders SharedFolder[] 
   starredParentId Int? 
   starredParentFolder StarredFolder? @relation("starredParentOfFolder", fields: [starredParentId], references: [id])
+  color String?
 }
 model File {
   id Int @id @default(autoincrement())

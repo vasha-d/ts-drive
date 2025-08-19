@@ -44,21 +44,31 @@ export async function newFolder(folderName, parentId, setRefresh) {
     
 }
 
-export async function moveFolder(folderId, newParentId, setRefesh) {
+export async function moveFolder(folderId, newParentId, setRefresh) {
 
     let url = apiUrl + `/users/folders/${folderId}`
     let data = new URLSearchParams({newParentId})
 
     let req = await axios.patch(url, data, {withCredentials: true})
 
-    setRefesh(r => !r)
+    setRefresh(r => !r)
 }
 
-export async function starFolder(folderId, setRefesh) {
+export async function starFolder(folderId, setRefresh) {
 
     let url = apiUrl + `/users/folders/${folderId}`
     let data = new URLSearchParams({star: true})
     let req = await axios.patch(url, data, {withCredentials:true})
 
-    setRefesh(r => !r)
+    setRefresh(r => !r)
+}
+
+
+export async function setFolderColor(folderId, newColor, setRefresh) {
+
+    let url = apiUrl + `/users/folders/${folderId}`
+    let data = new URLSearchParams({newColor: newColor})
+    let req = await axios.patch(url, data, {withCredentials:true})
+
+    setRefresh(r => !r)
 }

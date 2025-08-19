@@ -3,10 +3,11 @@ import styles from '../../../css/controls.module.css'
 import {RenameButton, ShareButton, DeleteButton, StarButton, DownloadButton} from './ControlButtons'
 import wrenchIcon from '../../../assets/wrench.svg'
 import MoveButton from './MoveModal/MoveButton'
+import SetColor from './SetColor'
 
 
     
-function Controls({toMoveId, forFile=false, onSubmits, controlsOpenPrio, toggleScaler, isValids}) {
+function Controls({toMoveId, forFile=false, onSubmits, controlsOpenPrio, toggleScaler, isValids, folderObj=null}) {
 
     let [visible, setVisible] = useState(false)
     let [adjustPosition, setAdjustPosition] = useState([false, false])
@@ -66,12 +67,13 @@ function Controls({toMoveId, forFile=false, onSubmits, controlsOpenPrio, toggleS
                 toggleScaler={toggleScaler}
                 isValids={isValids}
                 adjustPosition={adjustPosition}
+                folderObj={folderObj}
             />
         </>
     )
 }
 
-let ControlsList = React.forwardRef(({toMoveId, visible, forFile, onSubmits, toggleScaler, isValids, adjustPosition}, ref) => {
+let ControlsList = React.forwardRef(({folderObj, toMoveId, visible, forFile, onSubmits, toggleScaler, isValids, adjustPosition}, ref) => {
 
     if (!visible) return null;
 
@@ -110,6 +112,15 @@ let ControlsList = React.forwardRef(({toMoveId, visible, forFile, onSubmits, tog
                     forFile={forFile}
                     toggleScaler={toggleScaler}
                 ></MoveButton>
+
+                {forFile ? null : 
+                <SetColor
+                    folderName='dummy string'
+                    folderId={0}
+                    toggleScaler={toggleScaler}
+                    submitFunction={onSubmits[4]}
+                    folderObj={folderObj}
+                ></SetColor>}
                 {!forFile ? null :
                     <DownloadButton
                         submitFunction={onSubmits[4]}

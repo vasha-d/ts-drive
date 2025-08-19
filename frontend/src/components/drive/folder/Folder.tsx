@@ -1,6 +1,6 @@
 import { useContext, useRef } from 'react';
 import DriveContext from '../DriveContext';
-import { renameFolder, shareFolder, deleteFolder, starFolder } from '../../api/folder';
+import { renameFolder, shareFolder, deleteFolder, starFolder, setFolderColor } from '../../api/folder';
 import childrenStyles from '../../../css/children.module.css'
 import folderIcon from '../../../assets/folder.svg'
 import Controls from '../controls/Controls';
@@ -55,36 +55,44 @@ const Folder = ({folderObj , addToDir} : {
     function controlsOpenPrio() {
         folderRef.current?.classList.toggle(styles.controlsOpenPrio)
     }
+    function submitColorForm(color: string) {
+        setFolderColor(id, color, setRefresh)
+    }
     function toggleScaler() {
         console.log('toggling scaler');
         folderRef.current?.classList.toggle(styles.childScaler)
         folderRef.current?.classList.toggle(styles.modalOpenPrio)
     }
-    const onSubmits = [submitRenameForm, submitShareForm, DeleteFolder, StarFolder]
+    const onSubmits = [submitRenameForm, submitShareForm, DeleteFolder, StarFolder, submitColorForm]
     const isValids = [renameValid, shareValid]
     const starImg = !folderObj.starred ? null: 
                 <div className={styles.star}>
                     <img className={styles.starSpin} src={starIcon} alt="" />
                 </div>       
+    console.log(folderObj.color)
     return (
-        <div ref={folderRef} className={styles.folder + ` ` + styles.childScaler}onClick={handleClick}>
-            <div className={styles.folderIcon}>
-                <img src={folderIcon} alt="" />
-            </div>
-            <div className={styles.childText}>{name}</div>
+        <div style={{backgroundColor: folderObj.color}} className={styles.folderWrapper+` `+styles.childScaler} ref={folderRef}>
+            <div  className={styles.folder}onClick={handleClick}>
+                <div className={styles.folderIcon}>
+                    <img src={folderIcon} alt="" />
+                </div>
+                <div className={styles.childText}>{name}</div>
 
-            <div className={styles.iconRow}>
-                {starImg}
-                <Controls
-                    toMoveId={folderObj.id}
-                    forFile={false}
-                    onSubmits={onSubmits}
-                    controlsOpenPrio={controlsOpenPrio}
-                    toggleScaler={toggleScaler}
-                    isValids={isValids}
-                />
+                <div className={styles.iconRow}>
+                    {starImg}
+                    <Controls
+                        toMoveId={folderObj.id}
+                        forFile={false}
+                        onSubmits={onSubmits}
+                        controlsOpenPrio={controlsOpenPrio}
+                        toggleScaler={toggleScaler}
+                        isValids={isValids}
+                        folderObj={folderObj}
+                    />
+                </div>
             </div>
         </div>
+
     );
 }
 
