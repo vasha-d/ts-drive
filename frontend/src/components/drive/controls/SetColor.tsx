@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import type { FolderObj } from '../../../types/main'
 import mainStyles from './setcolor.module.css'
 import colorImg from '../../../assets/set-color.svg'
 import otherStyles from '../../../css/controls.module.css'
 import confirmImg from '../../../assets/check.svg'
 import cancelImg from '../../../assets/cancel.svg'
+import iro from '@jaames/iro'
 
 const styles = Object.assign({}, mainStyles, otherStyles)
 type colorButtonProps = {
@@ -50,7 +51,7 @@ function SetColor({folderObj, toggleScaler, submitFunction}: colorButtonProps) {
     }
        const modal = <ColorInputModal 
             visible={visible}
-            currentColor={folderObj.color}
+            currentColor={folderObj.color || '#a6cef3'}
             closeModal={closeModal}
             folderName={folderObj.name}
             folderId={0}
@@ -76,7 +77,6 @@ function ColorInputModal ({visible, currentColor, closeModal,folderName, submitM
     const elementRef = useRef<HTMLDivElement>(null)
 
     function stopPropag(e) {
-        console.log('stoppingprop')
         e.stopPropagation()
     }
     function clickSubmit() {
@@ -85,20 +85,21 @@ function ColorInputModal ({visible, currentColor, closeModal,folderName, submitM
     function closeForm() {
         closeModal(elementRef)
     }
-    function handleChange (e) {
-        console.log(e.target.value)
-        setColor(e.target.value)
-    }
     if (!visible) return null
+
     return (
         <div ref={elementRef} onClick={closeForm} className={styles.cover+` `+styles.modalFadeIn}>
             <div onClick={stopPropag}className={styles.colorModal}>
+
                 <div className={styles.folderName}>{folderName}</div>
                 <label className={styles.label} htmlFor="color">
                     Choose a new color
                 </label>
-                <input type="color" name="color" id="" onChange={handleChange} defaultValue={currentColor}/>
-
+                <ColorPicker
+                    currentColor={currentColor}
+                    setColor={setColor}
+                >
+                </ColorPicker>
                 <div className={styles.formButtons}>
                     <div onClick={clickSubmit} className={styles.confirm}>
                         <img src={confirmImg} alt="" />
@@ -113,5 +114,37 @@ function ColorInputModal ({visible, currentColor, closeModal,folderName, submitM
 
     
 }
+function ColorPicker ({currentColor, setColor}) {
 
+    const pickerParent = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+    let parent = pickerParent.current as HTMLDivElement
+    
+        const colorPicker = iro.ColorPicker(parent, {
+            color: currentColor,
+            width: 160,
+            layout: [
+            { 
+            component: iro.ui.Wheel,
+            },
+            { 
+            component: iro.ui.Slider,
+            },
+        ]
+    
+        })
+        function onColorChange (color) {
+            setColor(color.hexString)
+        }
+        colorPicker.on('color:change', onColorChange)
+        return () => {
+            colorPicker.off('color:change', onColorChange)
+            parent?.replaceChildren()
+        }
+    }, [pickerParent,currentColor, setColor]) 
+    return <div ref={pickerParent}>aa </div>
+    
+
+}
 export default SetColor
