@@ -69,7 +69,6 @@ const Folder = ({folderObj , addToDir} : {
                 <div className={styles.star}>
                     <img className={styles.starSpin} src={starIcon} alt="" />
                 </div>       
-    console.log(folderObj.color)
     return (
         <div style={{backgroundColor: folderObj.color}} className={styles.folderWrapper+` `+styles.childScaler} ref={folderRef}>
             <div  className={styles.folder}onClick={handleClick}>

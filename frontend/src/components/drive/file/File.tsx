@@ -17,8 +17,6 @@ const File = ({fileObj, toggleModal}: FileProps) => {
     const {setRefresh} = useContext<DriveContextType>(DriveContext)
     const fileRef = useRef<HTMLDivElement>(null)
     const {name, id} = fileObj
-    console.log(fileObj)
-    console.log('entered file')
     function DeleteFile() {
         deleteFile(fileObj.id, setRefresh)
     }

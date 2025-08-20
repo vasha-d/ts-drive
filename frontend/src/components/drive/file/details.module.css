@@ -1,3 +1,21 @@
+.detailsModal {
+    position: fixed;
+    z-index: 6;
+    right: 0;
+    --top-pos:calc(var(--navbar-height) + var(--contentbar-height));
+    --height: calc(100vh - var(--top-pos)) ;
+    top: var(--top-pos);
+    height: var(--height);
+    background-color: var(--white-blue);
+    box-sizing: border-box;
+    padding: 20px 20px 20px 10px;
+    border-left: var(--black-blue) 1px solid;
+    width: 40vh;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0px 0 30px 5px rgba(40, 40, 83, 0.538);
+}
 
 .detailIcons  {
     display: flex;
@@ -95,4 +113,32 @@ h2.detailName {
 .fileSizeDet {
     composes: fileDet;
     margin-top: 12px;
+}
+
+.modalFadeIn {
+    animation: fadeIn 0.5s forwards;
+}
+
+.modalFadeOut {
+    animation: fadeOut 0.5s forwards;
+}
+
+
+@keyframes fadeIn {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+
+    }
+}
+@keyframes fadeOut {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
 }

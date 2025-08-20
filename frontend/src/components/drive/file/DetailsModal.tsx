@@ -16,10 +16,10 @@ const styles = Object.assign({}, mainStyles, detStyles)
 type DetailsModalType = {
     visible: boolean,
     fileObj: FileObjType | null,
-    closeModal: () => void
+    modalToggler: (fileObj: FileObjType) => void
 }
 
-function DetailsModal({visible, fileObj, closeModal}: DetailsModalType) {
+function DetailsModal({visible, fileObj, modalToggler}: DetailsModalType) {
     if (!visible) return null
     if (fileObj == null) return null
     const {createdAt, extension, name, size, lastAccessed} = fileObj
@@ -35,10 +35,15 @@ function DetailsModal({visible, fileObj, closeModal}: DetailsModalType) {
         month: "long",  
         day: "numeric"
     })
-    console.log(fileObj)
+    function closeModal() {
+        if (visible) {
+            let obj = fileObj as FileObjType
+            modalToggler(obj)
+        }
+    }
     const fileSize = useStorageUnits(fileObj.size)
     return  (
-        <div className={styles.detailsModal}> 
+        <div className={styles.detailsModal+` `+styles.modalFadeIn} > 
             <div className={styles.detailIcons}>
                 <img src={detailsImg} alt="" />
                 <h2 className={styles.detailName}>{name}</h2> 

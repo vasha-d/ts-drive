@@ -5,7 +5,6 @@ import colorImg from '../../../assets/set-color.svg'
 import otherStyles from '../../../css/controls.module.css'
 import confirmImg from '../../../assets/check.svg'
 import cancelImg from '../../../assets/cancel.svg'
-import { setFolderColor } from '../../api/folder'
 
 const styles = Object.assign({}, mainStyles, otherStyles)
 type colorButtonProps = {
@@ -15,7 +14,7 @@ type colorButtonProps = {
 }
 type colorModalProps = {
     visible: boolean
-    currentColor: string
+    currentColor: string | undefined
     folderName: string | undefined,
     folderId: number
     closeModal:(elementRef: React.RefObject<HTMLDivElement | null>) => void
@@ -40,7 +39,7 @@ function SetColor({folderObj, toggleScaler, submitFunction}: colorButtonProps) {
         elementRef.current?.classList.add(styles.modalFadeOut)
         elementRef.current?.addEventListener('animationend', onFadeOutEnd)
         function onFadeOutEnd () {
-            elementRef.current?.classList.remove(styles.modalFadeIn)
+            elementRef.current?.removeEventListener('animationend', onFadeOutEnd)
             toggleScaler()
             setVisible(false)
         }
@@ -81,7 +80,7 @@ function ColorInputModal ({visible, currentColor, closeModal,folderName, submitM
         e.stopPropagation()
     }
     function clickSubmit() {
-        submitModal(color, elementRef)
+        submitModal(color as string, elementRef)
     }
     function closeForm() {
         closeModal(elementRef)

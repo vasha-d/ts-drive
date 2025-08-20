@@ -3,6 +3,8 @@ import File from './file/File';
 import styles from '../../css/children.module.css'
 import DetailsModal from './file/DetailsModal';
 import useDetailsModal from './file/useDetailsModal';
+import detModalStyles from './file/details.module.css'
+import { useRef } from 'react';
 
 const Children = ({childrenFolders, files, addToDir}) => {
 
@@ -12,19 +14,23 @@ const Children = ({childrenFolders, files, addToDir}) => {
         closeModal,
         toggleModal
     } = useDetailsModal()
+    const modalWrapperRef = useRef<HTMLDivElement>(null)
+    function modalToggler(fileObj) {
+        toggleModal(fileObj, modalWrapperRef, detModalStyles.modalFadeOut, detModalStyles.modalFadeIn)
+    }
     const folderElements = childrenFolders.map(folder => {
         return <Folder 
            key={`folder-${folder.id}`} 
            folderObj={folder}
            addToDir={addToDir}
-        >
+            >
         </Folder>
     })
     const fileElements = files.map(file => {
         return <File 
             key={`file-${file.id}`} 
             fileObj={file}
-            toggleModal={toggleModal}
+            toggleModal={modalToggler}
         >
         </File>
     })
@@ -54,11 +60,15 @@ const Children = ({childrenFolders, files, addToDir}) => {
                 </div>
             </div>
             {emptyMessage}
-            <DetailsModal
-                visible={modalVisible}
-                fileObj={modalObj}
-                closeModal={closeModal}
-            ></DetailsModal>
+            
+            <div ref={modalWrapperRef}>
+                <DetailsModal
+                    visible={modalVisible}
+                    fileObj={modalObj}
+                    modalToggler={modalToggler}
+                ></DetailsModal>
+            </div> 
+          
         </div>
     );
 }
