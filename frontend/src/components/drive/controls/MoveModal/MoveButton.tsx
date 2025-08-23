@@ -6,7 +6,7 @@ import moveImg from '../../../../assets/move.svg'
 let styles = {...mainStyles, ...otherStyles}
 
 
-function MoveButton({toMoveId, forFile, toggleScaler}) {
+function MoveButton({toMoveId, forFile, toggleScaler, setInProgress, setResult}) {
 
 
     let [modalVisible, setModalVisible] = useState(false)
@@ -35,6 +35,8 @@ function MoveButton({toMoveId, forFile, toggleScaler}) {
             closeModal={closeModal}
             modalVisible={modalVisible}
             forFile={forFile}
+            setInProgress={setInProgress}
+            setResult={setResult}
         />
         </>
 

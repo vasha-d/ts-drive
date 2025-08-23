@@ -20,7 +20,9 @@ export default tseslint.config([
       globals: globals.browser,
     },
     rules: {
-      'prefer-const': 'off', // 🚫 turn off this rule
+      'prefer-const': 'off', // 
+      'no-unused-vars': 'off',
+       "@typescript-eslint/no-unused-vars": "off" // TS version of the rule
     },
   },
 ])

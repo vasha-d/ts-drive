@@ -1,7 +1,6 @@
 import axios from "axios";
 
 let apiUrl = import.meta.env.VITE_API_URL + '/users/files'
-
 export async function newFile(file, parentId, setRefresh) {
     let data = new FormData()
 

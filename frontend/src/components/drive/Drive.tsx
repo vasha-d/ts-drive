@@ -8,6 +8,11 @@ import Sidebar from './sidebar/Sidebar';
 import ContentBar from './navbar/ContentBar';
 import PathBar from './navbar/Pathbar';
 import usePath from './usePath';
+import Status from './Status';
+import useStatus from './useStatus';
+import { useRef } from 'react';
+import statusStyles from '../../css/status.module.css'
+
 const Drive = () => {
     const {folder, loading, error, setRefresh, setCurrentFolderId} = useGetFolder()
     const  {addToDir, goBackToId, goBackOne, goToName, status} = usePath(
@@ -16,6 +21,9 @@ const Drive = () => {
     let toReturn = <>Error...</>
     const path = useLocation().pathname
     const driveMode = path.split('/')[2]
+
+    const statusDivRef = useRef<HTMLDivElement>(null)
+    const statusHook = useStatus(statusDivRef)
     if (error.message && error.status == 401) {
         toReturn = <Navigate to={'/auth/sign-in'}></Navigate>
     } 
@@ -26,12 +34,24 @@ const Drive = () => {
         let [sortedFolders, sortedFiles] = sortChildren(
             driveMode, folder.childrenFolders, folder.files
         )
+        function lift() {
+            console.log('doing lifft')
+            statusHook.setInProgress('TEXT HERE LIFTTING')
+        }
+         function drop() {
+            console.log('doing droop')
+            statusHook.setResult('success')
+        }
         toReturn =  
             <DriveContext.Provider value={
                 { setRefresh, setCurrentFolderId, currentFolder: folder}}>  
                 <div className={styles.drive}>
                         <Navbar></Navbar>
-                        <ContentBar goBackOne={goBackOne}>
+                        {/* status, pass to children all ocmmands for using it */}
+                        <ContentBar goBackOne={goBackOne} 
+                            setInProgress={statusHook.setInProgress}
+                            setResult={statusHook.setResult}
+                        >
                             <PathBar 
                                 status={status}
                                 goBackToId={goBackToId}
@@ -44,10 +64,23 @@ const Drive = () => {
                             <Children
                                 childrenFolders={sortedFolders}
                                 files={sortedFiles}
+                                setInProgress={statusHook.setInProgress}
+                                setResult={statusHook.setResult}
                                 addToDir={addToDir}
                                 >
                             </Children>
+                        <button onClick={lift}>lift</button>
+                        <button onClick={drop}>fail</button>
+                        
                         </div>
+                        <div ref={statusDivRef} className={statusStyles.floater}>
+                            <Status 
+                                status={statusHook.status}
+                                text={statusHook.text}
+                                visible={true}
+                            />
+                        </div>
+
                 </div>
 
             </DriveContext.Provider>
@@ -69,8 +102,7 @@ function sortChildren(driveMode, folders, files) {
         return sortByDates(folders, files, 'dateModified')
     }
     if (driveMode == 'shared') {
-        return sortByDates(folders, files, 'dateModified')
-        
+        return sortByDates(folders, files, 'dateModified')   
     }
 
 }

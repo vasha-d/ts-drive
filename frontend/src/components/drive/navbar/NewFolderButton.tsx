@@ -5,7 +5,12 @@ import { useState } from 'react'
 import pbStyles from '../../../css/contentbar.module.css'
 import ModalForm from '../ModalForm'
 import folderIcon from '../../../assets/create-folder.svg'
-function NewFolderButton({currentFolder}) {
+import type { setResultType, setInProgressType } from '../../../types/statusTypes'
+function NewFolderButton({currentFolder, setInProgress, setResult }: {
+    setInProgress: setInProgressType,
+    setResult: setResultType,
+    currentFolder,
+}) {
     let {parentId, childrenFolders} =currentFolder
     let {setRefresh} = useContext(DriveContext)
     let [formVisible, setFormVisible] = useState(false)
@@ -20,8 +25,13 @@ function NewFolderButton({currentFolder}) {
         return 'valid'
     }
     function submitForm (folderName) {
-        console.log('creating folder', parentId, folderName);
-        newFolder(folderName, currentFolder.id, setRefresh)
+        setInProgress('Create New Folder')
+        let pr = newFolder(folderName, currentFolder.id, setRefresh)
+        pr.then(() => {
+            setResult('success')
+        }).catch(() => [
+            setResult('failure')
+        ])
         setFormVisible(false)
         
     }

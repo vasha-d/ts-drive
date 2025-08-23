@@ -7,7 +7,8 @@ import SetColor from './SetColor'
 
 
     
-function Controls({toMoveId, forFile=false, onSubmits, controlsOpenPrio, toggleScaler, isValids, folderObj=null}) {
+function Controls({toMoveId, forFile=false, onSubmits, controlsOpenPrio, 
+    toggleScaler, isValids, folderObj=null, setInProgress, setResult}) {
 
     let [visible, setVisible] = useState(false)
     let [adjustPosition, setAdjustPosition] = useState([false, false])
@@ -68,12 +69,16 @@ function Controls({toMoveId, forFile=false, onSubmits, controlsOpenPrio, toggleS
                 isValids={isValids}
                 adjustPosition={adjustPosition}
                 folderObj={folderObj}
+                setInProgress={setInProgress}
+                setResult={setResult}
             />
         </>
     )
 }
 
-let ControlsList = React.forwardRef(({folderObj, toMoveId, visible, forFile, onSubmits, toggleScaler, isValids, adjustPosition}, ref) => {
+let ControlsList = React.forwardRef(({folderObj, toMoveId, visible, 
+    forFile, onSubmits, toggleScaler, isValids, adjustPosition,
+    setInProgress, setResult}, ref) => {
 
     if (!visible) return null;
 
@@ -111,6 +116,8 @@ let ControlsList = React.forwardRef(({folderObj, toMoveId, visible, forFile, onS
                     toMoveId={toMoveId}
                     forFile={forFile}
                     toggleScaler={toggleScaler}
+                    setResult={setResult}
+                    setInProgress={setInProgress}
                 ></MoveButton>
 
                 {forFile ? null : 

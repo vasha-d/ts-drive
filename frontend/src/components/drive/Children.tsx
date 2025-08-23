@@ -6,7 +6,7 @@ import useDetailsModal from './file/useDetailsModal';
 import detModalStyles from './file/details.module.css'
 import { useRef } from 'react';
 
-const Children = ({childrenFolders, files, addToDir}) => {
+const Children = ({childrenFolders, files, addToDir, setInProgress, setResult}) => {
 
     const {
         modalObj,
@@ -14,6 +14,7 @@ const Children = ({childrenFolders, files, addToDir}) => {
         closeModal,
         toggleModal
     } = useDetailsModal()
+    //pass modal commands to children, show modal, hidemodal, modal success, doing, or failedd
     const modalWrapperRef = useRef<HTMLDivElement>(null)
     function modalToggler(fileObj) {
         toggleModal(fileObj, modalWrapperRef, detModalStyles.modalFadeOut, detModalStyles.modalFadeIn)
@@ -23,6 +24,9 @@ const Children = ({childrenFolders, files, addToDir}) => {
            key={`folder-${folder.id}`} 
            folderObj={folder}
            addToDir={addToDir}
+            setResult={setResult}
+            setInProgress={setInProgress}
+
             >
         </Folder>
     })
@@ -31,6 +35,8 @@ const Children = ({childrenFolders, files, addToDir}) => {
             key={`file-${file.id}`} 
             fileObj={file}
             toggleModal={modalToggler}
+            setResult={setResult}
+            setInProgress={setInProgress}
         >
         </File>
     })
@@ -68,7 +74,7 @@ const Children = ({childrenFolders, files, addToDir}) => {
                     modalToggler={modalToggler}
                 ></DetailsModal>
             </div> 
-          
+
         </div>
     );
 }

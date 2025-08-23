@@ -1,0 +1,62 @@
+.statusImg {
+    height: 4vh;
+}
+
+.floater {
+    position: fixed;
+    background-color: var(--black-blue);
+    color: white;
+    bottom: 20px;
+    right: 50px;   
+    display: flex;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 2vh;
+    font-weight: bold;
+    z-index: 11;
+    font-size: 15px;
+    align-items: center;
+    box-shadow: 0 5px 20px 3px rgba(0, 0, 0, 0.497);
+}
+
+.lift {
+    animation: 0.5s lift linear forwards;
+}
+.drop {
+    animation: 0.5s drop linear forwards;
+}
+
+.spinAnimation {
+    animation: spin 1s linear infinite;
+}
+@keyframes lift {
+    0% {
+        transform: translateY(400%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes drop {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(400%);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    100% {
+        transform: rotateZ(-360deg);
+    }
+    100% {
+        transform: rotateZ(-360deg);
+        
+    }
+}

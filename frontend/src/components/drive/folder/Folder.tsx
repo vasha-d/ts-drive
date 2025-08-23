@@ -5,14 +5,17 @@ import childrenStyles from '../../../css/children.module.css'
 import folderIcon from '../../../assets/folder.svg'
 import Controls from '../controls/Controls';
 import starIcon from '../../../assets/star-enabled.svg'
-
+import type { setResultType, setInProgressType } from '../../../types/statusTypes';
 const styles = Object.assign({}, childrenStyles)
 
 
 import type { FolderObj } from '../../../types/main';
 
-const Folder = ({folderObj , addToDir} : {
-    folderObj: FolderObj, addToDir: (name, id) => void
+const Folder = ({folderObj , addToDir, setResult, setInProgress} : {
+    folderObj: FolderObj, addToDir: (name, id) => void,
+    setResult: setResultType,
+    setInProgress: setInProgressType
+
 }) => {
     const {name, id} = folderObj
     let {setCurrentFolderId, setRefresh} = useContext(DriveContext)
@@ -41,22 +44,58 @@ const Folder = ({folderObj , addToDir} : {
     }
     function submitRenameForm(newName) { 
         console.log('running');
+        setInProgress('Rename Folder')
+        
         renameFolder(id, newName, setRefresh)
+        .then(() => {
+            setResult('success')
+        }).catch(() => [
+            setResult('failure')
+        ])
     }
     function submitShareForm(usernameToShareWith) {
+        setInProgress('Share Folder')
+
         shareFolder(id, usernameToShareWith, setRefresh)
+        .then(() => {
+            setResult('success')
+        }).catch(() => [
+            setResult('failure')
+        ])
     }
     function DeleteFolder() {
+        setInProgress('Delete Folder')
+
         deleteFolder(id, setRefresh)
+        .then(() => {
+            setResult('success')
+        }).catch(() => [
+            setResult('failure')
+        ])
     }
     function StarFolder() {
+        const floaterText = folderObj.starred ? 'Unstar Folder' : 'Star Folder'
+        setInProgress(floaterText)
+        
         starFolder(id, setRefresh)
+        .then(() => {
+            setResult('success')
+        }).catch(() => [
+            setResult('failure')
+        ])
     }
     function controlsOpenPrio() {
         folderRef.current?.classList.toggle(styles.controlsOpenPrio)
     }
     function submitColorForm(color: string) {
+        setInProgress('Set Folder Color')
+        
         setFolderColor(id, color, setRefresh)
+        .then(() => {
+            setResult('success')
+        }).catch(() => [
+            setResult('failure')
+        ])
     }
     function toggleScaler() {
         console.log('toggling scaler');
@@ -87,6 +126,8 @@ const Folder = ({folderObj , addToDir} : {
                         toggleScaler={toggleScaler}
                         isValids={isValids}
                         folderObj={folderObj}
+                        setInProgress={setInProgress}
+                        setResult={setResult}
                     />
                 </div>
             </div>

@@ -6,12 +6,15 @@ import pbStyles from '../../../css/contentbar.module.css'
 import back from '../../../assets/back.svg'
 import DriveContext from '../DriveContext'
 import PathBar from './Pathbar';
-
+import type { setInProgressType, setResultType } from '../../../types/statusTypes';
 let styles = Object.assign({}, mainStyles, pbStyles)    
 
 
 
-function ContentBar({children, goBackOne}) {
+function ContentBar({children, goBackOne, setInProgress, setResult}: {
+    setInProgress: setInProgressType, setResult: setResultType,
+    children, goBackOne
+}) {
     const {currentFolder, setCurrentFolderId} = useContext(DriveContext)
     let {id, parentId} = currentFolder
     function clickBackButton() {
@@ -28,10 +31,14 @@ function ContentBar({children, goBackOne}) {
             </div>
             <div className={styles.newButtonsContainer}>
                 <NewFolderButton
-                    parentId = {id}
                     currentFolder = {currentFolder}
-                ></NewFolderButton>
+                    setInProgress = {setInProgress}
+                    setResult = {setResult}
+
+                    ></NewFolderButton>
                 <NewFileButton
+                    setInProgress = {setInProgress}
+                    setResult = {setResult}
                     parentId = {id}
                 ></NewFileButton>
             </div>

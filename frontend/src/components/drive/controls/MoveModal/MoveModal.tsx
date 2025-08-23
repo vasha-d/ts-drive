@@ -10,7 +10,7 @@ import cancelImg from '../../../../assets/cancel.svg'
 import { moveFolder } from '../../../api/folder';
 import { moveFile } from '../../../api/file';
 let styles = {...mainStyles, ...otherStyles}
-function MoveModal ({toMoveId, modalVisible, closeModal, forFile}) {
+function MoveModal ({toMoveId, modalVisible, closeModal, forFile, setInProgress, setResult}) {
     let {currentFolder, setRefresh} = useContext(DriveContext)
     let {loading, folder, error, setCurrentFolderId} = useGetFolder(currentFolder.id)
     let [selected, setSelected] = useState(null)
@@ -30,9 +30,22 @@ function MoveModal ({toMoveId, modalVisible, closeModal, forFile}) {
         console.log(toMoveId);
 
         if (forFile) {
+            setInProgress('Move File')
             moveFile(toMoveId, selected, setRefresh)
+            .then(() => {
+                setResult('success')
+            }).catch(() => [
+                setResult('failure')
+            ])
+        
         } else {
+            setInProgress('Move Folder')
             moveFolder(toMoveId, selected, setRefresh)
+            .then(() => {
+                setResult('success')
+            }).catch(() => [
+                setResult('failure')
+            ])
         }
 
         
