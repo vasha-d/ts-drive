@@ -8,8 +8,7 @@ import successImg from '../../assets/success.svg'
 import failureImg from '../../assets/cancel.svg'
 import styles from '../../css/status.module.css'
 
-function Status({status, text, visible}: {
-    visible: boolean,
+function Status({status, text}: {
     status: statusType,
     text: string
 }) {
@@ -27,7 +26,7 @@ function Status({status, text, visible}: {
 
 function StatusImg ({status}:{status: statusType}) {
 
-    console.log(status)
+    
     if (status == 'inProgress') {
         console.log('rreturnign img')
         return <img src={inProgressImg}className={styles.statusImg+` `+styles.spinAnimation} />

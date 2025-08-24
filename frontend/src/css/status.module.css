@@ -20,10 +20,10 @@
 }
 
 .lift {
-    animation: 0.5s lift linear forwards;
+    animation: 0.2s lift linear forwards;
 }
 .drop {
-    animation: 0.5s drop linear forwards;
+    animation: 0.2s drop linear forwards;
 }
 
 .spinAnimation {
@@ -31,7 +31,7 @@
 }
 @keyframes lift {
     0% {
-        transform: translateY(400%);
+        transform: translateY(200%);
     }
     100% {
         transform: translateY(0);

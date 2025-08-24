@@ -1,5 +1,6 @@
 
-function useStorageUnits(bytes: number) {
+function useStorageUnits(bytes: number | undefined) {
+    if (bytes == undefined) return 
     const kbdecimal = Math.round(bytes/10)/100
     const kbround = Math.round(bytes/1000)
     const mb = Math.round(bytes/10000)/100

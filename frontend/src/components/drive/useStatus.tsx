@@ -6,14 +6,15 @@ type useStatusReturnType = {
     setInProgress: setInProgressType,
     setResult: setResultType,
     status: statusType,
-    text: string
+    text: string,
+    visible: boolean
 }
 
 export default function useStatus (elementRef: React.RefObject<HTMLDivElement | null>): useStatusReturnType {
 
     const [status, setStatus] = useState<statusType>('success')
-    const [text, setText] = useState<string>('doing file')
-    const [visible, setVisible] = useState(true)
+    const [text, setText] = useState<string>('')
+    const [visible, setVisible] = useState(false)
     // pop up status
     // to export
     // setInProgres
@@ -21,10 +22,11 @@ export default function useStatus (elementRef: React.RefObject<HTMLDivElement | 
     // the animations will be handled internally 
 
     function popUpDiv () {
+        console.log('doing popu p')
         setVisible(true)
-        elementRef.current?.classList.remove(styles.lift, styles.drop)
-        void elementRef.current?.offsetWidth
-        elementRef.current?.classList.add(styles.lift)
+        // elementRef.current?.classList.remove(styles.lift, styles.drop)
+        // void elementRef.current?.offsetWidth
+        // elementRef.current?.classList.add(styles.lift)
 
     }
     function dropDiv () {
@@ -53,13 +55,14 @@ export default function useStatus (elementRef: React.RefObject<HTMLDivElement | 
             clearTimeout(id)
             dropDiv()
         }
-        const id = setTimeout(afterTimer, 3000)
+        const id = setTimeout(afterTimer, 4000)
     }
 
     return {
         setInProgress,
         setResult,
         status,
-        text
+        text,
+        visible
     }
 }   

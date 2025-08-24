@@ -12,7 +12,7 @@ import Status from './Status';
 import useStatus from './useStatus';
 import { useRef } from 'react';
 import statusStyles from '../../css/status.module.css'
-
+import useSortChildren from './useSortChildren';
 const Drive = () => {
     const {folder, loading, error, setRefresh, setCurrentFolderId} = useGetFolder()
     const  {addToDir, goBackToId, goBackOne, goToName, status} = usePath(
@@ -24,6 +24,9 @@ const Drive = () => {
 
     const statusDivRef = useRef<HTMLDivElement>(null)
     const statusHook = useStatus(statusDivRef)
+    let [sortedFolders, sortedFiles] = useSortChildren(
+            driveMode, folder?.childrenFolders, folder?.files
+        ) || []
     if (error.message && error.status == 401) {
         toReturn = <Navigate to={'/auth/sign-in'}></Navigate>
     } 
@@ -31,17 +34,8 @@ const Drive = () => {
         toReturn = <div>Loading...</div>
     } 
     else {
-        let [sortedFolders, sortedFiles] = sortChildren(
-            driveMode, folder.childrenFolders, folder.files
-        )
-        function lift() {
-            console.log('doing lifft')
-            statusHook.setInProgress('TEXT HERE LIFTTING')
-        }
-         function drop() {
-            console.log('doing droop')
-            statusHook.setResult('success')
-        }
+        
+  
         toReturn =  
             <DriveContext.Provider value={
                 { setRefresh, setCurrentFolderId, currentFolder: folder}}>  
@@ -69,17 +63,18 @@ const Drive = () => {
                                 addToDir={addToDir}
                                 >
                             </Children>
-                        <button onClick={lift}>lift</button>
-                        <button onClick={drop}>fail</button>
-                        
+            
                         </div>
-                        <div ref={statusDivRef} className={statusStyles.floater}>
+                        {
+                        !statusHook.visible ? null :
+                        <div ref={statusDivRef} className={statusStyles.floater+` `+statusStyles.lift}>
                             <Status 
                                 status={statusHook.status}
                                 text={statusHook.text}
-                                visible={true}
+                                
                             />
                         </div>
+                        }
 
                 </div>
 
@@ -88,48 +83,6 @@ const Drive = () => {
 
     return toReturn
 }
-function sortChildren(driveMode, folders, files) {
-    if (!driveMode) {
-        driveMode = ''
-    }
-    if (driveMode == '') {
-        return sortByDates(folders, files, 'dateCreated')
-    } else
-    if (driveMode == 'recent') {
-        return sortByDates(folders, files, 'dateModified')
-    }
-    if (driveMode == 'starred') {
-        return sortByDates(folders, files, 'dateModified')
-    }
-    if (driveMode == 'shared') {
-        return sortByDates(folders, files, 'dateModified')   
-    }
 
-}
-
-function sortByDates(folders, files, type) {
-    let sortFunction = {}
-    sortFunction.dateCreated = 
-        (f1, f2) => {
-            let d1 = new Date(f1.createdAt)
-            let d2 = new Date(f2.createdAt)
-            return d2 - d1
-        }
-    sortFunction.dateModified = 
-        (f1, f2) => {
-            let d1 = new Date(f1.lastModified)
-            let d2 = new Date(f2.lastModified)
-            return d2 - d1
-        }
-    let funcToUse = sortFunction[type]
-    let childrenFolders = folders.sort(
-        funcToUse
-    )
-    let childrenFiles = files.sort(
-        funcToUse
-    )
-    return [childrenFolders, childrenFiles]
-
-}
 
 export default Drive;

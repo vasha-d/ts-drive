@@ -19,8 +19,8 @@ function shortenName(name) {
     let noExt = stripExtension(name, ext)
     console.log('length ', noExt)
     console.log('running shorten name')
-    if (noExt.length < 24) return name
-    noExt = noExt.substr(0, 24)
+    if (noExt.length < 60) return name
+    noExt = noExt.substr(0, 60)
     return (noExt+ext)
 }   
 async function newFile(file, parentId, ownerId) {

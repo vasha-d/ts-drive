@@ -5,6 +5,8 @@ import dateCreatedImg from '../../../assets/date-created.svg'
 import dateAccImg from '../../../assets/date-accessed.svg'
 import fileSizeImg from '../../../assets/file-size.svg'
 import parentFolderImg from '../../../assets/parent-folder.svg'
+import fileNameImg from '../../../assets/file-name.svg'
+
 import extensionImg from '../../../assets/extension.svg'
 import detailsImg from '../../../assets/details-img.svg'
 import mainStyles from '../../../css/children.module.css'
@@ -20,6 +22,7 @@ type DetailsModalType = {
 }
 
 function DetailsModal({visible, fileObj, modalToggler}: DetailsModalType) {
+    const fileSize = useStorageUnits(fileObj?.size)
     if (!visible) return null
     if (fileObj == null) return null
     const {createdAt, extension, name, size, lastAccessed} = fileObj
@@ -41,9 +44,10 @@ function DetailsModal({visible, fileObj, modalToggler}: DetailsModalType) {
             modalToggler(obj)
         }
     }
-    const fileSize = useStorageUnits(fileObj.size)
+    console.log(fileObj.name)
     return  (
         <div className={styles.detailsModal+` `+styles.modalFadeIn} > 
+        
             <div className={styles.detailIcons}>
                 <img src={detailsImg} alt="" />
                 <h2 className={styles.detailName}>{name}</h2> 
@@ -52,8 +56,15 @@ function DetailsModal({visible, fileObj, modalToggler}: DetailsModalType) {
                     <img src={cancelImg} alt="" />  
                 </button>
             </div>
-        
+            
             <div className={styles.detailsList}>
+                <div className={styles.nameDetWrapper}>
+                    <div className={styles.nameDet}>
+                        <img src={fileNameImg} alt="" />
+                        <span className={styles.detailName}>Name: </span>
+                    </div>
+                        <div className={styles.nameDetail}>{fileObj.name}</div>
+                </div>
                 <div className={styles.fileDet}>
                     <img src={dateCreatedImg} alt="" />
                     <div className={styles.dateWrapper}>

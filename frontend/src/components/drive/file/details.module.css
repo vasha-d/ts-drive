@@ -22,7 +22,7 @@
     justify-content: space-between;
     align-items: center;
     height: 6vh;
-    margin-bottom: 20px;
+    margin-bottom: 8xpx;
 }
 .detailIcons > img {
     height: 32px;
@@ -41,7 +41,7 @@ h2.detailName {
 .detailsList {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     padding-left: 16px;
 }
 
@@ -55,10 +55,9 @@ h2.detailName {
 .fileDet {
     display: flex;
     gap: 8px;
-    border-bottom: 1px solid rgb(51, 88, 189);
+    border-bottom: 2px solid rgb(36, 36, 161);
     padding-bottom: 12px;
     padding-left: 12px;
-    border-radius: 6px;
     margin-right: 20px;
     
 }
@@ -84,6 +83,11 @@ h2.detailName {
     text-wrap: nowrap;
 }
 
+.nameDetail {
+    display: block;
+    text-wrap: wrap;
+}
+
 .extensionDetail {
     display: flex;
     align-items: center;
@@ -93,6 +97,20 @@ h2.detailName {
 .extensionDetail .detail {
     color: blue;
     font-weight: 500;
+}
+
+.nameDetWrapper {
+    composes: fileDet;
+    display: flex;
+    gap: 2px;
+    flex-direction: column;
+}
+.nameDet {
+    display: flex;
+    gap: 8px;
+    text-wrap: wrap;
+    align-items: center;
+    
 }
 
 .closeModalBtn {
