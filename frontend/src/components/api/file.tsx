@@ -76,8 +76,13 @@ export async function downloadFile(id) {
         withCredentials: true
     })
     let link = req.data
-    console.log(link);
-    console.log(reqLink, req);
+    const element = document.createElement('a')
+    element.href = link
+    element.click()
+
+    element.remove()
+    
+    console.log(req.data);
   
 }
 

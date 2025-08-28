@@ -2,7 +2,13 @@ const {PrismaClient} = require('../generated/prisma')
 const cloudinary = require('cloudinary').v2
 const {updateUserTotalStorage} = require('./users')
 const prisma = new PrismaClient()
+function dlSafeName(name, extension) {
+    const unsafeChars = /[ .~()\[\]{}'"\\\/:;?&=+#%|,@^`]/g;
 
+    // Replace all matches with --
+    return name.replace(unsafeChars, '--')+extension;
+ 
+}
 function getExtension(name) {
     let split = name.split('.')
 
@@ -29,7 +35,7 @@ async function newFile(file, parentId, ownerId) {
     let extension = getExtension(name)
     let withOutExtension = stripExtension(name, extension)
     console.log(file)
-    let cldUpload = await uploadToCloudinary(file)
+    let cldUpload = await uploadToCloudinary(file, withOutExtension, extension)
     console.log('cld:', cldUpload)
     let size = cldUpload.result.bytes
     let rsrcType = cldUpload.result.resource_type
@@ -78,7 +84,7 @@ async function downloadFile(fileId) {
         }
 
     })
-    let dlName = file.name + file.extension
+    let dlName = dlSafeName(file.name, '')
     let link = getDownloadLink(dlName, file.publicId, file.resourceType)
     return link
 }
@@ -136,8 +142,8 @@ async function moveFile(fileId, newParentId) {
     })
     return file
 }
-async function uploadToCloudinary(file) {
-    let newName = encodeURIComponent(file.originalname)
+async function uploadToCloudinary(file, withOutExtension, extension) {
+    let newName = dlSafeName(withOutExtension, extension)
     const publicId = `${Date.now()}-${newName}`;
     console.log('uploading cld');
     return new Promise(async (resolve, reject) => {
@@ -145,7 +151,7 @@ async function uploadToCloudinary(file) {
 
                 let uploadStream = cloudinary.uploader.upload_stream(
                     {
-                resource_type: 'auto',
+                resource_type: 'raw',
                 public_id: publicId
             },
             (err, result) => {
@@ -170,12 +176,14 @@ async function uploadToCloudinary(file) {
 }
 async function getDownloadLink(fileName, public_id, resourceType) {
 
-    let name = encodeURIComponent(fileName)
-    console.log(name, public_id);
+    console.log('log wituin func', fileName);
     const downloadUrl = cloudinary.url(public_id, {
-        resource_type: resourceType,
-        flags: `attachment:${name}`
+        resource_type: 'raw',
+        flags: "attachment:"+fileName,  
+        sign_url: true,
+        type: "upload",
     });
+    console.log(downloadUrl)
     return downloadUrl
     
 }

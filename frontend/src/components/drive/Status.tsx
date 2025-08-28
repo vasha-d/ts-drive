@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import type {  statusObjType, statusType } from '../../types/statusTypes'
 import inProgressImg from '../../assets/in-progress.svg'
 import successImg from '../../assets/success.svg'
-import failureImg from '../../assets/cancel.svg'
+import failureImg from '../../assets/failed.svg'
 import styles from '../../css/status.module.css'
 
 function Status({status, text}: {
