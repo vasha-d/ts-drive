@@ -2,7 +2,7 @@ import { useContext, useRef } from 'react';
 import DriveContext from '../DriveContext';
 import { renameFolder, shareFolder, deleteFolder, starFolder, setFolderColor } from '../../api/folder';
 import childrenStyles from '../../../css/children.module.css'
-import folderIcon from '../../../assets/folder.svg'
+import folderIcon from '../../../assets/folder2.svg'
 import Controls from '../controls/Controls';
 import starIcon from '../../../assets/star-enabled.svg'
 import type { setResultType, setInProgressType } from '../../../types/statusTypes';

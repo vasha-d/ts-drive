@@ -31,12 +31,13 @@ button {
     padding-inline: var(--contents-padding-left) var(--contents-padding-right);
     overflow: hidden;
     grid-area: contents;
+    background-color: var(--bg-color);
 }
 .pathbar {
     height: var(--pathbar-height);
     position: sticky;
     border-bottom: 1px solid black;
-    background-color: whitesmoke;
+    background-color: var(--bg-color);
     width: 100%;
     box-sizing: border-box;
     display: inline;

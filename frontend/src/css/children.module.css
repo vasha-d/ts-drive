@@ -1,6 +1,4 @@
-:global(#root) {
-    --dark-font: rgb(49, 49, 65);
-}
+
 
 .childrenContainer {
     padding-bottom: 30vh;
@@ -9,7 +7,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px 32px;
-    color: var(--dark-font);
+    color: var(--white-font);
     --child-width: 210px;
     position: relative;
 }
@@ -32,7 +30,7 @@
     --transition-time: 0.08s;
     cursor: pointer;
     align-items: center;
-    color: var(--white-blue);
+    color: var(--dark-font);
     box-sizing: border-box;
     font-size: 0.9rem;
     font-weight: bold;

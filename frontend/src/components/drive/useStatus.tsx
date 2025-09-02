@@ -15,19 +15,10 @@ export default function useStatus (elementRef: React.RefObject<HTMLDivElement | 
     const [status, setStatus] = useState<statusType>('success')
     const [text, setText] = useState<string>('')
     const [visible, setVisible] = useState(false)
-    // pop up status
-    // to export
-    // setInProgres
-    //set fail or success 
-    // the animations will be handled internally 
 
     function popUpDiv () {
         console.log('doing popu p')
         setVisible(true)
-        // elementRef.current?.classList.remove(styles.lift, styles.drop)
-        // void elementRef.current?.offsetWidth
-        // elementRef.current?.classList.add(styles.lift)
-
     }
     function dropDiv () {
         elementRef.current?.classList.remove(styles.lift, styles.drop)

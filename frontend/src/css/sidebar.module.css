@@ -7,8 +7,7 @@
     box-sizing: border-box;
     vertical-align: top;
     height: var(--sidebar-height);
-    background-color: rgb(88, 99, 114);
-    background-color: var(--deep-blue);
+    background-color: rgb(30, 60, 88);
     gap: 26px;
     align-items: center;
     padding-top: 5vh;
@@ -21,7 +20,7 @@
     justify-content: center;
     gap: 12px;
     font-weight: bold;
-    color: rgb(237, 240, 243);
+    color: var(--white-font);
     padding-left: 2vh;
     transition: scale 0.01s linear;
     font-size: 15px;

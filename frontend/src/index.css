@@ -1,15 +1,14 @@
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   
-  --white-font: rgb(237, 240, 243);
+  --white-font: rgb(241, 244, 249);
   --white-blue: rgb(231, 241, 251);
   --light-blue: rgb(166, 206, 243);
   --mid-blue:  rgb(55, 106, 173);
-  --cyan-blue: rgb(69, 110, 135);
-  --deep-blue: rgb(9, 69, 122);
-  --black-blue: rgb(21, 46, 77);
+  --deep-blue: rgb(11, 48, 82);
+  --black-blue: rgb(13, 23, 38);
   --dark-blue: rgb(35, 38, 42);
-  --grey-blue: rgb(39, 59, 96);
+  --bg-color: rgba(215, 226, 238, 0.863);
 
 }
 
