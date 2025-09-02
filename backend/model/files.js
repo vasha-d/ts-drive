@@ -187,12 +187,27 @@ async function getDownloadLink(fileName, public_id, resourceType) {
     return downloadUrl
     
 }
+async function deleteCldFile(publicId) {
+        
+    try {
+        const result = await cloudinary.uploader.destroy(publicId, {
+            resource_type: 'raw', 
+        });
+        return 'success'
+    } catch (error) {
+        console.error('Error deleting:', error);
+    }
+}
+
 async function deleteFile(fileId) {
     let del = await prisma.file.delete({
         where: {
             id: fileId
         }
     })
+    let publicId = del.publicId
+    let delCld = await deleteCldFile(publicId)
+    if (delCld !== 'success') return undefined
     let amount = del.size * (-1)
     let ownerId = del.ownerId
     updateUserTotalStorage(ownerId, amount)
@@ -246,6 +261,7 @@ async function setJustAccesed(fileId) {
     })
     
 }
+
 module.exports = {
     newFile,
     getFile,
