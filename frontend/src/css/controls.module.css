@@ -32,7 +32,7 @@
     grid-template-columns: 148px 0;
     width: max-content;
     border: 1px solid black;
-    border-radius: 16px;
+    border-radius: 10px;
     overflow: hidden;
     height: max-content;
     animation: foldOpen 0.2s linear;
