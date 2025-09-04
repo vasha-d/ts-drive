@@ -67,6 +67,7 @@ async function deleteFolder(req, res) {
 }
 
 async function getDrive(req, res) {
+    console.log('request')
     let userId = req.user.id
 
     let drive =  await foldersModel.getDrive(userId)

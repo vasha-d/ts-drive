@@ -20,6 +20,7 @@ export function useGetFolder(defId='drive'): GetFolderResult {
             try {
                 
                 const url = `${apiUrl}/users/folders/${currentFolderId}`
+                console.log(url)
                 const req = await axios.get(url, {
                     withCredentials: true
                 })

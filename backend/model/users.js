@@ -4,7 +4,7 @@ const prisma = new PrismaClient()
 
 
 async function createUser(username, password) {
-
+    console.log(username, password)
     try {
         
         const newUser = await prisma.user.create({

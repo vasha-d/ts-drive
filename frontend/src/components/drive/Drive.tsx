@@ -21,13 +21,14 @@ const Drive = () => {
     let toReturn = <>Error...</>
     const path = useLocation().pathname
     const driveMode = path.split('/')[2]
-
+    console.log('loading drive file')
     const statusDivRef = useRef<HTMLDivElement>(null)
     const statusHook = useStatus(statusDivRef)
     let [sortedFolders, sortedFiles] = useSortChildren(
             driveMode, folder?.childrenFolders, folder?.files
         ) || []
     if (error.message && error.status == 401) {
+        console.log('redirec', error)
         toReturn = <Navigate to={'/auth/sign-in'}></Navigate>
     } 
     else if (loading || folder == null) {
@@ -35,7 +36,7 @@ const Drive = () => {
     } 
     else {
         
-  
+        console.log('loading drive')
         toReturn =  
             <DriveContext.Provider value={
                 { setRefresh, setCurrentFolderId, currentFolder: folder}}>  

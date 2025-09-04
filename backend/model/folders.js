@@ -203,7 +203,7 @@ async function setFolderStar(folderId, userId) {
     return 
 }
 async function getDrive(userId) {
-
+    console.log('gettign drive')
     let drive = await prisma.folder.findFirst({
         where: {
             ownerId: userId,

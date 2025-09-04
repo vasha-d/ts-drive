@@ -22,7 +22,7 @@ async function signIntoUser(req, res) {
                 username: user.username
             }
         }, 
-        'secret', 
+        process.env.JWT_SECRET, 
         {
         expiresIn: '1d'
         }
@@ -52,7 +52,7 @@ async function authorizeMiddleware(req, res, next) {
         return
     }
     try {
-        verify= jwt.verify(token, 'secret')
+        verify= jwt.verify(token,  process.env.JWT_SECRET)
     } catch (error) {
         res.sendStatus(401)
 
