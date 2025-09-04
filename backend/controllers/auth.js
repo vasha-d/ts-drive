@@ -30,13 +30,15 @@ async function signIntoUser(req, res) {
     res.cookie('token', token, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
-        sameSite: 'Lax',
+        sameSite: 'none',
+        secure: true
     })
     res.json(user)
 }
 async function signOutOfUser(req, res) {
     res.clearCookie('token',{
-        sameSite: 'Lax',
+        sameSite: 'none',
+        secure: 'true',
         path: '/'
 
     })
