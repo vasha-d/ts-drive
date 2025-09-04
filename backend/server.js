@@ -9,7 +9,12 @@ app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true
 }))
-
+app.use((req, res, next) => {
+  console.log("Origin:", req.headers.origin);
+  console.log("Cookies:", req.headers.cookie);
+  console.log("Authorization:", req.headers.authorization);
+  next();
+});
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cookieParser())

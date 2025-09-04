@@ -28,11 +28,13 @@ const SignIn = () => {
                 username,
                 password
             })
+            console.log(url)
 
             let req = await axios.post(url, data, {withCredentials: true})
 
             if (req.status == 200) {
                 console.log(req)
+                console.log('succsesful sign in')
                 navigate('/drive')
             }
         }
