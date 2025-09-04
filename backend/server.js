@@ -6,7 +6,7 @@ const driveControllers = require('./controllers/files')
 const authControllers = require('./controllers/auth')
 const cors = require('cors')
 app.use(cors({
-    origin: 'https://ts-drive.vercel.app/',
+    origin: 'https://ts-drive.vercel.app',
     credentials: true
 }))
 app.use((req, res, next) => {
