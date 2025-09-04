@@ -7,7 +7,7 @@ const authControllers = require('./controllers/auth')
 const cors = require('cors')
 app.use(cors({
     //origin: 'https://ts-drive.vercel.app',
-    origin: ['http://localhost:5173', 'https://ovur-drive.vercel.app/'],
+    origin: ['http://localhost:5173', 'https://ovur-drive.vercel.app'],
 
     credentials: true
 }))
